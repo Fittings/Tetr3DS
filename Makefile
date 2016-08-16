@@ -33,7 +33,7 @@ TARGET		:=	compiled/Tetris3DS
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
-INCLUDES	:=	include
+INCLUDES	:=	$SOURCES include include/types
 #ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------
