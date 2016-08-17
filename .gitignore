@@ -3,6 +3,7 @@
 
 # 3DS Development
 /build/
+/documentation/
 
 # Eclipse
 .cproject

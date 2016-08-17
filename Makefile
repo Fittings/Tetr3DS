@@ -136,6 +136,7 @@ all: $(BUILD)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@doxygen Tetris3DSdoxygen.Doxyfile
 
 #---------------------------------------------------------------------------------
 clean:

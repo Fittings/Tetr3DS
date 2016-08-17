@@ -5,15 +5,20 @@
 #include <math.h>
 #include <3ds.h>
 #include <sf2d.h>
+#include <stdbool.h>
+
 #include "tetris_controller.h"
+#include "types.h"
+
+
 
 #define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
 
-
-//21 x 10 tetris
-
-int main()
+/**
+ * Initializes general 3DS libraries for the application to use.
+ */
+void application_init(void)
 {
 	// Set the random seed based on the time
 	srand(time(NULL));
@@ -21,20 +26,32 @@ int main()
 	sf2d_init();
 	sf2d_set_clear_color(RGBA8(0x40, 0x40, 0x40, 0xFF));
 	sf2d_set_3D(1);
+}
 
-	TetrisController tetris_controller = tetris_controller_init();
-
-
-	while (aptMainLoop())
-	{
-
-
-	}
-
-
+/**
+ * Ends all general 3DS libraries that were setup by application_init()
+ */
+int application_finish(void)
+{
 	sf2d_fini();
 	return 0;
 }
+
+
+int main(void)
+{
+	application_init();
+
+	TetrisController *tetris_controller = tetris_controller_init();
+	while (aptMainLoop() && is_running(tetris_controller))
+	{
+		update_controller(tetris_controller);
+	}
+
+	return application_finish();
+}
+
+
 
 
 //ZZZ TODO Delete me! Just here for to remember baisics
