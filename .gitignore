@@ -5,11 +5,13 @@
 /build/
 /documentation/
 
+
 # Eclipse
 .cproject
 .project
 ..*
 \#*#
+/.settings/
 
 # Compiled Object files
 *.slo
