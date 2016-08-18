@@ -7,7 +7,7 @@
 #include <sf2d.h>
 #include <stdbool.h>
 
-#include "tetris_controller.h"
+#include "../include/application_controller.h"
 #include "types.h"
 
 
@@ -42,10 +42,10 @@ int main(void)
 {
 	application_init();
 
-	TetrisController *tetris_controller = tetris_controller_init();
-	while (aptMainLoop() && is_running(tetris_controller))
+	ApplicationController *application_controller = application_controller_init();
+	while (aptMainLoop() && application_controller_is_running(application_controller))
 	{
-		update_controller(tetris_controller);
+		update_application_controller(application_controller);
 	}
 
 	return application_finish();
