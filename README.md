@@ -1,3 +1,4 @@
-# template
+# Tetris3DS
 
-This is a template for starting new 3DS libctru projects.
+Tetris for the 3DS.
+
