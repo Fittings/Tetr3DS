@@ -1,10 +1,11 @@
 #include <malloc.h>
-
+#include <3ds.h>
+#include <sf2d.h>
 #include "../include/application_controller.h"
 #include "../include/game/tetris_controller.h"
 
 
-
+#define CONFIG_3D_SLIDERSTATE (*(float *)0x1FF81080)
 
 struct _ApplicationController
 {
@@ -52,8 +53,10 @@ static void update_menu(ApplicationController *self)
 	self->flag_mode = QUIT_APP;
 }
 
+
 static void update_game(ApplicationController *self)
 {
+	/* Start the game, if not loaded */
 	if (self->tetris_controller == NULL)
 	{
 		self->tetris_controller = tetris_controller_init();
@@ -62,7 +65,7 @@ static void update_game(ApplicationController *self)
 
 	if (tetris_controller_is_running(self->tetris_controller))
 	{
-
+		update_tetris_controller(self->tetris_controller);
 	}
 	else
 	{
@@ -77,7 +80,6 @@ static void update_title(ApplicationController *self)
 {
 	self->flag_mode = QUIT_APP;
 }
-
 
 
 void update_application_controller(ApplicationController *self)
@@ -105,3 +107,4 @@ bool application_controller_is_running(ApplicationController *self)
 {
 	return !(self->flag_mode == QUIT_APP);
 }
+
