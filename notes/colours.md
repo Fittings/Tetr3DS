@@ -8,5 +8,6 @@ Blocks need to be:
 * Look pretty.
 
 For colour schemes to try out:
-	http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
-	http://ksrowell.com/blog-visualizing-data/2012/02/02/optimal-colors-for-graphs/
+
+[Online color picker, with presets] (http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) <br>
+[Another example color set] (http://ksrowell.com/blog-visualizing-data/2012/02/02/optimal-colors-for-graphs/)
