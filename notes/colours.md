@@ -1,4 +1,4 @@
-# Colours of a blocks
+# Colours of the blocks
 
 How many different colours for blocks is too many colours?
 
