@@ -29,11 +29,11 @@ typedef struct _TetrisBoard TetrisBoard;
  * TetrisBoard struct is used for holding tetris pieces.
  * TetrisBoard is of size: (x_blocks by y_blocks).
  *
- * @param x_blocks The width of the board in 'block' pieces.x
- * @param y_blocks the height of the board in 'block' pieces.
- * @return An TetrisController used for handling the 3DS application.
+ * @param width The width of the board in 'block' pieces.x
+ * @param height the height of the board in 'block' pieces.
+ * @return An TetrisBoard used for handling the 3DS application.
  */
-extern TetrisBoard *tetris_board_init(int x_blocks, int y_blocks);
+extern TetrisBoard *tetris_board_init(int width, int height);
 
 /**
  * @brief Frees the TetrisBoard struct

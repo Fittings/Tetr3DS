@@ -7,11 +7,9 @@
 
 
 
+
 struct _TetrisController
 {
-	//ZZZ TODO Scoreboard
-	//ZZZ TODO Board
-	//ZZ TODO Queue - pieces
 
 };
 typedef struct _TetrisController TetrisController;
