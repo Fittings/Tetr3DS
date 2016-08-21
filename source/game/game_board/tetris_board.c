@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <sf2d.h>
 #include <stdbool.h>
+
 #include "../include/game/game_board/tetris_board.h"
 #include "../include/game/block/tetris_block.h"
 
@@ -85,6 +86,25 @@ bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, u8 x, u8 y)
 	}
 
 	return false;
+}
+
+int i = 0;
+//ZZZ TODO Delete. Just to make sure things are going where we are going.
+static void bePretty(int i)
+{
+	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
+		sf2d_draw_rectangle_rotate(190, 160, 70, 60, RGBA8(0xFF, 0xFF, 0xFF, 0xFF), 3.0* i);
+		sf2d_draw_rectangle(30, 100, 40, 60, RGBA8(0xFF, 0x00, 0xFF, 0xFF));
+		sf2d_draw_rectangle(160-15 + cosf(i)*50.0f, 120-15 + sinf(i)*50.0f, 30, 30, RGBA8(0x00, 0xFF, 0xFF, 0xFF));
+	sf2d_end_frame();
+
+	sf2d_swapbuffers();
+}
+
+void tetris_board_render(TetrisBoard *self, int x, int y)
+{
+	i = i + 2;
+	bePretty(i);
 }
 
 

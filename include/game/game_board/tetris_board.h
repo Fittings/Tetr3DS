@@ -47,6 +47,18 @@ extern TetrisBoard *tetris_board_init(int width, int height);
 extern void tetris_board_free(TetrisBoard *self);
 
 
+/**
+ * @brief Renders the TetrisBoard
+ *
+ * Renders the TetrisBoard on the given input screen. At the location given.
+ *
+ * @param self The TetrisBoard struct to reference
+ * @param x x coordinate of the top left corner of the board
+ * @param y y coordinate of the top left corner of the board
+ */
+extern void tetris_board_render(TetrisBoard *self, int x, int y);
+
+
 
 
 #endif
