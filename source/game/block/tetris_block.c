@@ -44,5 +44,9 @@ int tetris_block_sizeof()
 	return sizeof(TetrisBlock);
 }
 
+u32 tetris_block_get_creator_id(TetrisBlock *self)
+{
+	return self->creator_id;
+}
 
 

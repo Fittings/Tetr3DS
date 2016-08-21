@@ -1,8 +1,10 @@
 #include <malloc.h>
 #include <stdbool.h>
 #include <sf2d.h>
+#include <stdbool.h>
 #include "../include/game/game_board/tetris_board.h"
 #include "../include/game/block/tetris_block.h"
+
 
 
 
@@ -17,7 +19,6 @@ struct _TetrisBoard
 	int height;
 
 	TetrisBlock ***block_array; //ZZZ TODO Is this really a triple pointer situation?
-
 };
 typedef struct _TetrisBoard TetrisBoard;
 
@@ -51,6 +52,7 @@ TetrisBoard *tetris_board_init(int width, int height)
 	return self;
 }
 
+
 static void free_block_array(TetrisBoard *self)
 {
 	for (int w=0; w < self->width; w++)
@@ -73,6 +75,23 @@ void tetris_board_free(TetrisBoard *self)
 		free(self);
 	}
 }
+
+
+bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, u8 x, u8 y)
+{
+	if (x < self->width && y < self->height)
+	{
+
+	}
+
+	return false;
+}
+
+
+
+
+
+
 
 
 

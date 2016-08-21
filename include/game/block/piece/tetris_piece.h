@@ -8,6 +8,9 @@
 #ifndef INCLUDE_GAME_TETRIS_PIECE_H_
 #define INCLUDE_GAME_TETRIS_PIECE_H_
 
+#include "../include/game/block/tetris_block.h"
+
+
 
 
 /**
@@ -24,10 +27,12 @@ typedef struct _TetrisPiece TetrisPiece;
  *
  * Creates a TetrisPiece struct.
  *
- * @param creator_id The id of the block creator. (Usually the standard block creator)
+ * @param piece_array The 2d array of tetris blocks that create a TetrisPiece
+ * @param width The width of the 2d array
+ * @param height The height of the 2d array
  * @return A single TetrisPiece
  */
-extern TetrisPiece *tetris_piece_init(u32 creator_id); //ZZZ TODO array
+extern TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, u8 width, u8 height);
 
 /**
  * @brief Frees the TetrisBlock struct

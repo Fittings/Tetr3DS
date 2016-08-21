@@ -11,6 +11,7 @@
 
 
 #include <stdbool.h>
+#include "../include/game/block/piece/tetris_piece.h"
 
 
 

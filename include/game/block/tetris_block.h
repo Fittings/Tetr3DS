@@ -36,7 +36,7 @@ extern TetrisBlock *tetris_block_init(u32 creator_id); //ZZZ TODO implement colo
  * Frees the TetrisBlock struct.
  * This should always be called after the TetrisBlock struct is no longer in use
  *
- * @param self The TetrisBoard struct to reference
+ * @param self The TetrisBlock struct to reference
  */
 extern void tetris_block_free(TetrisBlock *self);
 
@@ -49,6 +49,13 @@ extern void tetris_block_free(TetrisBlock *self);
  * @return The size of th TetrisBlock struct.
  */
 extern int tetris_block_sizeof();
+
+/**
+ * @brief Returns the creator_id of the block
+ *
+ * @param self The TetrisBlock struct to reference
+ */
+extern u32 tetris_block_get_creator_id(TetrisBlock *self);
 
 
 
