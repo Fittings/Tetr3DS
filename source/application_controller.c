@@ -29,7 +29,7 @@ ApplicationController *application_controller_init()
 	{
 		self->flag_mode = GAME_STATE;
 
-		self->tetris_controller = NULL;
+		self->tetris_controller = tetris_controller_init();
 	}
 
 
@@ -57,21 +57,22 @@ static void update_menu(ApplicationController *self)
 static void update_game(ApplicationController *self)
 {
 	/* Start the game, if not loaded */
-	if (self->tetris_controller == NULL)
-	{
-		self->tetris_controller = tetris_controller_init();
-	}
+
 
 
 	if (tetris_controller_is_running(self->tetris_controller))
 	{
 		update_tetris_controller(self->tetris_controller);
+
 	}
 	else
 	{
 		tetris_controller_free(self->tetris_controller);
 		self->flag_mode = MAIN_MENU;
 	}
+
+
+
 
 
 }

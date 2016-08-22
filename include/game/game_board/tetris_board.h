@@ -55,8 +55,10 @@ extern void tetris_board_free(TetrisBoard *self);
  * @param self The TetrisBoard struct to reference
  * @param x x coordinate of the top left corner of the board
  * @param y y coordinate of the top left corner of the board
+ * @param width The width from the x co-ordinate. (Rightwards)
+ * @param height The height from the y co-ordinate. (Downwards)
  */
-extern void tetris_board_render(TetrisBoard *self, int x, int y);
+extern void tetris_board_render(TetrisBoard *self, int x, int y, int width, int height);
 
 
 

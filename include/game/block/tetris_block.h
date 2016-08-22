@@ -57,6 +57,7 @@ extern int tetris_block_sizeof();
  */
 extern u32 tetris_block_get_creator_id(TetrisBlock *self);
 
+extern void tetris_block_render(TetrisBlock *self, int x, int y, int length);
 
 
 
