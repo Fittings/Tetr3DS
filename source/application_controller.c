@@ -67,8 +67,8 @@ static void update_game(ApplicationController *self)
 	}
 	else
 	{
-		tetris_controller_free(self->tetris_controller);
-		self->flag_mode = MAIN_MENU;
+		//tetris_controller_free(self->tetris_controller);
+		//self->flag_mode = MAIN_MENU;
 	}
 
 

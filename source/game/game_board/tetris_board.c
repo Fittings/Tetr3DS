@@ -89,11 +89,12 @@ TetrisBoard *tetris_board_init(int block_width, int block_height)
 		}
 	}
 
+	/*
 	//ZZZ TODO Kill me
 	for (int x=0; x < 100; x++)
 	{
 		beScary();
-	}
+	} */
 
 
 	return self;
@@ -138,87 +139,14 @@ bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, u8 x, u8 y)
 
 void tetris_board_render(TetrisBoard *self, int x, int y, int pixel_width, int pixel_height)
 {
+
 	/*
 	for (int y=0; y < 150; y++)
 	{
 		bePleasant();
 	} */
 
-	bePleasant();
-
-	for (int z=0; z < 100; z++)
-	{
-		//sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-
-		int block_length = min((pixel_width / self->block_width), (pixel_height / self->block_height));
-		block_length = block_length <= 0 ? 1 : block_length; //Blocks are always at least 1px
-
-		int total_height = block_length * self->block_height;
-		int total_width = block_length * self->block_width;
-		int start_y = pixel_width - total_width;
-		int start_x = pixel_height - total_height;
-
-		int render_width = start_x;
-
-		sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-
-		sf2d_draw_rectangle(0, 0, self->block_width, self->block_height, RGBA8(0x00, 0x00, 0xFF, 0xCC));
-
-
-		sf2d_end_frame();
-		sf2d_swapbuffers();
-		/*
-		for (int w=0; w < self->block_width; w++)
-		{
-
-
-			for (int m=0; m < 20; m++)
-			{
-				sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-				sf2d_draw_rectangle(10, 10, block_length, block_length, RGBA8(0xFF, 0x00, 0x00, 0xCC));
-				sf2d_end_frame();
-				sf2d_swapbuffers();
-			} */
-
-
-
-
-			/*
-			int render_height = start_y;
-			for (int h=0; h < self->block_height; h++)
-			{
-
-				sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-
-				sf2d_draw_rectangle(0, 0, block_length, block_length, RGBA8(0x00, 0x00, 0xFF, 0xCC));
-
-
-				sf2d_end_frame();
-				sf2d_swapbuffers();
-
-
-
-				render_height = render_height * block_length;
-			}
-			render_width = render_width * block_length; */
-
-		}
-
-
-
-
-		//sf2d_end_frame();
-		//sf2d_swapbuffers();
-
-
-
-
-	 /*
-
 	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-
-
-
 
 	int block_length = min((pixel_width / self->block_width), (pixel_height / self->block_height));
 	block_length = block_length <= 0 ? 1 : block_length; //Blocks are always at least 1px
@@ -231,34 +159,35 @@ void tetris_board_render(TetrisBoard *self, int x, int y, int pixel_width, int p
 	int render_width = start_x;
 	for (int w=0; w < self->block_width; w++)
 	{
-		//int render_height = start_y;
+		int render_height = start_y;
 		for (int h=0; h < self->block_height; h++)
 		{
 			if (h % 2 == 0)
 			{
-				bePleasant();
+				sf2d_draw_rectangle(render_width, render_height, block_length, block_length, RGBA8(0xBB, 0xBB, 0x00, 0xCC)); //ZZZ TODO Colours
 			}
 			else
 			{
-				beScary();
+				sf2d_draw_rectangle(render_width, render_height, block_length, block_length, RGBA8(0x00, 0xBB, 0xBB, 0xCC)); //ZZZ TODO Colours
 			}
-			//render_height = render_height * block_length;
+			render_height = render_height + (h * block_length);
 			//tetris_block_render(self->block_array[w][h], render_width, render_height, block_length);
 
 			//sf2d_draw_rectangle_rotate(block_length, block_length, block_length, block_length, RGBA8(0xFF, 0xFF, 0xFF, 0xFF), 3.0* w);
 			//sf2d_draw_rectangle(160-15 + cosf(w)*50.0f, 120-15 + sinf(i)*50.0f, 30, 30, RGBA8(0x00, 0xFF, 0xFF, 0xFF));
 		}
-		//render_width = render_width * block_length;
+		render_width = render_width + (w * block_length);
 	}
 
 	sf2d_end_frame();
-	sf2d_swapbuffers(); */
+	sf2d_swapbuffers();
 
+	/*
 	//ZZZ TODO kill me
 	for (int y=0; y < 300; y++)
 	{
 		beScary();
-	}
+	} */
 
 }
 
