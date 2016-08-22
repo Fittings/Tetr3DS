@@ -162,7 +162,7 @@ void tetris_board_render(TetrisBoard *self, int x, int y, int pixel_width, int p
 		int render_height = start_y;
 		for (int h=0; h < self->block_height; h++)
 		{
-			if (h % 2 == 0)
+			if ((w+h) % 2 == 0)
 			{
 				sf2d_draw_rectangle(render_width, render_height, block_length, block_length, RGBA8(0xBB, 0xBB, 0x00, 0xCC)); //ZZZ TODO Colours
 			}
@@ -170,13 +170,13 @@ void tetris_board_render(TetrisBoard *self, int x, int y, int pixel_width, int p
 			{
 				sf2d_draw_rectangle(render_width, render_height, block_length, block_length, RGBA8(0x00, 0xBB, 0xBB, 0xCC)); //ZZZ TODO Colours
 			}
-			render_height = render_height + (h * block_length);
+			render_height = block_length + (h * block_length);
 			//tetris_block_render(self->block_array[w][h], render_width, render_height, block_length);
 
 			//sf2d_draw_rectangle_rotate(block_length, block_length, block_length, block_length, RGBA8(0xFF, 0xFF, 0xFF, 0xFF), 3.0* w);
 			//sf2d_draw_rectangle(160-15 + cosf(w)*50.0f, 120-15 + sinf(i)*50.0f, 30, 30, RGBA8(0x00, 0xFF, 0xFF, 0xFF));
 		}
-		render_width = render_width + (w * block_length);
+		render_width = block_length + (w * block_length);
 	}
 
 	sf2d_end_frame();
