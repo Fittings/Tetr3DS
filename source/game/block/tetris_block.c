@@ -51,13 +51,13 @@ u32 tetris_block_get_creator_id(TetrisBlock *self)
 
 void tetris_block_render(TetrisBlock *self, int x, int y, int length)
 {
-	if (self->creator_id == 1)
+	if (self->creator_id == 0)
 	{
-		sf2d_draw_rectangle(x, y, length, length, RGBA8(0xAA, 0x00, 0xFF, 0xFF)); //ZZZ TODO Colours
+		sf2d_draw_rectangle(x, y, length, length, RGBA8(0xFF, 0xBB, 0x00, 0xCC));
 	}
 	else
 	{
-		sf2d_draw_rectangle(x, y, length, length, RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //ZZZ TODO Colours
+		sf2d_draw_rectangle(x, y, length, length, RGBA8(0x00, 0xBB, 0xBB, 0xCC));
 	}
 
 }
