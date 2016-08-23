@@ -49,7 +49,8 @@ u32 tetris_block_get_creator_id(TetrisBlock *self)
 	return self->creator_id;
 }
 
-void tetris_block_render(TetrisBlock *self, int x, int y, int length)
+//ZZZ TODO This needs to be done correctly, once we have implemented colours.
+void tetris_block_draw(TetrisBlock *self, int x, int y, int length)
 {
 	if (self->creator_id == 0)
 	{

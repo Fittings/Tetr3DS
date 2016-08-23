@@ -5,19 +5,7 @@
 
 #include "../include/game/game_board/tetris_board.h"
 #include "../include/game/block/tetris_block.h"
-
-//ZZZ TODO Move to a utility class.
-#define max(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a > _b ? _a : _b; })
-
-#define min(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a < _b ? _a : _b; })
-
-
+#include "../include/utility/numbers_utility.h"
 
 struct _TetrisBoard
 {
@@ -31,45 +19,14 @@ struct _TetrisBoard
 typedef struct _TetrisBoard TetrisBoard;
 
 
-static void beScary()
-{
-	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-	sf2d_draw_rectangle(0, 0, 400, 320, RGBA8(0xFF, 0x00, 0x00, 0xCC));
-		sf2d_end_frame();
-		sf2d_swapbuffers();
-
-}
-
-static void bePleasant()
-{
-	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-		sf2d_draw_rectangle(0, 0, 400, 320, RGBA8(0x00, 0xFF, 0x00, 0xCC));
 
 
-		sf2d_end_frame();
-		sf2d_swapbuffers();
-}
-
-int i = 0;
-//ZZZ TODO Delete. Just to make sure things are going where we are going.
-static void bePretty(int i)
-{
-	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-	sf2d_draw_rectangle_rotate(190, 160, 70, 60, RGBA8(0xFF, 0xFF, 0xFF, 0xFF), 3.0* i);
-		sf2d_draw_rectangle(30, 100, 2, 2, RGBA8(0xFF, 0x00, 0xFF, 0xFF));
-		sf2d_draw_rectangle(160-15 + cosf(i)*50.0f, 120-15 + sinf(i)*50.0f, 30, 30, RGBA8(0x00, 0xFF, 0xFF, 0xFF));
-
-		sf2d_end_frame();
-		sf2d_swapbuffers();
-
-}
 
 TetrisBoard *tetris_board_init(int block_width, int block_height)
 {
 	TetrisBoard *self = malloc(sizeof *self);
 	if (!self || block_width <= 0 || block_height <= 0)
 	{
-		beScary();
 		return NULL;
 	}
 
@@ -137,10 +94,8 @@ bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, u8 x, u8 y)
 
 
 
-void tetris_board_render(TetrisBoard *self, int x, int y, int pixel_width, int pixel_height)
+void tetris_board_draw(TetrisBoard *self, int x, int y, int pixel_width, int pixel_height)
 {
-	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-
 	int block_length = min((pixel_width / self->block_width), (pixel_height / self->block_height));
 	block_length = block_length <= 2 ? 2 : block_length; //Enforce blocks are always 2px
 
@@ -158,21 +113,9 @@ void tetris_board_render(TetrisBoard *self, int x, int y, int pixel_width, int p
 		{
 			int block_x = start_x + (w * block_length);
 			int block_y = start_y + (h * block_length);
-			tetris_block_render(self->block_array[w][h], block_x, block_y, block_length);
+			tetris_block_draw(self->block_array[w][h], block_x, block_y, block_length);
 		}
 	}
-
-	sf2d_end_frame();
-
-	sf2d_start_frame(GFX_TOP, GFX_LEFT);
-	{
-		sf2d_draw_rectangle(start_x, start_y, 12, 12, RGBA8(0x00, 0xBB, 0xBB, 0xCC)); //ZZZ TODO Colours
-	}
-	sf2d_end_frame();
-
-	sf2d_swapbuffers();
-
-
 }
 
 
