@@ -9,13 +9,14 @@
 
 struct _TetrisBlock
 {
-	//ZZZ TODO Colour
 	u32 creator_id;
+
+	Colour colour;
 };
 typedef struct _TetrisBlock TetrisBlock;
 
 
-TetrisBlock *tetris_block_init(u32 creator_id)
+TetrisBlock *tetris_block_init(u32 creator_id, Colour colour)
 {
 	TetrisBlock *self = malloc(sizeof *self);
 	if (!self)
@@ -25,6 +26,8 @@ TetrisBlock *tetris_block_init(u32 creator_id)
 
 	{
 		self->creator_id = creator_id;
+
+		self->colour = colour;
 	}
 
 	return self;
@@ -52,15 +55,11 @@ u32 tetris_block_get_creator_id(TetrisBlock *self)
 //ZZZ TODO This needs to be done correctly, once we have implemented colours.
 void tetris_block_draw(TetrisBlock *self, int x, int y, int length)
 {
-	if (self->creator_id == 0)
-	{
-		sf2d_draw_rectangle(x, y, length, length, RGBA8(0xFF, 0xBB, 0x00, 0xCC));
-	}
-	else
-	{
-		sf2d_draw_rectangle(x, y, length, length, RGBA8(0x00, 0xBB, 0xBB, 0xCC));
-	}
+	//Draw a black border
+	sf2d_draw_rectangle(x, y, length, length, RGBA8(0x00, 0x00, 0x00, 0xFF));
 
+	//Draw the square
+	sf2d_draw_rectangle(x+1, y+1, length-1, length-1, getColourRGBAValue(LIGHT_BLUE, 0x00));
 }
 
 

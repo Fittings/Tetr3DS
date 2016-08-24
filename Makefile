@@ -31,9 +31,9 @@ IP3DS := 192.168.0.14:17491
 #---------------------------------------------------------------------------------
 TARGET		:=	compiled/Tetris3DS
 BUILD		:=	build
-SOURCES		:=	source source/game source/game/game_board source/game/block/ source/game/block/piece
+SOURCES		:=	source source/game source/game/game_board source/game/block/ source/game/block/piece source/types
 DATA		:=	data
-INCLUDES	:=	$SOURCES include include/types include/game include/game/game_board include/game/block/ include/game/block/piece include/utility
+INCLUDES	:=	$SOURCES include include/types include/game include/game/game_board include/game/block/ include/game/block/piece include/utility 
 #ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------

@@ -8,7 +8,7 @@
 #include <stdbool.h>
 
 #include "../include/application_controller.h"
-#include "types.h"
+#include "../include/types/game_states.h"
 
 
 

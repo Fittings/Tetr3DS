@@ -41,18 +41,10 @@ TetrisBoard *tetris_board_init(int block_width, int block_height)
 			for (int h=0; h < block_height; h++)
 			{
 				//bePretty(h); //ZZZ TODO Kill me
-				self->block_array[w][h] = tetris_block_init(w % 2); //ZZZ TODO use an enum ID here.
+				self->block_array[w][h] = tetris_block_init(0, LIGHT_BLUE); //ZZZ TODO use an enum ID here.
 			}
 		}
 	}
-
-	/*
-	//ZZZ TODO Kill me
-	for (int x=0; x < 100; x++)
-	{
-		beScary();
-	} */
-
 
 	return self;
 }

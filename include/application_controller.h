@@ -12,7 +12,8 @@
 #define INCLUDE_APPLICATION_CONTROLLER_H_
 
 #include <stdbool.h>
-#include "types.h"
+
+#include "types/game_states.h"
 
 
 

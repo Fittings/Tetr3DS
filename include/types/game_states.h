@@ -1,5 +1,5 @@
-#ifndef TYPES_H_
-#define TYPES_H_
+#ifndef GAME_STATES_H_
+#define GAME_STATES_H_
 
 typedef enum {
 	TITLE_SCREEN,

@@ -1,6 +1,8 @@
 #ifndef COLOURS_H_
 #define COLOURS_H_
 
+#include <3ds.h>
+
 typedef enum
 {
 	LIGHT_BLUE,
