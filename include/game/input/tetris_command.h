@@ -1,0 +1,20 @@
+#ifndef TETRIS_COMMAND_H_
+#define TETRIS_COMMAND_H_
+
+
+typedef enum
+{
+	MOVE_UP,
+	MOVE_DOWN,
+	MOVE_LEFT,
+	MOVE_RIGHT,
+	DROP_INSTANTLY,
+	ROTATE_CLOCKWISE,
+	ROTATE_ANTICLOCKWISE,
+	STORE_BLOCK,
+	DO_PAUSE
+} TetrisCommand;
+
+
+
+#endif
