@@ -5,16 +5,18 @@
 
 #include "../include/game/game_board/tetris_board.h"
 #include "../include/game/block/tetris_block.h"
+#include "../include/game/block/piece/tetris_piece.h"
 #include "../include/utility/numbers_utility.h"
 
 struct _TetrisBoard
 {
-	//ZZZ TODO Create an ID enum system
+	//ZZZ TODO Create an ID Enum
 
+	TetrisPiece *currentPiece;
+
+	TetrisBlock ***block_array;
 	int block_width;
 	int block_height;
-
-	TetrisBlock ***block_array; //ZZZ TODO Is this really a triple pointer situation?
 };
 typedef struct _TetrisBoard TetrisBoard;
 

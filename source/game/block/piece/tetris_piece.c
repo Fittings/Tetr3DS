@@ -11,7 +11,7 @@ struct _TetrisPiece
 	u8 centre_x;
 	u8 centre_y;
 
-	TetrisBlock ***piece_array; //ZZZ TODO Is this really a triple pointer situation?
+	TetrisBlock ***piece_array;
 };
 typedef struct _TetrisPiece TetrisPiece;
 

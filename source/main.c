@@ -38,19 +38,10 @@ int application_finish(void)
 int main(void)
 {
 	application_init();
+
 	ApplicationController *application_controller = application_controller_init();
-
-
-
 	while (aptMainLoop() && application_controller_is_running(application_controller))
 	{
-		sf2d_start_frame(GFX_TOP, GFX_LEFT);
-
-		sf2d_draw_rectangle(0, 20, 360, 10, RGBA8(0x00, 0x00, 0x00, 0xFF));
-		sf2d_draw_rectangle(0, 20, sf2d_get_fps() * 6, 10, RGBA8(0xFF, 0x00, 0x00, 0xCC));
-
-		sf2d_end_frame();
-
 		update_application_controller(application_controller);
 	}
 
