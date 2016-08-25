@@ -54,7 +54,7 @@ void tetris_controller_free(TetrisController *self)
 
 void update_tetris_controller(TetrisController *self)
 {
-	//ZZZ TODO This properly...
+
 	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
 
 	tetris_board_draw(self->board, 0, 0, 320, 240);
