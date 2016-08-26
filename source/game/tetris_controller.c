@@ -1,6 +1,7 @@
 #include <malloc.h>
 #include <stdbool.h>
 #include <sf2d.h>
+#include <time.h>
 #include "../include/game/tetris_controller.h"
 #include "../include/game/game_board/tetris_board.h"
 #include "../include/game/input/tetris_input.h"
@@ -12,6 +13,9 @@
 struct _TetrisController
 {
 	TetrisBoard *board;
+
+	clock_t game_start_time;
+	clock_t last_board_update;
 };
 typedef struct _TetrisController TetrisController;
 
@@ -35,7 +39,7 @@ static void handleInput(TetrisController *self)
 	}
 }
 
-static void drawTetrisGame(TetrisController *self)
+static void draw_tetris_game(TetrisController *self)
 {
 	sf2d_start_frame(GFX_TOP, GFX_LEFT);
 	{
@@ -52,15 +56,62 @@ static void drawTetrisGame(TetrisController *self)
 	sf2d_end_frame();
 
 	sf2d_swapbuffers();
-
 }
+
+static bool is_new_tetris_iteration(TetrisController *self)
+{
+	/*
+	actualLevel      iterationDelay [seconds]
+	                (rounded to nearest 0.05)
+	============    =========================
+	     1                 0.50
+	     2                 0.45
+	     3                 0.40
+	     4                 0.35
+	     5                 0.30
+	     6                 0.25
+	     7                 0.20
+	     8                 0.15
+	     9                 0.10
+	    10                 0.05
+	*/
+	//ZZZ TODO FInished
+	//timeStruct->tm_sec
+	CLOCKS_PER_SEC;
+
+    clock_t t1, t2;
+
+    t1 = clock();
+
+
+    int i;
+
+    for(i = 0; i < CLOCKS_PER_SEC; i++)
+    {
+        int x = 90;
+    }
+
+    t2 = clock();
+
+    //float diff = ((float)(t2 - t1) / float(CLOCKS_PER_SEC) ) * 1000;
+
+
+    return false;
+}
+
 
 void update_tetris_controller(TetrisController *self)
 {
 	handleInput(self);
+	draw_tetris_game(self);
 
-	drawTetrisGame(self);
+	if (is_new_tetris_iteration(self))
+	{
+		//updateBoard
+	}
 }
+
+
 
 
 TetrisController *tetris_controller_init()
@@ -78,6 +129,8 @@ TetrisController *tetris_controller_init()
 			tetris_controller_free(self);
 			return NULL;
 		}
+		self->game_start_time = clock();
+		self->last_board_update = clock();
 	}
 
 
