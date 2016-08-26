@@ -39,11 +39,10 @@ TetrisBoard *tetris_board_init(int block_width, int block_height)
 		self->block_array = malloc(block_width * sizeof(void *));
 		for (int w=0; w < block_width; w++)
 		{
-			self->block_array[w] = malloc(block_height * tetris_block_sizeof());
+			self->block_array[w] = malloc(block_height * sizeof(void *));
 			for (int h=0; h < block_height; h++)
 			{
-				//bePretty(h); //ZZZ TODO Kill me
-				self->block_array[w][h] = tetris_block_init(0, LIGHT_BLUE); //ZZZ TODO use an enum ID here.
+				self->block_array[w][h] = tetris_block_init(BLOCK_TYPE_BACKGROUND, LIGHT_GREY);
 			}
 		}
 	}

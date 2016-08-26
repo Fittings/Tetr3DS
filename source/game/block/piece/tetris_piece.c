@@ -21,8 +21,7 @@ TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_block, 
 {
 	if ( (point_get_x(centre_block) >= width) && (point_get_y(centre_block) >= height))
 	{
-		//Invalid parameters, centre_block must be inside the piece_array.
-		return NULL;
+		return NULL; //Invalid parameters, centre_block must be inside the piece_array.
 	}
 
 	TetrisPiece *self = malloc(sizeof *self);

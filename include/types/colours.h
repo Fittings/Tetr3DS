@@ -5,6 +5,7 @@
 
 typedef enum
 {
+	LIGHT_GREY,
 	LIGHT_BLUE,
 	DARK_BLUE,
 	LIGHT_GREEN,

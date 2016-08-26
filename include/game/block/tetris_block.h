@@ -10,6 +10,7 @@
 #define INCLUDE_GAME_TETRIS_BLOCK_H_
 
 #include "../include/types/colours.h"
+#include "../include/game/block/block_type.h"
 
 
 /**
@@ -26,11 +27,11 @@ typedef struct _TetrisBlock TetrisBlock;
  *
  * Creates a TetrisBlock struct. Tetris blocks are used for creating tetris pieces.
  *
- * @param creator_id The id of the block creator. (Usually the standard block creator)
+ * @param block_type The type of block
  * @param colour The colour of the block @ref colours.h
  * @return A single TetrisBlock
  */
-extern TetrisBlock *tetris_block_init(u32 creator_id, Colour colour); //ZZZ TODO implement colours
+extern TetrisBlock *tetris_block_init(BlockType block_type, Colour colour); //ZZZ TODO implement colours
 
 /**
  * @brief Frees the TetrisBlock struct
@@ -53,11 +54,11 @@ extern void tetris_block_free(TetrisBlock *self);
 extern int tetris_block_sizeof();
 
 /**
- * @brief Returns the creator_id of the block
+ * @brief Returns the type of block
  *
  * @param self The TetrisBlock struct to reference.
  */
-extern u32 tetris_block_get_creator_id(TetrisBlock *self);
+extern BlockType tetris_block_get_type(TetrisBlock *self);
 
 /**
  * @brief Draws the block.
