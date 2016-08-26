@@ -5,20 +5,26 @@
 
 
 
-
 struct _TetrisPiece
 {
-	u8 centre_x;
-	u8 centre_y;
-
 	TetrisBlock ***piece_array;
+	u16 width;
+	u16 height;
+
+	Point *centre_block;
 };
 typedef struct _TetrisPiece TetrisPiece;
 
 
-//ZZZ TODO Use an enum to define this array pieces
-TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, u8 width, u8 height)
+
+TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_block, u16 width, u16 height)
 {
+	if ( (point_get_x(centre_block) >= width) && (point_get_y(centre_block) >= height))
+	{
+		//Invalid parameters, centre_block must be inside the piece_array.
+		return NULL;
+	}
+
 	TetrisPiece *self = malloc(sizeof *self);
 	if (!self)
 	{
@@ -27,18 +33,10 @@ TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, u8 width, u8 height)
 
 	{
 		self->piece_array = piece_array;
+		self->width = width;
+		self->height = height;
 
-		for (int w=0; w < width; w++)
-		{
-			for (int h=0; h < height; h++)
-			{
-				if (tetris_block_get_creator_id(self->piece_array[w][h]) == 0) //ZZZ TODO Compare to an enum for block creators
-				{
-					self->centre_x = w;
-					self->centre_y = h;
-				}
-			}
-		}
+		self->centre_block = centre_block;
 	}
 
 	return self;
@@ -49,6 +47,7 @@ void tetris_piece_free(TetrisPiece *self)
 {
 	if (self)
 	{
+		point_free(self->centre_block);
 		free(self);
 	}
 }

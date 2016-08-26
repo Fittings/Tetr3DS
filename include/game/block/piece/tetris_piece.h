@@ -9,6 +9,7 @@
 #define INCLUDE_GAME_TETRIS_PIECE_H_
 
 #include "../include/game/block/tetris_block.h"
+#include "../include/game/block/point.h"
 
 
 
@@ -28,11 +29,12 @@ typedef struct _TetrisPiece TetrisPiece;
  * Creates a TetrisPiece struct.
  *
  * @param piece_array The 2d array of tetris blocks that create a TetrisPiece
+ * @param centre_block The centre block of the block array.
  * @param width The width of the 2d array
  * @param height The height of the 2d array
  * @return A single TetrisPiece
  */
-extern TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, u8 width, u8 height);
+extern TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_block, u16 width, u16 height);
 
 /**
  * @brief Frees the TetrisBlock struct
