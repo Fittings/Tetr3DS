@@ -107,7 +107,7 @@ TetrisPiece *create_S()
 		block_array[w] = malloc(height * sizeof(void *));
 		for (int h=0; h < height; h++)
 		{
-			if ( (w == 1 && h == 2) || (w == 2 && h == 2) || (w == 2 && h == 1) || (w == 3 && h == 2) )
+			if ( (w == 2 && h == 1) || (w == 3 && h == 1) || (w == 1 && h == 2) || (w == 2 && h == 2) )
 			{
 				block_array[w][h] = tetris_block_init(BLOCK_TYPE_USER, LIGHT_GREEN);
 			}
@@ -165,7 +165,7 @@ TetrisPiece *create_J()
 		block_array[w] = malloc(height * sizeof(void *));
 		for (int h=0; h < height; h++)
 		{
-			if ( (w == 1 && h == 1) || (w == 2 && h == 1) || (w == 3 && h == 2) || (w == 3 && h == 2) )
+			if ( (w == 1 && h == 1) || (w == 2 && h == 1) || (w == 3 && h == 1) || (w == 3 && h == 2) )
 			{
 				block_array[w][h] = tetris_block_init(BLOCK_TYPE_USER, DARK_ORANGE);
 			}
