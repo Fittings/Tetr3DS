@@ -1,7 +1,7 @@
 #include <malloc.h>
 #include <stdbool.h>
 #include <sf2d.h>
-#include <time.h>
+
 #include "../include/game/tetris_controller.h"
 #include "../include/game/game_board/tetris_board.h"
 #include "../include/game/input/tetris_input.h"
@@ -10,12 +10,19 @@
 
 
 
+
 struct _TetrisController
 {
 	TetrisBoard *board;
 
-	clock_t game_start_time;
-	clock_t last_board_update;
+	u8 level;
+
+	//Speed Settings
+	u64 game_start_time;
+	u64 last_board_update;
+
+
+
 };
 typedef struct _TetrisController TetrisController;
 
@@ -27,6 +34,7 @@ static void handleInput(TetrisController *self)
 {
 	switch (get_game_input())
 	{
+	case NO_COMMAND: return;
 	case MOVE_UP:
 	case MOVE_DOWN:
 	case MOVE_LEFT:
@@ -34,8 +42,9 @@ static void handleInput(TetrisController *self)
 	case DROP_INSTANTLY:
 	case ROTATE_CLOCKWISE:
 	case ROTATE_ANTICLOCKWISE:
-	case STORE_BLOCK:
-	case DO_PAUSE: break;
+	case STORE_BLOCK: break;
+	case DO_PAUSE:
+		break;
 	}
 }
 
@@ -75,28 +84,15 @@ static bool is_new_tetris_iteration(TetrisController *self)
 	     9                 0.10
 	    10                 0.05
 	*/
-	//ZZZ TODO FInished
-	//timeStruct->tm_sec
-	CLOCKS_PER_SEC;
+	u64 update_difference_ms = osGetTime() - self->last_board_update;
+	u64 current_iteration_delay = (1000 * (11 - self->level) * 0.05);
 
-    clock_t t1, t2;
+	return (update_difference_ms >= current_iteration_delay);
+}
 
-    t1 = clock();
-
-
-    int i;
-
-    for(i = 0; i < CLOCKS_PER_SEC; i++)
-    {
-        int x = 90;
-    }
-
-    t2 = clock();
-
-    //float diff = ((float)(t2 - t1) / float(CLOCKS_PER_SEC) ) * 1000;
-
-
-    return false;
+static void do_new_iteration(TetrisController *self)
+{
+//	if (tetris_board_set_current_piece(self->board,
 }
 
 
@@ -107,7 +103,7 @@ void update_tetris_controller(TetrisController *self)
 
 	if (is_new_tetris_iteration(self))
 	{
-		//updateBoard
+		do_new_iteration(self);
 	}
 }
 
@@ -129,8 +125,11 @@ TetrisController *tetris_controller_init()
 			tetris_controller_free(self);
 			return NULL;
 		}
-		self->game_start_time = clock();
-		self->last_board_update = clock();
+
+		//ZZZ TODO Move this out of here.
+		self->game_start_time = osGetTime();
+		self->last_board_update = osGetTime();
+		self->level = 1;
 	}
 
 

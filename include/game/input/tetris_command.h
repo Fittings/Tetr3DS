@@ -4,6 +4,7 @@
 
 typedef enum
 {
+	NO_COMMAND,
 	MOVE_UP,
 	MOVE_DOWN,
 	MOVE_LEFT,

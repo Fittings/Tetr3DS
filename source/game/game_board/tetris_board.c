@@ -12,7 +12,8 @@ struct _TetrisBoard
 {
 	//ZZZ TODO Create an ID Enum
 
-	TetrisPiece *currentPiece;
+	TetrisPiece *current_piece;
+	Point *piece_location; //Location of the centre of the piece.
 
 	TetrisBlock ***block_array;
 	int block_width;
@@ -33,6 +34,8 @@ TetrisBoard *tetris_board_init(int block_width, int block_height)
 	}
 
 	{
+		self->current_piece = NULL;
+
 		self->block_width = block_width;
 		self->block_height = block_height;
 
@@ -109,6 +112,24 @@ void tetris_board_draw(TetrisBoard *self, int x, int y, int pixel_width, int pix
 			tetris_block_draw(self->block_array[w][h], block_x, block_y, block_length);
 		}
 	}
+}
+
+bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece)
+{
+	if (self->current_piece != NULL)
+	{
+		self->current_piece = piece;
+		self->piece_location = point_init( (self->block_width/2), 0 ); //Set the piece to centre and top of the board
+
+		return true;
+	}
+
+	return false;
+}
+
+TetrisPiece *tetris_board_get_current_piece(TetrisBoard *self)
+{
+	return self->current_piece;
 }
 
 

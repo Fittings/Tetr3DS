@@ -8,7 +8,7 @@ TetrisCommand get_game_input()
 	hidScanInput();
 	//u32 kDown = hidKeysDown();
 
-	return MOVE_UP;
+	return NO_COMMAND;
 }
 
 TetrisCommand get_paused_input()
