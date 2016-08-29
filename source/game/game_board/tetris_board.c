@@ -113,6 +113,7 @@ void tetris_board_draw(TetrisBoard *self, int x, int y, int pixel_width, int pix
 		}
 	}
 
+
 	if (self->current_piece != NULL)
 	{
 		tetris_piece_draw(self->current_piece, start_x + (point_get_x(self->piece_location) * block_length), start_y + (point_get_y(self->piece_location) * block_length), block_length);
@@ -122,7 +123,7 @@ void tetris_board_draw(TetrisBoard *self, int x, int y, int pixel_width, int pix
 
 bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece)
 {
-	if (self->current_piece != NULL)
+	if (self->current_piece == NULL)
 	{
 		self->current_piece = piece;
 		self->piece_location = point_init( (self->block_width/2), 0 ); //Set the piece to centre and top of the board

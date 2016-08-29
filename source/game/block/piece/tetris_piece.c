@@ -54,16 +54,14 @@ void tetris_piece_free(TetrisPiece *self)
 
 void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_size)
 {
-	u16 x_offset = pixel_x - point_get_x(self->centre_block);
-	u16 y_offset = pixel_y - point_get_y(self->centre_block);
-
 	for (int w=0; w < self->width; w++)
 	{
 		for (int h=0; h < self->height; h++)
 		{
-			tetris_block_draw(self->piece_array[w][h], w + x_offset, h + y_offset, block_size);
+			int block_x = pixel_x + ( (w-point_get_x(self->centre_block)) * block_size);
+			int block_y = pixel_y + ( (h-point_get_y(self->centre_block)) * block_size);
+			tetris_block_draw(self->piece_array[w][h], block_x , block_y, block_size);
 		}
-
 	}
 }
 

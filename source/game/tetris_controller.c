@@ -122,7 +122,7 @@ static bool is_new_tetris_iteration(TetrisController *self)
 
 static void do_new_iteration(TetrisController *self)
 {
-	if (tetris_board_set_current_piece(self->board, create_T())) //ZZZ TODO Replace create, from get from queue.
+	if (tetris_board_set_current_piece(self->board, create_L())) //ZZZ TODO Replace create, from get from queue.
 	{
 		//Update queue to have removed piece.
 	}
