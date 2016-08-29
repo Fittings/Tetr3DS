@@ -65,14 +65,23 @@ extern void tetris_board_draw(TetrisBoard *self, int x, int y, int width, int he
  * @brief Sets the current piece on the board.
  *
  * Sets the current piece on the board, if there isn't already a TetrisPiece.
- * This is the piece that is controller by the player.
+ * This is the piece that is controller by the user.
  *
- * @param self The TetrisBiard struct to reference
+ * @param self The TetrisBoard struct to reference
  * @param piece The TetrisPiece to place on the board.
  */
 extern bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece);
 
 
+/**
+ * @brief Gets the current piece on the board.
+ *
+ * Returns a TetrisPiece that represents the current piece on the board.
+ * This piece is in control by the user.
+ *
+ * @param self The TetrisBoard struct to reference
+ * @return The current TetrisPiece on the board.
+ */
 extern TetrisPiece *tetris_board_get_current_piece(TetrisBoard *self);
 
 
