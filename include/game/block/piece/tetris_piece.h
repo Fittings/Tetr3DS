@@ -42,7 +42,7 @@ extern TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_
  * Frees the TetrisBlock struct.
  * This should always be called after the TetrisBlock struct is no longer in use
  *
- * @param self The TetrisBoard struct to reference
+ * @param self The TetrisBoard struct to reference.
  */
 extern void tetris_piece_free(TetrisPiece *self);
 
@@ -51,12 +51,26 @@ extern void tetris_piece_free(TetrisPiece *self);
 /**
  * @brief Rotates a Tetris Piece clockwise 90 degrees.
  *
- *	Takes a TetrisPiece and returns the TetrisPiece that is rotated 90 degrees clockwise.
+ * Takes a TetrisPiece and returns the TetrisPiece that is rotated 90 degrees clockwise.
  *
- *	@param self The TetrisPiece struct.
- *	@param rotations The amount of times to rotate.
+ * @param self The TetrisPiece struct to reference.
+ * @param rotations The amount of times to rotate.
  */
 extern TetrisPiece tetris_block_rotate_90_clockwise(TetrisPiece *self, u8 rotations);
+
+
+/**
+ * @brief Draws the TetrisPiece.
+ *
+ * Draws the TetrisPiece.
+ *
+ * @param self The TetrisPiece struct to reference.
+ * @param pixel_x The x pixel co-ordinate for the top left of the centre block.
+ * @param pixel_y The y pixel co-ordinate for the top left of the centre block.
+ * @param block_size The width/height of the TetrisBlock to draw
+ *
+ */
+extern void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_size);
 
 
 

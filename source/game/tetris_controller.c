@@ -6,6 +6,7 @@
 #include "../include/game/game_board/tetris_board.h"
 #include "../include/game/input/tetris_input.h"
 #include "../include/game/input/tetris_command.h"
+#include "../include/game/configurations/pieces/pieces.h"
 
 
 
@@ -67,6 +68,27 @@ static void draw_tetris_game(TetrisController *self)
 	sf2d_swapbuffers();
 }
 
+//ZZZ TODO Delete
+static void draw_test()
+{
+	sf2d_start_frame(GFX_TOP, GFX_LEFT);
+	{
+		sf2d_draw_rectangle(0, 20, 360, 10, RGBA8(0x00, 0x00, 0x00, 0xFF));
+		sf2d_draw_rectangle(0, 20, sf2d_get_fps() * 6, 10, RGBA8(0xFF, 0x00, 0x00, 0xCC));
+	}
+	sf2d_end_frame();
+
+
+	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
+	{
+		sf2d_draw_rectangle(0, 20, 360, 10, RGBA8(0x00, 0x00, 0x00, 0xFF));
+		sf2d_draw_rectangle(0, 20, sf2d_get_fps() * 6, 10, RGBA8(0xFF, 0x00, 0x00, 0xCC));
+	}
+	sf2d_end_frame();
+
+	sf2d_swapbuffers();
+}
+
 static bool is_new_tetris_iteration(TetrisController *self)
 {
 	/*
@@ -87,12 +109,23 @@ static bool is_new_tetris_iteration(TetrisController *self)
 	u64 update_difference_ms = osGetTime() - self->last_board_update;
 	u64 current_iteration_delay = (1000 * (11 - self->level) * 0.05);
 
-	return (update_difference_ms >= current_iteration_delay);
+	if (update_difference_ms >= current_iteration_delay)
+	{
+		self->last_board_update = osGetTime();
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 static void do_new_iteration(TetrisController *self)
 {
-//	if (tetris_board_set_current_piece(self->board,
+	if (tetris_board_set_current_piece(self->board, create_T())) //ZZZ TODO Replace create, from get from queue.
+	{
+		//Update queue to have removed piece.
+	}
 }
 
 

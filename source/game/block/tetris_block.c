@@ -55,7 +55,7 @@ BlockType tetris_block_get_type(TetrisBlock *self)
 }
 
 
-void tetris_block_draw(TetrisBlock *self, int x, int y, int length)
+void tetris_block_draw(TetrisBlock *self, u16 x, u16 y, u16 length)
 {
 	//Draw a black border
 	sf2d_draw_rectangle(x, y, length, length, RGBA8(0x00, 0x00, 0x00, 0xFF));
