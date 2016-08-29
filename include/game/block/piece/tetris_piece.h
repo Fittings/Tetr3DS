@@ -73,6 +73,40 @@ extern TetrisPiece tetris_block_rotate_90_clockwise(TetrisPiece *self, u8 rotati
 extern void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_size);
 
 
+/**
+ * @brief Returns the 2d Block array representing the TetrisPiece.
+ *
+ * Returns the Block array that represents the TetrisPiece.
+ * The Block array consists of blocks that are physical, and BLOCK_TYPE_EMPTY that are not used.
+ *
+ * @param self The TetrisPiece struct to reference.
+ * @return The 2d TetrisBlock array representing the TetrisPiece
+ */
+extern TetrisBlock ***tetris_piece_get_array(TetrisPiece *self);
+
+
+/**
+ * @brief Returns the width of the 2d TetrisBlock array.
+ *
+ * Returns the width of the 2d Block array representing the TetrisPiece
+ *
+ * @param self The TetrisPiece struct to reference.
+ * @return The width of the 2d TetrisBlock array.
+ */
+extern u16 tetris_piece_get_width(TetrisPiece *self);
+
+
+/**
+ * @brief Returns the height of the 2d TetrisBlock array.
+ *
+ * Returns the height of the 2d Block array representing the TetrisPiece
+ *
+ * @param self The TetrisPiece struct to reference.
+ * @return The height of the 2d TetrisBlock array.
+ */
+extern u16 tetris_piece_get_height(TetrisPiece *self);
+
+
 
 
 #endif

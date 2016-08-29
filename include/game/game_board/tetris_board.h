@@ -84,7 +84,18 @@ extern bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece
  */
 extern TetrisPiece *tetris_board_get_current_piece(TetrisBoard *self);
 
-
+/**
+ * @brief Moves the current piece on the board by the parameters.
+ *
+ * Moves the current piece by the parameters.
+ * Returns a bool if Succeeded or Failed
+ *
+ * @param self The TetrisBoard struct to reference.
+ * @param blocks_down The amount of blocks on the board to move the piece down.
+ * @param blocks_right The amount of blocks on the board to move the piece right.
+ * @return A bool representing if the piece was successfully moved.
+ */
+extern bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_down, u16 blocks_right);
 
 
 #endif

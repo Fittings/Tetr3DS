@@ -49,7 +49,6 @@ u16 point_get_x(Point *self)
 }
 
 
-
 u16 point_get_y(Point *self)
 {
 	return self->y;

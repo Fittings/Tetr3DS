@@ -7,7 +7,7 @@
 
 struct _TetrisPiece
 {
-	TetrisBlock ***piece_array;
+	TetrisBlock ***block_array;
 	u16 width;
 	u16 height;
 
@@ -31,7 +31,7 @@ TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_block, 
 	}
 
 	{
-		self->piece_array = piece_array;
+		self->block_array = piece_array;
 		self->width = width;
 		self->height = height;
 
@@ -60,8 +60,23 @@ void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_si
 		{
 			int block_x = pixel_x + ( (w-point_get_x(self->centre_block)) * block_size);
 			int block_y = pixel_y + ( (h-point_get_y(self->centre_block)) * block_size);
-			tetris_block_draw(self->piece_array[w][h], block_x , block_y, block_size);
+			tetris_block_draw(self->block_array[w][h], block_x , block_y, block_size);
 		}
 	}
+}
+
+TetrisBlock ***tetris_piece_get_array(TetrisPiece *self)
+{
+	return self->block_array;
+}
+
+u16 tetris_piece_get_width(TetrisPiece *self)
+{
+	return self->width;
+}
+
+u16 tetris_piece_get_height(TetrisPiece *self)
+{
+	return self->height;
 }
 

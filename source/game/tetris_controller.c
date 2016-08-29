@@ -1,12 +1,13 @@
-#include <malloc.h>
-#include <stdbool.h>
-#include <sf2d.h>
-
 #include "../include/game/tetris_controller.h"
 #include "../include/game/game_board/tetris_board.h"
 #include "../include/game/input/tetris_input.h"
 #include "../include/game/input/tetris_command.h"
 #include "../include/game/configurations/pieces/pieces.h"
+
+#include <malloc.h>
+#include <stdbool.h>
+#include <sf2d.h>
+
 
 
 
@@ -124,7 +125,7 @@ static void do_new_iteration(TetrisController *self)
 {
 	if (tetris_board_set_current_piece(self->board, create_J())) //ZZZ TODO Replace create, from get from queue.
 	{
-		//Update queue to have removed piece.
+		tetris_board_move_current_piece(self->board, 0, 1);
 	}
 }
 

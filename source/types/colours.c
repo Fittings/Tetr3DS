@@ -8,6 +8,8 @@ u32 getColourRGBAValue(Colour colour, u8 opacity)
 
 	switch (colour)
 	{
+	case INVISIBLE: colourValue =  RGBA8(0x00, 0x00, 0x00, 0x00); break;
+
 	case LIGHT_GREY: colourValue = RGBA8(0xD3, 0xD3, 0xD3, opacity); break;
 
 	case DARK_BLUE: colourValue = RGBA8(0x1F, 0x78, 0xB4, opacity); break;

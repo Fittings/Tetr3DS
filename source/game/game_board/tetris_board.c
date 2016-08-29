@@ -45,7 +45,7 @@ TetrisBoard *tetris_board_init(int block_width, int block_height)
 			self->block_array[w] = malloc(block_height * sizeof(void *));
 			for (int h=0; h < block_height; h++)
 			{
-				self->block_array[w][h] = tetris_block_init(BLOCK_TYPE_BACKGROUND, LIGHT_GREY);
+				self->block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
 			}
 		}
 	}
@@ -113,13 +113,14 @@ void tetris_board_draw(TetrisBoard *self, int x, int y, int pixel_width, int pix
 		}
 	}
 
-
+	//ZZZ TODO Move this into the loop. We don't want to be rendering outside the border.
 	if (self->current_piece != NULL)
 	{
 		tetris_piece_draw(self->current_piece, start_x + (point_get_x(self->piece_location) * block_length), start_y + (point_get_y(self->piece_location) * block_length), block_length);
 	}
 
 }
+
 
 bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece)
 {
@@ -134,9 +135,80 @@ bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece)
 	return false;
 }
 
+
 TetrisPiece *tetris_board_get_current_piece(TetrisBoard *self)
 {
 	return self->current_piece;
+}
+
+
+//Checks if there is a block at the current location.
+static bool is_position_free(TetrisBoard *self, u16 x, u16 y)
+{
+	//Special case, blocks can fall from any height.
+	if (x < 0)
+	{
+		return true;
+	}
+
+	//Check the block is within the boundaries.
+	if (x < self->block_width && y >= 0 && y < self->block_width)
+	{
+		//Check the block is empty
+		if ( tetris_block_get_type(self->block_array[x][y]) == BLOCK_TYPE_EMPTY)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+//Checks if the current piece is in a valid position on the board.
+static bool is_current_piece_valid(TetrisBoard *self)
+{
+	//ZZZ TODO Figure out why this doesn't work...
+	TetrisBlock ***block_array = tetris_piece_get_array(self->current_piece);
+	u16 width = tetris_piece_get_width(self->current_piece);
+	u16 height = tetris_piece_get_height(self->current_piece);
+
+	u16 x_piece_offset = point_get_x(self->piece_location);
+	u16 y_piece_offset = point_get_y(self->piece_location);
+
+
+	for (int x=0; x < width; x++)
+	{
+		for (int y=0; y < height; y++)
+		{
+			if ( tetris_block_get_type(block_array[x][y]) != BLOCK_TYPE_EMPTY
+					&& !is_position_free(self, x_piece_offset - x, y_piece_offset - y))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+
+bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_right, u16 blocks_down)
+{
+	Point *old_point = self->piece_location;
+	u16 old_x = point_get_x(old_point);
+	u16 old_y = point_get_y(old_point);
+
+	self->piece_location = point_init(old_x + blocks_right, old_y + blocks_down);
+
+	if (is_current_piece_valid(self))
+	{
+		return true;
+	}
+	else
+	{
+		self->piece_location = old_point;
+		return false;
+	}
 }
 
 
