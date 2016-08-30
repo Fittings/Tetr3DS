@@ -84,6 +84,17 @@ extern bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece
  */
 extern TetrisPiece *tetris_board_get_current_piece(TetrisBoard *self);
 
+
+/**
+ * @brief Sets the current piece into the board and removes the current piece
+ *
+ * The current piece becomes a set of blocks in the board.
+ * The current piece is reset back to NULL.
+ *
+ * @param self The TetrisBoard struct to reference.
+ */
+extern void tetris_board_concrete_current_piece(TetrisBoard *self);
+
 /**
  * @brief Moves the current piece on the board by the parameters.
  *

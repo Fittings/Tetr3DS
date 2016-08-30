@@ -42,9 +42,14 @@ extern TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_
  * Frees the TetrisBlock struct.
  * This should always be called after the TetrisBlock struct is no longer in use
  *
+ * Important Note:
+ * This intentionally doesn't free the block array.
+ * TetrisBlocks are typically used even if the current peice isn't used.
+ *
+ *
  * @param self The TetrisBoard struct to reference.
  */
-extern void tetris_piece_free(TetrisPiece *self);
+extern void tetris_piece_shallow_free(TetrisPiece *self);
 
 
 

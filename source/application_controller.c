@@ -63,12 +63,11 @@ static void update_game(ApplicationController *self)
 	if (tetris_controller_is_running(self->tetris_controller))
 	{
 		update_tetris_controller(self->tetris_controller);
-
 	}
 	else
 	{
 		//tetris_controller_free(self->tetris_controller);
-		//self->flag_mode = MAIN_MENU;
+		self->flag_mode = QUIT_APP;
 	}
 
 

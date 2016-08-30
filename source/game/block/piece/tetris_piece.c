@@ -42,10 +42,27 @@ TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_block, 
 }
 
 
+void tetris_piece_shallow_free(TetrisPiece *self)
+{
+	if (self)
+	{
+		point_free(self->centre_block);
+		free(self);
+	}
+}
+
 void tetris_piece_free(TetrisPiece *self)
 {
 	if (self)
 	{
+		for (int x=0; x < self->width; x++)
+		{
+			for (int y=0; y < self->height; y++)
+			{
+				tetris_block_free(self->block_array[x][y]);
+			}
+		}
+
 		point_free(self->centre_block);
 		free(self);
 	}

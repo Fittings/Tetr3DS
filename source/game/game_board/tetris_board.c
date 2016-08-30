@@ -10,8 +10,6 @@
 
 struct _TetrisBoard
 {
-	//ZZZ TODO Create an ID Enum
-
 	TetrisPiece *current_piece;
 	Point *piece_location; //Location of the centre of the piece.
 
@@ -89,39 +87,6 @@ bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, u8 x, u8 y)
 }
 
 
-
-void tetris_board_draw(TetrisBoard *self, int x, int y, int pixel_width, int pixel_height)
-{
-	int block_length = min((pixel_width / self->block_width), (pixel_height / self->block_height));
-	block_length = block_length <= 2 ? 2 : block_length; //Enforce blocks are always 2px
-
-
-	int total_width = block_length * self->block_width;
-	int start_x = (total_width > pixel_width) ? pixel_width - total_width : x + ((pixel_width - total_width)/2);
-
-
-	int total_height = block_length * self->block_height;
-	int start_y = (total_height > pixel_height) ? pixel_height - total_height : y + ((pixel_height - total_height)/2);
-
-	for (int w=0; w < self->block_width; w++)
-	{
-		for (int h=0; h < self->block_height; h++)
-		{
-			int block_x = start_x + (w * block_length);
-			int block_y = start_y + (h * block_length);
-			tetris_block_draw(self->block_array[w][h], block_x, block_y, block_length);
-		}
-	}
-
-	//ZZZ TODO Move this into the loop. We don't want to be rendering outside the border.
-	if (self->current_piece != NULL)
-	{
-		tetris_piece_draw(self->current_piece, start_x + (point_get_x(self->piece_location) * block_length), start_y + (point_get_y(self->piece_location) * block_length), block_length);
-	}
-
-}
-
-
 bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece)
 {
 	if (self->current_piece == NULL)
@@ -142,6 +107,39 @@ TetrisPiece *tetris_board_get_current_piece(TetrisBoard *self)
 }
 
 
+
+void tetris_board_concrete_current_piece(TetrisBoard *self)
+{
+	u16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
+	u16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
+
+	u16 width = tetris_piece_get_width(self->current_piece);
+	u16 height = tetris_piece_get_height(self->current_piece);
+
+	TetrisBlock ***tetris_array = tetris_piece_get_array(self->current_piece);
+
+	for (int x=0; x < width; x++)
+	{
+		for (int y=0; y < height; y++)
+		{
+			if (tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY)
+			{
+				tetris_block_free(self->block_array[x + x_piece_offset][y + y_piece_offset]);
+				self->block_array[x + x_piece_offset][y + y_piece_offset] = tetris_array[x][y];
+			}
+		}
+	}
+
+	tetris_piece_shallow_free(self->current_piece);
+	self->current_piece = NULL;
+}
+
+
+
+
+
+
+
 //Checks if there is a block at the current location.
 static bool is_position_free(TetrisBoard *self, u16 x, u16 y)
 {
@@ -151,28 +149,16 @@ static bool is_position_free(TetrisBoard *self, u16 x, u16 y)
 		return true;
 	}
 
-
-	//Check the block is within the boundaries.
-	if (x < self->block_width &&  y >= 0 &&y <= self->block_height)
-	{
-//		/return true;
-
-		if (tetris_block_get_type(self->block_array[x][y]) == BLOCK_TYPE_EMPTY)
-		{
-			return true;
-		}
-	}
-
-	return false;
+	//Returns true if the block is within the boundaries and the block is empty
+	return (x < self->block_width &&  y >= 0 &&y <= self->block_height &&
+			tetris_block_get_type(self->block_array[x][y]) == BLOCK_TYPE_EMPTY);
 }
 
 
 //Checks if the current piece is in a valid position on the board.
 static bool is_current_piece_valid(TetrisBoard *self)
 {
-	//ZZZ TODO Figure out why this doesn't work...
 	TetrisBlock ***tetris_array = tetris_piece_get_array(self->current_piece);
-
 
 	u16 width = tetris_piece_get_width(self->current_piece);
 	u16 height = tetris_piece_get_height(self->current_piece);
@@ -180,7 +166,7 @@ static bool is_current_piece_valid(TetrisBoard *self)
 	u16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
 	u16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
 
-
+	//ZZZ TODO There seems to be a bug here. When the piece reaches the bottom on the 3DS is freezes.
 	for (int x=0; x < width; x++)
 	{
 		for (int y=0; y < height; y++)
@@ -219,7 +205,41 @@ bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_right, u16 bl
 
 
 
+extern void draw_current_piece(TetrisBoard *self, int start_x_px, int start_y_px, int block_length_px)
+{
+	if (self->current_piece != NULL)
+	{
+		tetris_piece_draw(self->current_piece, start_x_px + (point_get_x(self->piece_location) * block_length_px), start_y_px + (point_get_y(self->piece_location) * block_length_px), block_length_px);
+	}
+}
+
+extern void draw_tetris_board(TetrisBoard *self, int start_x_px, int start_y_px, int block_length_px)
+{
+	for (int w=0; w < self->block_width; w++)
+	{
+		for (int h=0; h < self->block_height; h++)
+		{
+			int block_x = start_x_px + (w * block_length_px);
+			int block_y = start_y_px + (h * block_length_px);
+			tetris_block_draw(self->block_array[w][h], block_x, block_y, block_length_px);
+		}
+	}
+}
 
 
+void tetris_board_draw(TetrisBoard *self, int x, int y, int pixel_width, int pixel_height)
+{
+	int block_length = min((pixel_width / self->block_width), (pixel_height / self->block_height));
+	block_length = block_length <= 2 ? 2 : block_length; //Enforce blocks are always 2px
 
 
+	int total_width = block_length * self->block_width;
+	int start_x = (total_width > pixel_width) ? pixel_width - total_width : x + ((pixel_width - total_width)/2);
+
+
+	int total_height = block_length * self->block_height;
+	int start_y = (total_height > pixel_height) ? pixel_height - total_height : y + ((pixel_height - total_height)/2);
+
+	draw_tetris_board(self, start_x, start_y, block_length);
+	draw_current_piece(self, start_x, start_y, block_length);
+}

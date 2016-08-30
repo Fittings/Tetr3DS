@@ -16,15 +16,13 @@
 struct _TetrisController
 {
 	TetrisBoard *board;
+	bool is_running;
 
 	u8 level;
 
 	//Speed Settings
 	u64 game_start_time;
 	u64 last_board_update;
-
-
-
 };
 typedef struct _TetrisController TetrisController;
 
@@ -34,18 +32,32 @@ typedef struct _TetrisController TetrisController;
 
 static void handleInput(TetrisController *self)
 {
+	//ZZZ TODO Less primitive, standardise movement into a seperate function.
 	switch (get_game_input())
 	{
 	case NO_COMMAND: return;
 	case MOVE_UP:
+		tetris_board_move_current_piece(self->board, 0, -1);
+		break;
 	case MOVE_DOWN:
+		tetris_board_move_current_piece(self->board, 0, 1);
+		break;
 	case MOVE_LEFT:
+		tetris_board_move_current_piece(self->board, -1, 0);
+		break;
 	case MOVE_RIGHT:
+		tetris_board_move_current_piece(self->board, 1, 0);
+		break;
 	case DROP_INSTANTLY:
+		break;
 	case ROTATE_CLOCKWISE:
+		break;
 	case ROTATE_ANTICLOCKWISE:
-	case STORE_BLOCK: break;
+		break;
+	case STORE_BLOCK:
+		break;
 	case DO_PAUSE:
+		self->is_running = false;
 		break;
 	}
 }
@@ -130,7 +142,7 @@ static void do_new_iteration(TetrisController *self)
 
 	if (!tetris_board_move_current_piece(self->board, 0, 1))
 	{
-
+		tetris_board_concrete_current_piece(self->board);
 	}
 }
 
@@ -165,10 +177,12 @@ TetrisController *tetris_controller_init()
 			return NULL;
 		}
 
+		self->is_running = true; //ZZZ TODO Move this
+
 		//ZZZ TODO Move this out of here.
 		self->game_start_time = osGetTime();
 		self->last_board_update = osGetTime();
-		self->level = 7;
+		self->level = 5;
 	}
 
 
@@ -193,5 +207,5 @@ void tetris_controller_free(TetrisController *self)
 
 bool tetris_controller_is_running(TetrisController *self)
 {
-	return true;
+	return self->is_running;
 }

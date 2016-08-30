@@ -26,7 +26,7 @@ TetrisPiece *create_O()
 			}
 			else
 			{
-				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
+				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, INVISIBLE);
 			}
 
 		}
@@ -55,7 +55,7 @@ TetrisPiece *create_I()
 			}
 			else
 			{
-				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
+				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, INVISIBLE);
 			}
 
 		}
@@ -84,7 +84,7 @@ TetrisPiece *create_Z()
 			}
 			else
 			{
-				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
+				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, INVISIBLE);
 			}
 
 		}
@@ -113,7 +113,7 @@ TetrisPiece *create_S()
 			}
 			else
 			{
-				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
+				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, INVISIBLE);
 			}
 
 		}
@@ -142,7 +142,7 @@ TetrisPiece *create_L()
 			}
 			else
 			{
-				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
+				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, INVISIBLE);
 			}
 
 		}
@@ -171,7 +171,7 @@ TetrisPiece *create_J()
 			}
 			else
 			{
-				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
+				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, INVISIBLE);
 			}
 		}
 	}
@@ -199,7 +199,7 @@ TetrisPiece *create_T()
 			}
 			else
 			{
-				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
+				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, INVISIBLE);
 			}
 		}
 	}
