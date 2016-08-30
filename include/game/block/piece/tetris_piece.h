@@ -74,6 +74,18 @@ extern void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 b
 
 
 /**
+ * @brief Returns the focal point of the TetrisPiece
+ *
+ * Returns the focal point of the TetrisPiece.
+ * The focal point is used as a centre of rotation.
+ *
+ * @param self The TetrisPiece struct to reference.
+ * @return The Point struct that represents the TetrisPiece focal point
+ */
+extern Point *tetris_piece_get_point(TetrisPiece *self);
+
+
+/**
  * @brief Returns the 2d Block array representing the TetrisPiece.
  *
  * Returns the Block array that represents the TetrisPiece.

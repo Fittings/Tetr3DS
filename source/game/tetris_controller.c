@@ -123,9 +123,14 @@ static bool is_new_tetris_iteration(TetrisController *self)
 
 static void do_new_iteration(TetrisController *self)
 {
-	if (tetris_board_set_current_piece(self->board, create_J())) //ZZZ TODO Replace create, from get from queue.
+	if (tetris_board_set_current_piece(self->board, create_T())) //ZZZ TODO Replace create, from get from queue.
 	{
-		tetris_board_move_current_piece(self->board, 0, 1);
+
+	}
+
+	if (!tetris_board_move_current_piece(self->board, 0, 1))
+	{
+
 	}
 }
 
@@ -163,7 +168,7 @@ TetrisController *tetris_controller_init()
 		//ZZZ TODO Move this out of here.
 		self->game_start_time = osGetTime();
 		self->last_board_update = osGetTime();
-		self->level = 1;
+		self->level = 7;
 	}
 
 

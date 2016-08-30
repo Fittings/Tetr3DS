@@ -151,11 +151,13 @@ static bool is_position_free(TetrisBoard *self, u16 x, u16 y)
 		return true;
 	}
 
+
 	//Check the block is within the boundaries.
-	if (x < self->block_width && y >= 0 && y < self->block_width)
+	if (x < self->block_width &&  y >= 0 &&y <= self->block_height)
 	{
-		//Check the block is empty
-		if ( tetris_block_get_type(self->block_array[x][y]) == BLOCK_TYPE_EMPTY)
+//		/return true;
+
+		if (tetris_block_get_type(self->block_array[x][y]) == BLOCK_TYPE_EMPTY)
 		{
 			return true;
 		}
@@ -169,20 +171,22 @@ static bool is_position_free(TetrisBoard *self, u16 x, u16 y)
 static bool is_current_piece_valid(TetrisBoard *self)
 {
 	//ZZZ TODO Figure out why this doesn't work...
-	TetrisBlock ***block_array = tetris_piece_get_array(self->current_piece);
+	TetrisBlock ***tetris_array = tetris_piece_get_array(self->current_piece);
+
+
 	u16 width = tetris_piece_get_width(self->current_piece);
 	u16 height = tetris_piece_get_height(self->current_piece);
 
-	u16 x_piece_offset = point_get_x(self->piece_location);
-	u16 y_piece_offset = point_get_y(self->piece_location);
+	u16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
+	u16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
 
 
 	for (int x=0; x < width; x++)
 	{
 		for (int y=0; y < height; y++)
 		{
-			if ( tetris_block_get_type(block_array[x][y]) != BLOCK_TYPE_EMPTY
-					&& !is_position_free(self, x_piece_offset - x, y_piece_offset - y))
+			if ( tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY &&
+				 !is_position_free(self, x + x_piece_offset, y + y_piece_offset) )
 			{
 				return false;
 			}

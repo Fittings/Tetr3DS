@@ -65,6 +65,11 @@ void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_si
 	}
 }
 
+Point *tetris_piece_get_point(TetrisPiece *self)
+{
+	return self->centre_block;
+}
+
 TetrisBlock ***tetris_piece_get_array(TetrisPiece *self)
 {
 	return self->block_array;
