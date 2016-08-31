@@ -62,24 +62,7 @@ static void handleInput(TetrisController *self)
 	}
 }
 
-static void draw_tetris_game(TetrisController *self)
-{
-	sf2d_start_frame(GFX_TOP, GFX_LEFT);
-	{
-		tetris_board_draw(self->board, 0, 0, 400, 240);
-	}
-	sf2d_end_frame();
 
-
-	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-	{
-		sf2d_draw_rectangle(0, 20, 360, 10, RGBA8(0x00, 0x00, 0x00, 0xFF));
-		sf2d_draw_rectangle(0, 20, sf2d_get_fps() * 6, 10, RGBA8(0xFF, 0x00, 0x00, 0xCC));
-	}
-	sf2d_end_frame();
-
-	sf2d_swapbuffers();
-}
 
 //ZZZ TODO Delete
 static void draw_test()
@@ -146,16 +129,38 @@ static void do_new_iteration(TetrisController *self)
 	}
 }
 
+static void draw_tetris_game(TetrisController *self)
+{
+	sf2d_start_frame(GFX_TOP, GFX_LEFT);
+	{
+		tetris_board_draw(self->board, 0, 0, 400, 240);
+
+		if (is_new_tetris_iteration(self))
+		{
+			do_new_iteration(self);
+		}
+	}
+	sf2d_end_frame();
+
+
+	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
+	{
+		sf2d_draw_rectangle(0, 20, 360, 10, RGBA8(0x00, 0x00, 0x00, 0xFF));
+		sf2d_draw_rectangle(0, 20, sf2d_get_fps() * 6, 10, RGBA8(0xFF, 0x00, 0x00, 0xCC));
+	}
+	sf2d_end_frame();
+
+	sf2d_swapbuffers();
+}
+
 
 void update_tetris_controller(TetrisController *self)
 {
 	handleInput(self);
 	draw_tetris_game(self);
 
-	if (is_new_tetris_iteration(self))
-	{
-		do_new_iteration(self);
-	}
+	//ZZZ TODO Put this back where this belongs.
+
 }
 
 
