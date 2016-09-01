@@ -92,7 +92,7 @@ bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece)
 	if (self->current_piece == NULL)
 	{
 		self->current_piece = piece;
-		self->piece_location = point_init( 0+1/*(self->block_width/2)*/, 0 ); //Set the piece to centre and top of the board
+		self->piece_location = point_init( (self->block_width/2), -1 ); //Set the piece to centre and top of the board
 
 		return true;
 	}
@@ -126,6 +126,7 @@ void tetris_board_concrete_current_piece(TetrisBoard *self)
 			if (tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY)
 			{
 				tetris_block_free(self->block_array[x + x_piece_offset][y + y_piece_offset]);
+
 				self->block_array[x + x_piece_offset][y + y_piece_offset] = tetris_array[x][y];
 			}
 		}
@@ -144,35 +145,26 @@ void tetris_board_concrete_current_piece(TetrisBoard *self)
 //Checks if there is a block at the current location.
 static bool is_position_free(TetrisBoard *self, u16 x, u16 y)
 {
-	//Special case, blocks can fall from any height.
-
-	sf2d_draw_rectangle((x)*12, (y)*12, 12, 12, RGBA8(0xFF, 0x00, 0x00, 0xFF));
-
-	if (x <= 0) return false;
+	if (x < 0) return false;
 	if (x >= self->block_width) return false;
 	if (y >= self->block_height) return false;
 	if (y < 0) return true;
-	return tetris_block_get_type(self->block_array[x][y]) == BLOCK_TYPE_EMPTY;
 
-	//Returns true if the block is within the boundaries and the block is empty
-	return (x < self->block_width &&  x >= 0 && y < self->block_height &&
-			tetris_block_get_type(self->block_array[x][y]) == BLOCK_TYPE_EMPTY);
+	return tetris_block_get_type(self->block_array[x][y]) == BLOCK_TYPE_EMPTY;
 }
 
 
 //Checks if the current piece is in a valid position on the board.
 static bool is_current_piece_valid(TetrisBoard *self)
 {
-	//ZZZ TODO The issue is with what blocks we are checking are free. Need to rethink the numbers here.
 	TetrisBlock ***tetris_array = tetris_piece_get_array(self->current_piece);
 
-	u16 width = tetris_piece_get_width(self->current_piece)-1;
+	u16 width = tetris_piece_get_width(self->current_piece);
 	u16 height = tetris_piece_get_height(self->current_piece);
 
-	u16 x_piece_offset = point_get_x(tetris_piece_get_point(self->current_piece)) - point_get_x(self->piece_location);
-	u16 y_piece_offset = point_get_y(tetris_piece_get_point(self->current_piece)) - point_get_y(self->piece_location);
+	u16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
+	u16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
 
-	//ZZZ TODO There seems to be a bug here. When the piece reaches the bottom on the 3DS is freezes.
 	for (int x=0; x < width; x++)
 	{
 		for (int y=0; y < height; y++)
@@ -202,7 +194,7 @@ bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_right, u16 bl
 	}
 	else
 	{
-		self->piece_location = old_point;
+		self->piece_location = point_init(old_x, old_y);
 		return false;
 	}
 }
