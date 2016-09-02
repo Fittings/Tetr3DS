@@ -114,16 +114,24 @@ void tetris_board_concrete_current_piece(TetrisBoard *self)
 	u16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
 	u16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
 
+	if (x_piece_offset < 0 || y_piece_offset < 0) return;
+
 	u16 width = tetris_piece_get_width(self->current_piece);
 	u16 height = tetris_piece_get_height(self->current_piece);
 
 	TetrisBlock ***tetris_array = tetris_piece_get_array(self->current_piece);
 
+
 	for (int x=0; x < width; x++)
 	{
 		for (int y=0; y < height; y++)
 		{
-			if (tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY)
+			int actual_x = x + x_piece_offset;
+			int actual_y = y + y_piece_offset;
+			if (tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY &&
+					actual_x >= 0 && actual_x < self->block_width &&
+					actual_y >= 0 && actual_y < self->block_height)
+
 			{
 				tetris_block_free(self->block_array[x + x_piece_offset][y + y_piece_offset]);
 
