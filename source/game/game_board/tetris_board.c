@@ -92,7 +92,8 @@ bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece)
 	if (self->current_piece == NULL)
 	{
 		self->current_piece = piece;
-		self->piece_location = point_init( (self->block_width/2), -1 ); //Set the piece to centre and top of the board
+		self->piece_location = point_init( 1, 10 ); //Set the piece to centre and top of the board
+		//self->piece_location = point_init( (self->block_width/2), -1 ); //Set the piece to centre and top of the board
 
 		return true;
 	}
@@ -110,39 +111,97 @@ TetrisPiece *tetris_board_get_current_piece(TetrisBoard *self)
 
 void tetris_board_concrete_current_piece(TetrisBoard *self)
 {
-	if (self->current_piece == NULL) return; //ZZZ TODO Testing
+	if (self->current_piece == NULL) return;
+
+
+
 	u16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
 	u16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
 
-	if (x_piece_offset < 0 || y_piece_offset < 0) return;
-
-	u16 width = tetris_piece_get_width(self->current_piece);
-	u16 height = tetris_piece_get_height(self->current_piece);
+	u16 p_width = tetris_piece_get_width(self->current_piece);
+	u16 p_height = tetris_piece_get_height(self->current_piece);
 
 	TetrisBlock ***tetris_array = tetris_piece_get_array(self->current_piece);
 
 
-	for (int x=0; x < width; x++)
+	sf2d_draw_rectangle(30, 30, 0-1, y_piece_offset, RGBA8(0x00, 0xFF, 0x00, 0xFF));
+
+	for (int x=0; x < p_width; x++)
 	{
-		for (int y=0; y < height; y++)
+		int board_x = x + x_piece_offset;
+
+		for (int y=0; y < p_height; y++)
 		{
-			int actual_x = x + x_piece_offset;
-			int actual_y = y + y_piece_offset;
-			if (tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY &&
-					actual_x >= 0 && actual_x < self->block_width &&
-					actual_y >= 0 && actual_y < self->block_height)
+			int board_y = y + y_piece_offset;
 
+			sf2d_draw_rectangle((board_x)*12, (board_y)*12, 12, 12, RGBA8(0xFF, 0x00, 0x00, 0xFF));
+
+			if (board_x >= 0 && board_x < self->block_width &&
+					board_y >= 0 && board_y < self->block_height &&
+					tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY)
 			{
-				tetris_block_free(self->block_array[x + x_piece_offset][y + y_piece_offset]);
-
-				self->block_array[x + x_piece_offset][y + y_piece_offset] = tetris_array[x][y];
+				tetris_block_free(self->block_array[board_x][board_y]);
+				self->block_array[board_x][board_y] = tetris_array[x][y];
 			}
+			else
+			{
+				tetris_block_free(tetris_array[x][y]);
+			}
+
 		}
 	}
 
-	tetris_piece_shallow_free(self->current_piece);
 	self->current_piece = NULL;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//	if (self->current_piece == NULL) return; //ZZZ TODO Testing
+//	u16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
+//	u16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
+//
+//	if (x_piece_offset < 0 || y_piece_offset < 0) return;
+//
+//	u16 width = tetris_piece_get_width(self->current_piece);
+//	u16 height = tetris_piece_get_height(self->current_piece);
+//
+//	TetrisBlock ***tetris_array = tetris_piece_get_array(self->current_piece);
+//
+//
+//	for (int x=0; x < width; x++)
+//	{
+//		for (int y=0; y < height; y++)
+//		{
+//			int actual_x = x + x_piece_offset;
+//			int actual_y = y + y_piece_offset;
+//			if (tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY &&
+//					actual_x >= 0 && actual_x < self->block_width &&
+//					actual_y >= 0 && actual_y < self->block_height)
+//
+//			{
+//				tetris_block_free(self->block_array[x + x_piece_offset][y + y_piece_offset]);
+//
+//				self->block_array[x + x_piece_offset][y + y_piece_offset] = tetris_array[x][y];
+//			}
+//		}
+//	}
+//
+//	tetris_piece_shallow_free(self->current_piece);
+//	self->current_piece = NULL;
+//}
 
 
 
