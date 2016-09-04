@@ -67,28 +67,6 @@ static void handleInput(TetrisController *self)
 
 
 
-//ZZZ TODO Delete
-static void draw_test()
-{
-	sf2d_start_frame(GFX_TOP, GFX_LEFT);
-	{
-		sf2d_draw_rectangle(0, 20, 360, 10, RGBA8(0x00, 0x00, 0x00, 0xFF));
-		sf2d_draw_rectangle(0, 20, sf2d_get_fps() * 6, 10, RGBA8(0xFF, 0x00, 0x00, 0xCC));
-	}
-	sf2d_end_frame();
-
-
-	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-	{
-		//sf2d_draw_rectangle(0, 20, 360, 10, RGBA8(0x00, 0x00, 0x00, 0xFF));
-		//sf2d_draw_rectangle(0, 20, sf2d_get_fps() * 6, 10, RGBA8(0xFF, 0x00, 0x00, 0xCC));
-
-	}
-	sf2d_end_frame();
-
-	sf2d_swapbuffers();
-}
-
 static bool is_new_tetris_iteration(TetrisController *self)
 {
 	/*
@@ -122,6 +100,7 @@ static bool is_new_tetris_iteration(TetrisController *self)
 
 static void do_new_iteration(TetrisController *self)
 {
+
 	if (tetris_board_set_current_piece(self->board, create_T())) //ZZZ TODO Replace create, from get from queue.
 	{
 
@@ -132,6 +111,8 @@ static void do_new_iteration(TetrisController *self)
 		tetris_board_concrete_current_piece(self->board);
 	}
 }
+
+int i =0;
 
 static void draw_tetris_game(TetrisController *self)
 {
@@ -144,7 +125,7 @@ static void draw_tetris_game(TetrisController *self)
 
 	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
 	{
-		sftd_draw_textf(self->font, 10, 10, RGBA8(0, 255, 0, 255), 20, "FPS %f", sf2d_get_fps());
+		sftd_draw_textf(self->font, ++i % 20, 10, RGBA8(0, 255, 0, 255), 20, "FPS %f", sf2d_get_fps());
 	}
 	sf2d_end_frame();
 

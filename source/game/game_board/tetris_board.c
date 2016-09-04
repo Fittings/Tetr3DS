@@ -99,9 +99,7 @@ bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece)
 	if (self->current_piece == NULL)
 	{
 		self->current_piece = piece;
-
-		self->piece_location = point_init( (self->block_width/2), 0 ); //Set the piece to centre and top of the board
-
+		self->piece_location = point_init( (self->block_width/2), 1 ); //Set the piece to centre and top of the board
 		return true;
 	}
 
@@ -182,6 +180,7 @@ static bool is_current_piece_valid(TetrisBoard *self)
 	s16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
 	s16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
 
+
 	for (int x=0; x < width; x++)
 	{
 		for (int y=0; y < height; y++)
@@ -199,11 +198,14 @@ static bool is_current_piece_valid(TetrisBoard *self)
 
 bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_right, u16 blocks_down)
 {
+	if (self->current_piece == NULL) return false;
+
 	Point *old_point = self->piece_location;
 	u16 old_x = point_get_x(old_point);
 	u16 old_y = point_get_y(old_point);
 
 	self->piece_location = point_init(old_x + blocks_right, old_y + blocks_down);
+
 
 	if (is_current_piece_valid(self))
 	{
