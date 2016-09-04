@@ -7,6 +7,8 @@
 #include "../include/game/block/tetris_block.h"
 #include "../include/game/block/piece/tetris_piece.h"
 #include "../include/utility/numbers_utility.h"
+#include "FreeSans_ttf.h" //ZZZ TODO Remove this
+#include <sftd.h>//ZZZ TODO Remove this
 
 struct _TetrisBoard
 {
@@ -16,9 +18,11 @@ struct _TetrisBoard
 	TetrisBlock ***block_array;
 	int block_width;
 	int block_height;
+
+
+	sftd_font *font; //ZZZ TODO Delete
 };
 typedef struct _TetrisBoard TetrisBoard;
-
 
 
 
@@ -46,6 +50,9 @@ TetrisBoard *tetris_board_init(int block_width, int block_height)
 				self->block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
 			}
 		}
+
+		//ZZZ TODO Delete
+		self->font = sftd_load_font_mem(FreeSans_ttf, FreeSans_ttf_size);
 	}
 
 	return self;
@@ -92,8 +99,8 @@ bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece)
 	if (self->current_piece == NULL)
 	{
 		self->current_piece = piece;
-		self->piece_location = point_init( 1, 10 ); //Set the piece to centre and top of the board
-		//self->piece_location = point_init( (self->block_width/2), -1 ); //Set the piece to centre and top of the board
+
+		self->piece_location = point_init( (self->block_width/2), 0 ); //Set the piece to centre and top of the board
 
 		return true;
 	}
@@ -115,16 +122,13 @@ void tetris_board_concrete_current_piece(TetrisBoard *self)
 
 
 
-	u16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
-	u16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
+	s16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
+	s16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
 
 	u16 p_width = tetris_piece_get_width(self->current_piece);
 	u16 p_height = tetris_piece_get_height(self->current_piece);
 
 	TetrisBlock ***tetris_array = tetris_piece_get_array(self->current_piece);
-
-
-	sf2d_draw_rectangle(30, 30, 0-1, y_piece_offset, RGBA8(0x00, 0xFF, 0x00, 0xFF));
 
 	for (int x=0; x < p_width; x++)
 	{
@@ -155,60 +159,6 @@ void tetris_board_concrete_current_piece(TetrisBoard *self)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//	if (self->current_piece == NULL) return; //ZZZ TODO Testing
-//	u16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
-//	u16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
-//
-//	if (x_piece_offset < 0 || y_piece_offset < 0) return;
-//
-//	u16 width = tetris_piece_get_width(self->current_piece);
-//	u16 height = tetris_piece_get_height(self->current_piece);
-//
-//	TetrisBlock ***tetris_array = tetris_piece_get_array(self->current_piece);
-//
-//
-//	for (int x=0; x < width; x++)
-//	{
-//		for (int y=0; y < height; y++)
-//		{
-//			int actual_x = x + x_piece_offset;
-//			int actual_y = y + y_piece_offset;
-//			if (tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY &&
-//					actual_x >= 0 && actual_x < self->block_width &&
-//					actual_y >= 0 && actual_y < self->block_height)
-//
-//			{
-//				tetris_block_free(self->block_array[x + x_piece_offset][y + y_piece_offset]);
-//
-//				self->block_array[x + x_piece_offset][y + y_piece_offset] = tetris_array[x][y];
-//			}
-//		}
-//	}
-//
-//	tetris_piece_shallow_free(self->current_piece);
-//	self->current_piece = NULL;
-//}
-
-
-
-
-
-
-
 //Checks if there is a block at the current location.
 static bool is_position_free(TetrisBoard *self, u16 x, u16 y)
 {
@@ -229,8 +179,8 @@ static bool is_current_piece_valid(TetrisBoard *self)
 	u16 width = tetris_piece_get_width(self->current_piece);
 	u16 height = tetris_piece_get_height(self->current_piece);
 
-	u16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
-	u16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
+	s16 x_piece_offset = point_get_x(self->piece_location) - point_get_x(tetris_piece_get_point(self->current_piece));
+	s16 y_piece_offset = point_get_y(self->piece_location) - point_get_y(tetris_piece_get_point(self->current_piece));
 
 	for (int x=0; x < width; x++)
 	{

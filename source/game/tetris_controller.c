@@ -3,7 +3,8 @@
 #include "../include/game/input/tetris_input.h"
 #include "../include/game/input/tetris_command.h"
 #include "../include/game/configurations/pieces/pieces.h"
-
+#include "FreeSans_ttf.h" //ZZZ TODO Remove this
+#include <sftd.h>
 #include <malloc.h>
 #include <stdbool.h>
 #include <sf2d.h>
@@ -23,6 +24,8 @@ struct _TetrisController
 	//Speed Settings
 	u64 game_start_time;
 	u64 last_board_update;
+
+	sftd_font *font;
 };
 typedef struct _TetrisController TetrisController;
 
@@ -77,8 +80,9 @@ static void draw_test()
 
 	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
 	{
-		sf2d_draw_rectangle(0, 20, 360, 10, RGBA8(0x00, 0x00, 0x00, 0xFF));
-		sf2d_draw_rectangle(0, 20, sf2d_get_fps() * 6, 10, RGBA8(0xFF, 0x00, 0x00, 0xCC));
+		//sf2d_draw_rectangle(0, 20, 360, 10, RGBA8(0x00, 0x00, 0x00, 0xFF));
+		//sf2d_draw_rectangle(0, 20, sf2d_get_fps() * 6, 10, RGBA8(0xFF, 0x00, 0x00, 0xCC));
+
 	}
 	sf2d_end_frame();
 
@@ -134,19 +138,13 @@ static void draw_tetris_game(TetrisController *self)
 	sf2d_start_frame(GFX_TOP, GFX_LEFT);
 	{
 		tetris_board_draw(self->board, 0, 0, 400, 240);
-
-		if (is_new_tetris_iteration(self))
-		{
-			do_new_iteration(self);
-		}
 	}
 	sf2d_end_frame();
 
 
 	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
 	{
-		sf2d_draw_rectangle(0, 20, 360, 10, RGBA8(0x00, 0x00, 0x00, 0xFF));
-		sf2d_draw_rectangle(0, 20, sf2d_get_fps() * 6, 10, RGBA8(0xFF, 0x00, 0x00, 0xCC));
+		sftd_draw_textf(self->font, 10, 10, RGBA8(0, 255, 0, 255), 20, "FPS %f", sf2d_get_fps());
 	}
 	sf2d_end_frame();
 
@@ -159,7 +157,10 @@ void update_tetris_controller(TetrisController *self)
 	handleInput(self);
 	draw_tetris_game(self);
 
-	//ZZZ TODO Put this back where this belongs.
+	if (is_new_tetris_iteration(self))
+	{
+		do_new_iteration(self);
+	}
 
 }
 
@@ -188,6 +189,9 @@ TetrisController *tetris_controller_init()
 		self->game_start_time = osGetTime();
 		self->last_board_update = osGetTime();
 		self->level = 5;
+
+		//ZZZ TODO Move to a text specific class.
+		self->font = sftd_load_font_mem(FreeSans_ttf, FreeSans_ttf_size);
 	}
 
 
