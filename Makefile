@@ -34,7 +34,11 @@ BUILD		:=	build
 SOURCES		:=	source source/game source/game/game_board source/game/block source/game/block/piece source/types source/game/input source/game/configurations source/game/configurations/pieces
 DATA		:=	data
 INCLUDES	:=	$SOURCES include include/types include/game include/game/game_board include/game/block include/game/block/piece include/utility include/game/input include/game/configurations include/game/configurations/pieces
-#ROMFS		:=	romfs
+
+APP_TITLE		:= Tetris3DS
+APP_DESCRIPTION	:= Tetris for the 3DS.
+APP_AUTHOR		:= Fittings
+
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -141,7 +145,24 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf
+	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(TARGET)-strip.elf $(TARGET).cia $(TARGET).3ds
+#---------------------------------------------------------------------------------
+$(TARGET)-strip.elf: $(BUILD)
+	@$(STRIP) $(TARGET).elf -o $(TARGET)-strip.elf
+#---------------------------------------------------------------------------------
+cci: $(TARGET)-strip.elf
+	@makerom -f cci -rsf resources/$(TARGET).rsf -target d -exefslogo -elf $(TARGET)-strip.elf -o $(TARGET).3ds
+	@echo "built ... sf2d_sample.3ds"
+#---------------------------------------------------------------------------------
+cia: $(TARGET)-strip.elf
+	@makerom -f cia -o $(TARGET).cia -elf $(TARGET)-strip.elf -rsf resources/$(TARGET).rsf -exefslogo -target t
+	@echo "built ... sf2d_sample.cia"
+#---------------------------------------------------------------------------------
+send: $(BUILD)
+	@3dslink $(TARGET).3dsx
+#---------------------------------------------------------------------------------
+run: $(BUILD)
+	@citra $(TARGET).3dsx
 
 
 #---------------------------------------------------------------------------------
@@ -153,7 +174,7 @@ DEPENDS	:=	$(OFILES:.o=.d)
 # main targets
 #---------------------------------------------------------------------------------
 ifeq ($(strip $(NO_SMDH)),)
-$(OUTPUT).3dsx	:	$(OUTPUT).elf $(OUTPUT).smdh 
+$(OUTPUT).3dsx	:	$(OUTPUT).elf $(OUTPUT).smdh
 
 else
 $(OUTPUT).3dsx	:	$(OUTPUT).elf
@@ -167,6 +188,7 @@ $(OUTPUT).elf	:	$(OFILES)
 # you need a rule like this for each extension you use as binary data
 #---------------------------------------------------------------------------------
 %.bin.o	:	%.bin
+%.ttf.o	:	%.ttf
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	@$(bin2o)
