@@ -1,34 +1,20 @@
 #include "../include/game/configurations/piece_set.h"
 #include "../include/game/configurations/pieces/pieces.h"
+#include "../include/game/block/piece/tetris_piece.h"
+
+#include <stdlib.h>
 #include <malloc.h>
 
 
 
 struct _PieceSet
 {
-	TetrisPiece **piece_set;
+	PieceSetType set_type;
 	u8 set_size;
 };
 typedef struct _PieceSet PieceSet;
 
 
-
-
-static void standard_set_init(PieceSet *self)
-{
-	self->set_size = 7;
-
-	self->piece_set = malloc(self->set_size * sizeof(void *));
-
-	self->piece_set[0] = create_O();
-	self->piece_set[1] = create_I();
-	self->piece_set[2] = create_S();
-	self->piece_set[3] = create_Z();
-	self->piece_set[4] = create_L();
-	self->piece_set[5] = create_J();
-	self->piece_set[6] = create_T();
-
-}
 
 PieceSet *piece_set_init(PieceSetType set_type) //ZZZ TODO Define a constant
 {
@@ -39,10 +25,12 @@ PieceSet *piece_set_init(PieceSetType set_type) //ZZZ TODO Define a constant
 	}
 
 	{
+		self->set_type = set_type;
+
 		switch (set_type)
 		{
 		case TETRIS_SET_STANDARD:
-			standard_set_init(self);
+			self->set_size = 7;
 			break;
 		}
 	}
@@ -55,11 +43,53 @@ void piece_set_free(PieceSet *self)
 {
 	if (self)
 	{
-		for (int i=0; i < self->set_size; i++)
-		{
-			tetris_piece_free(self->piece_set[i]);
-		}
-
 		free(self);
 	}
+}
+
+
+static TetrisPiece *get_standard_tetris_piece(u8 piece_number)
+{
+	switch (piece_number)
+	{
+	case 1:
+		return create_O();
+	case 2:
+		return create_I();
+	case 3:
+		return create_S();
+	case 4:
+		return create_Z();
+	case 5:
+		return create_L();
+	case 6:
+		return create_J();
+	case 7:
+		return create_T();
+	default:
+		return NULL;
+	}
+}
+
+
+TetrisPiece *piece_set_get_tetris_piece(PieceSet *self, u8 piece_number)
+{
+	if (self->set_size >= piece_number) return NULL;
+
+	switch (self->set_type)
+	{
+	case TETRIS_SET_STANDARD:
+		return get_standard_tetris_piece(piece_number);
+
+	default:
+		return NULL;
+	}
+}
+
+
+TetrisPiece *piece_set_get_rand_tetris_piece(PieceSet *self)
+{
+	u8 piece_number = rand() % (self->set_size);
+	return piece_set_get_tetris_piece(self, piece_number);
+
 }

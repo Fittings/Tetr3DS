@@ -22,7 +22,7 @@ struct _TetrisBoard
 
 	sftd_font *font; //ZZZ TODO Delete
 };
-typedef struct _TetrisBoard TetrisBoard;
+
 
 
 
