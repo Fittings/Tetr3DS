@@ -30,7 +30,7 @@ typedef struct _PieceGenerator PieceGenerator;
  *
  * Initializes a piece generator.
  *
- * @param max_size The size of the piece generator. There will always be 'size' amounts of pieces.
+ * @param size The size of the piece generator. There will always be 'size' amounts of pieces.
  * @param set_type The set of pieces used for the piece generator. All pieces will be from this set.
  * @return Returns the PieceGenerator for TetrisPiece generation.
  */
