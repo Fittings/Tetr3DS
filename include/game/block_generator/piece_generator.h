@@ -37,6 +37,9 @@ typedef struct _PieceGenerator PieceGenerator;
 extern PieceGenerator *piece_generator_init(u8 size, PieceSetType set_type);
 
 
+extern TetrisPiece *piece_generator_get_next(PieceGenerator *self);
+
+
 
 
 #endif

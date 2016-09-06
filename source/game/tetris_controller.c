@@ -8,9 +8,13 @@
 #include <malloc.h>
 #include <stdbool.h>
 #include <sf2d.h>
+#include "../include/game/configurations/piece_set.h"
+#include "../include/game/block_generator/piece_generator.h"
 
 
-
+//ZZZ TODO Remove these from globals and make part of the constructor.
+#define G_QUEUE_SIZE 8
+#define G_PIECE_SET TETRIS_SET_STANDARD
 
 
 
@@ -18,6 +22,8 @@ struct _TetrisController
 {
 	TetrisBoard *board;
 	bool is_running;
+
+	PieceGenerator *piece_generator;
 
 	u8 level;
 
@@ -101,9 +107,11 @@ static bool is_new_tetris_iteration(TetrisController *self)
 static void do_new_iteration(TetrisController *self)
 {
 
-	if (tetris_board_set_current_piece(self->board, create_T())) //ZZZ TODO Replace create, from get from queue.
-	{
 
+	if (tetris_board_get_current_piece(self->board) == NULL)
+	{
+		TetrisPiece *piece = piece_generator_get_next(self->piece_generator);
+		tetris_board_set_current_piece(self->board, create_O()); //ZZZ TODO Replace create, from get from queue.
 	}
 
 	if (!tetris_board_move_current_piece(self->board, 0, 1))
@@ -163,6 +171,7 @@ TetrisController *tetris_controller_init()
 			tetris_controller_free(self);
 			return NULL;
 		}
+		self->piece_generator = piece_generator_init(G_QUEUE_SIZE, G_PIECE_SET); //ZZZ TODO Fix this, no global pls
 
 		self->is_running = true; //ZZZ TODO Move this
 

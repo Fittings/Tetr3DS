@@ -24,6 +24,11 @@ typedef enum
 typedef struct _PieceSet PieceSet;
 
 
+extern PieceSet *piece_set_init(PieceSetType set_type);
+extern void piece_set_free(PieceSet *self);
+extern TetrisPiece *piece_set_get_tetris_piece(PieceSet *self, u8 piece_number);
+extern TetrisPiece *piece_set_get_rand_tetris_piece(PieceSet *self);
+
 
 
 #endif
