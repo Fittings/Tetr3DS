@@ -12,10 +12,10 @@ extern Queue *queue_init(u32 max_size);
 
 extern bool queue_is_full(Queue *queue);
 
-extern int queue_get_size(Queue *queue);
+extern int queue_get_current_size(Queue *queue);
 
 extern void queue_add(Queue *queue, void *item);
 
-extern void *piece_queue_pop(Queue *queue);
+extern void *queue_pop(Queue *queue);
 
 #endif /* INCLUDE_UTILITY_QUEUE_H_ */

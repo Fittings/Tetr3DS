@@ -38,6 +38,7 @@ Queue *queue_init(u32 max_size)
 	}
 
 	{
+
 		self->head_node = NULL;
 
 		self->current_size = 0;
@@ -53,39 +54,30 @@ bool queue_is_full(Queue *queue)
 	return (queue->current_size >= queue->upper_bound);
 }
 
-int queue_get_size(Queue *queue)
+int queue_get_current_size(Queue *queue)
 {
 	return queue->current_size;
 }
 
-
-static Node *get_last_node(Queue *queue)
-{
-	Node *current_node = queue->head_node;
-
-	while (current_node != NULL)
-	{
-		current_node = current_node->next_node;
-	}
-
-	return current_node;
-}
 
 
 void queue_add(Queue *queue, void *item)
 {
 	if (!queue_is_full(queue))
 	{
-		Node *current_node = get_last_node(queue);
-
+		Node *current_node = queue->head_node;
+		while (current_node != NULL)
+		{
+			current_node = current_node->next_node;
+		}
+		current_node = create_node(item);
 		queue->current_size++;
-		current_node->next_node = create_node(item);
 	}
 }
 
-void *piece_queue_pop(Queue *queue)
+void *queue_pop(Queue *queue)
 {
-	if (queue_get_size(queue) <= 0) return NULL;
+	if (queue_get_current_size(queue) <= 0) return NULL;
 
 	Node *old_head = queue->head_node;
 	queue->head_node = old_head->next_node;
