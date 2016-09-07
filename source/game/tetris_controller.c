@@ -31,7 +31,7 @@ struct _TetrisController
 	u64 game_start_time;
 	u64 last_board_update;
 
-	sftd_font *font;
+
 };
 typedef struct _TetrisController TetrisController;
 
@@ -106,12 +106,10 @@ static bool is_new_tetris_iteration(TetrisController *self)
 
 static void do_new_iteration(TetrisController *self)
 {
-
-
 	if (tetris_board_get_current_piece(self->board) == NULL)
 	{
 		TetrisPiece *piece = piece_generator_get_next(self->piece_generator);
-		tetris_board_set_current_piece(self->board, create_O()); //ZZZ TODO Replace create, from get from queue.
+		tetris_board_set_current_piece(self->board, piece);
 	}
 
 	if (!tetris_board_move_current_piece(self->board, 0, 1))
@@ -133,7 +131,7 @@ static void draw_tetris_game(TetrisController *self)
 
 	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
 	{
-		sftd_draw_textf(self->font, ++i % 20, 10, RGBA8(0, 255, 0, 255), 20, "FPS %f", sf2d_get_fps());
+
 	}
 	sf2d_end_frame();
 
@@ -150,7 +148,6 @@ void update_tetris_controller(TetrisController *self)
 	{
 		do_new_iteration(self);
 	}
-
 }
 
 
@@ -179,9 +176,6 @@ TetrisController *tetris_controller_init()
 		self->game_start_time = osGetTime();
 		self->last_board_update = osGetTime();
 		self->level = 5;
-
-		//ZZZ TODO Move to a text specific class.
-		self->font = sftd_load_font_mem(FreeSans_ttf, FreeSans_ttf_size);
 	}
 
 

@@ -7,8 +7,7 @@
 #include "../include/game/block/tetris_block.h"
 #include "../include/game/block/piece/tetris_piece.h"
 #include "../include/utility/numbers_utility.h"
-#include "FreeSans_ttf.h" //ZZZ TODO Remove this
-#include <sftd.h>//ZZZ TODO Remove this
+
 
 struct _TetrisBoard
 {
@@ -20,7 +19,6 @@ struct _TetrisBoard
 	int block_height;
 
 
-	sftd_font *font; //ZZZ TODO Delete
 };
 
 
@@ -52,7 +50,7 @@ TetrisBoard *tetris_board_init(int block_width, int block_height)
 		}
 
 		//ZZZ TODO Delete
-		self->font = sftd_load_font_mem(FreeSans_ttf, FreeSans_ttf_size);
+
 	}
 
 	return self;

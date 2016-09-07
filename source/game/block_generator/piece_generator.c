@@ -9,12 +9,16 @@
 
 
 
+
 struct _PieceGenerator
 {
 	PieceSet *piece_set;
 
 	Queue *piece_queue;
 };
+
+
+
 
 
 PieceGenerator *piece_generator_init(u8 size, PieceSetType set_type)

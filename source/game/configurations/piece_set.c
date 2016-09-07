@@ -52,19 +52,19 @@ static TetrisPiece *get_standard_tetris_piece(u8 piece_number)
 {
 	switch (piece_number)
 	{
-	case 1:
+	case 0:
 		return create_O();
-	case 2:
+	case 1:
 		return create_I();
-	case 3:
+	case 2:
 		return create_S();
-	case 4:
+	case 3:
 		return create_Z();
-	case 5:
+	case 4:
 		return create_L();
-	case 6:
+	case 5:
 		return create_J();
-	case 7:
+	case 6:
 		return create_T();
 	default:
 		return NULL;
@@ -74,7 +74,7 @@ static TetrisPiece *get_standard_tetris_piece(u8 piece_number)
 
 TetrisPiece *piece_set_get_tetris_piece(PieceSet *self, u8 piece_number)
 {
-	if (self->set_size >= piece_number) return NULL;
+	piece_number = piece_number % (self->set_size);
 
 	switch (self->set_type)
 	{
@@ -82,7 +82,7 @@ TetrisPiece *piece_set_get_tetris_piece(PieceSet *self, u8 piece_number)
 		return get_standard_tetris_piece(piece_number);
 
 	default:
-		return NULL;
+		return get_standard_tetris_piece(piece_number);
 	}
 }
 
