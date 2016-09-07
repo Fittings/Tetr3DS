@@ -37,6 +37,15 @@ typedef struct _PieceGenerator PieceGenerator;
 extern PieceGenerator *piece_generator_init(u8 size, PieceSetType set_type);
 
 
+/**
+ * @brief Returns the next piece in the queue.
+ *
+ * Returns the next piece in the queue.
+ * Adds another piece to replace it at the bottom of the queue.
+ *
+ * @param self The PieceGenerator struct to reference.
+ * @return The TetrisPiece at the top of the PieceGenerator queue.
+ */
 extern TetrisPiece *piece_generator_get_next(PieceGenerator *self);
 
 
