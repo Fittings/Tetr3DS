@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <sf2d.h>
 #include "../include/game/block/piece/tetris_piece.h"
+#include "../include/utility/array_utility.h"
 
 
 
@@ -100,5 +101,18 @@ u16 tetris_piece_get_width(TetrisPiece *self)
 u16 tetris_piece_get_height(TetrisPiece *self)
 {
 	return self->height;
+}
+
+
+void tetris_piece_rotate(TetrisPiece *self, int clockwise_90_rotation_count)
+{
+	for (int i=0; i < clockwise_90_rotation_count; i++)
+	{
+		self->block_array = rotate_2d_array(self->block_array);
+		//point_init(point_get_y(self->centre_block), point_get_x(self->centre_block));
+	}
+
+
+
 }
 
