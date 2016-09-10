@@ -124,6 +124,8 @@ extern u16 tetris_piece_get_width(TetrisPiece *self);
 extern u16 tetris_piece_get_height(TetrisPiece *self);
 
 
+extern void tetris_piece_rotate(TetrisPiece *self, u8 clockwise_90_rotation_count);
+
 
 
 #endif

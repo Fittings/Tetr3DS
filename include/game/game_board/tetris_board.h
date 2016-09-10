@@ -108,5 +108,7 @@ extern void tetris_board_concrete_current_piece(TetrisBoard *self);
  */
 extern bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_down, u16 blocks_right);
 
+extern bool tetris_board_rotate_current_piece(TetrisBoard *self, u8 rotations);
+
 
 #endif

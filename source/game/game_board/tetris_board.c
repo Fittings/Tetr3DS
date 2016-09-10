@@ -216,6 +216,15 @@ bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_right, u16 bl
 	}
 }
 
+bool tetris_board_rotate_current_piece(TetrisBoard *self, u8 rotations)
+{
+	if (self->current_piece == NULL) return false;
+
+	tetris_piece_rotate(self->current_piece, rotations);
+
+	return true;
+}
+
 
 
 
