@@ -47,6 +47,9 @@ extern TetrisBoard *tetris_board_init(int width, int height);
 extern void tetris_board_free(TetrisBoard *self);
 
 
+void tetris_board_remove_full_lines(TetrisBoard *self);
+
+
 /**
  * @brief Renders the TetrisBoard
  *

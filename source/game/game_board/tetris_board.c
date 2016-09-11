@@ -222,10 +222,64 @@ bool tetris_board_rotate_current_piece(TetrisBoard *self, u8 rotations)
 
 	tetris_piece_rotate(self->current_piece, rotations);
 
+	if (is_current_piece_valid(self))
+	{
+		return true;
+	}
+	else
+	{
+		tetris_piece_rotate(self->current_piece, -rotations);
+		return false;
+	}
+}
+
+extern bool is_line_complete(TetrisBoard *self, int line_height)
+{
+	for (int w=0; w < self->block_width; w++)
+	{
+		if (tetris_block_get_type(self->block_array[w][line_height]) == BLOCK_TYPE_EMPTY)
+		{
+			return false;
+		}
+	}
+
 	return true;
 }
 
+extern void set_row_to_empty(TetrisBoard *self, int row)
+{
+	for (int w=0; w < self->block_width; w++)
+	{
+		self->block_array[w][row] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
+	}
+}
 
+//Moves the upper part of the board down into the row_dest
+extern void move_board_down_to(TetrisBoard *self, int row_dest)
+{
+	if (row_dest >= self->block_height) return;
+
+	for (int h = row_dest-1; h >= 0; h--)
+	{
+		for (int w=0; w < self->block_width; w++)
+		{
+			self->block_array[w][h+1] = self->block_array[w][h];
+		}
+	}
+
+	set_row_to_empty(self, 0);
+}
+
+void tetris_board_remove_full_lines(TetrisBoard *self)
+{
+	for (int h=0; h < self->block_height; h++)
+	{
+		if (is_line_complete(self, h))
+		{
+			move_board_down_to(self, h);
+		}
+	}
+}
 
 
 

@@ -149,6 +149,8 @@ void update_tetris_controller(TetrisController *self)
 	{
 		do_new_iteration(self);
 	}
+
+	tetris_board_remove_full_lines(self->board);
 }
 
 
