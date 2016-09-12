@@ -123,7 +123,14 @@ extern u16 tetris_piece_get_width(TetrisPiece *self);
  */
 extern u16 tetris_piece_get_height(TetrisPiece *self);
 
-
+/**
+ * @brief Rotates the TetrisPiece
+ *
+ * Rotates the TetrisPiece by clockwise by the amount of rotates given.
+ *
+ * @param self The TetrisPiece struct to reference
+ * @param clockwise_90_rotation_count The amount of rotations.
+ */
 extern void tetris_piece_rotate(TetrisPiece *self, u8 clockwise_90_rotation_count);
 
 

@@ -34,9 +34,10 @@ extern void ***array2d_create_empty(u32 width, u32 height);
  * Creates a shallow copy of an array of width x height.
  * All pointers will point to the same data as the old array.
  *
+ * @param array The array to copy.
  * @param width The width of the 2d array.
  * @param height The height of the 2d array.
- * @return An copied 2d array of size width x height
+ * @return An copied 2d array of size width x height.
  */
 extern void ***array_2d_copy(void ***array, u32 width, u32 height);
 

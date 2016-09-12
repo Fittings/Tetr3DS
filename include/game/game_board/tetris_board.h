@@ -46,7 +46,14 @@ extern TetrisBoard *tetris_board_init(int width, int height);
  */
 extern void tetris_board_free(TetrisBoard *self);
 
-
+/**
+ * @brief Removes any completed lines in the Tetris Board
+ *
+ * Removes any completed lines in the TetrisBoard and also moves the TetrisBoard down into
+ * the removed lines
+ *
+ * @param self The TetrisBoard struct to reference.
+ */
 void tetris_board_remove_full_lines(TetrisBoard *self);
 
 
@@ -111,6 +118,13 @@ extern void tetris_board_concrete_current_piece(TetrisBoard *self);
  */
 extern bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_down, u16 blocks_right);
 
+/**
+ * @brief Rotates the current user piece on the board.
+ *
+ * @param self The TetrisBoard struct to reference.
+ * @param rotations the amount of piece rotations.
+ * @return True if the rotation occurred.
+ */
 extern bool tetris_board_rotate_current_piece(TetrisBoard *self, u8 rotations);
 
 
