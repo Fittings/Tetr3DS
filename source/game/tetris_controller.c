@@ -59,10 +59,11 @@ static void handleInput(TetrisController *self)
 		break;
 	case DROP_INSTANTLY:
 		break;
-	case ROTATE_CLOCKWISE:
+	case ROTATE_CLOCKWISE: //X
 		tetris_board_rotate_current_piece(self->board, 1);
 		break;
-	case ROTATE_ANTICLOCKWISE:
+	case ROTATE_ANTICLOCKWISE: //Y
+		tetris_board_rotate_current_piece(self->board, 3);
 		break;
 	case STORE_BLOCK:
 		break;

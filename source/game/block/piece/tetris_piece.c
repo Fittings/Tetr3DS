@@ -106,15 +106,8 @@ u16 tetris_piece_get_height(TetrisPiece *self)
 
 void tetris_piece_rotate(TetrisPiece *self, u8 clockwise_90_rotation_count)
 {
-	for (int i=0; i < clockwise_90_rotation_count; i++)
-	{
-		self->block_array = (TetrisBlock ***) rotate_2d_array( (void *)self->block_array, self->width, self->height);
+	self->block_array = (TetrisBlock ***) array2d_array_rotate_right_angle( (void *)self->block_array, self->width, self->height, clockwise_90_rotation_count);
 
-
-		point_init(point_get_y(self->centre_block), point_get_x(self->centre_block)); //ZZZ TODO This is wrong for non NxN matrices.
-	}
-
-
-
+	(point_get_y(self->centre_block), point_get_x(self->centre_block)); //ZZZ TODO This is wrong for non NxN matrices.
 }
 
