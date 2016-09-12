@@ -200,7 +200,7 @@ TetrisPiece *create_T()
 			}
 			else
 			{
-				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_BLUE);
+				block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, INVISIBLE);
 			}
 		}
 	}

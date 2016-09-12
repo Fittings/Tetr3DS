@@ -8,6 +8,9 @@
 #include "../include/game/block/piece/tetris_piece.h"
 #include "../include/utility/numbers_utility.h"
 
+#define BOARD_COLOUR BLACK
+//ZZZ TODO Move this to the board class,
+
 
 struct _TetrisBoard
 {
@@ -45,7 +48,7 @@ TetrisBoard *tetris_board_init(int block_width, int block_height)
 			self->block_array[w] = malloc(block_height * sizeof(void *));
 			for (int h=0; h < block_height; h++)
 			{
-				self->block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
+				self->block_array[w][h] = tetris_block_init(BLOCK_TYPE_EMPTY, BOARD_COLOUR);
 			}
 		}
 
@@ -250,7 +253,7 @@ extern void set_row_to_empty(TetrisBoard *self, int row)
 {
 	for (int w=0; w < self->block_width; w++)
 	{
-		self->block_array[w][row] = tetris_block_init(BLOCK_TYPE_EMPTY, LIGHT_GREY);
+		self->block_array[w][row] = tetris_block_init(BLOCK_TYPE_EMPTY, BOARD_COLOUR);
 	}
 }
 
