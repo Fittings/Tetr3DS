@@ -31,9 +31,9 @@ IP3DS := 192.168.0.14:17491
 #---------------------------------------------------------------------------------
 TARGET		:=	compiled/Tetris3DS
 BUILD		:=	build
-SOURCES		:=	source source/game source/game/game_board source/game/block source/game/block/piece source/types source/game/input source/game/configurations source/game/configurations/pieces source/game/block_generator source/utility
+SOURCES		:=	source source/game source/game/game_board source/game/block source/game/block/piece source/types source/game/input source/game/configurations source/game/configurations/pieces source/game/block_generator source/utility source/game/game_piece
 DATA		:=	data
-INCLUDES	:=	$SOURCES include include/types include/game include/game/game_board include/game/block include/game/block/piece include/utility include/game/input include/game/configurations include/game/configurations/pieces include/game/block_generator
+INCLUDES	:=	$SOURCES include include/types include/game include/game/game_board include/game/block include/game/block/piece include/utility include/game/input include/game/configurations include/game/configurations/pieces include/game/block_generator include/game/game_piece
 
 APP_TITLE		:= Tetris3DS
 APP_DESCRIPTION	:= Tetris for the 3DS.
