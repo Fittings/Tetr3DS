@@ -31,7 +31,17 @@ typedef struct _TetrisBlock TetrisBlock;
  * @param colour The colour of the block @ref colours.h
  * @return A single TetrisBlock
  */
-extern TetrisBlock *tetris_block_init(BlockType block_type, Colour colour); //ZZZ TODO implement colours
+extern TetrisBlock *tetris_block_init(BlockType block_type, Colour colour);
+
+/**
+ * @brief Creates a deep copy of a TetrisBlock struct.
+ *
+ * Returns a deep copy of a TetrisBlock struct.
+ *
+ * @param self The TetrisBlock struct to reference.
+ * @return A deep copy of the TetrisBlock.
+ */
+extern TetrisBlock *tetris_block_deep_copy(TetrisBlock *self);
 
 /**
  * @brief Frees the TetrisBlock struct

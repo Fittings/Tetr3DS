@@ -1,7 +1,7 @@
-#include <malloc.h>
-#include <stdbool.h>
-#include <sf2d.h>
 #include "../include/game/block/piece/tetris_piece.h"
+
+#include <malloc.h>
+#include <sf2d.h>
 #include "../include/utility/array_utility.h"
 
 
@@ -52,6 +52,7 @@ void tetris_piece_shallow_free(TetrisPiece *self)
 	}
 }
 
+
 void tetris_piece_free(TetrisPiece *self)
 {
 	if (self)
@@ -67,6 +68,22 @@ void tetris_piece_free(TetrisPiece *self)
 		point_free(self->centre_block);
 		free(self);
 	}
+}
+
+
+TetrisPiece *tetris_piece_deep_copy(TetrisPiece *self)
+{
+	TetrisPiece *new_piece = (TetrisPiece *)array_2d_copy((void *)self->block_array, self->width, self->height);
+
+	for (int w=0; w < self->width; w++)
+	{
+		for (int h=0; h < self->height; h++)
+		{
+			new_piece->block_array[w][h] = tetris_block_deep_copy(self->block_array[w][h]);
+		}
+	}
+
+	return new_piece;
 }
 
 

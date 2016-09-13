@@ -33,7 +33,6 @@ TetrisBlock *tetris_block_init(BlockType type, Colour colour)
 	return self;
 }
 
-
 void tetris_block_free(TetrisBlock *self)
 {
 	if (self)
@@ -43,6 +42,12 @@ void tetris_block_free(TetrisBlock *self)
 }
 
 
+TetrisBlock *tetris_block_deep_copy(TetrisBlock *self)
+{
+	return tetris_block_init(self->type, self->colour);
+}
+
+//ZZZ TODO Delete this..
 int tetris_block_sizeof()
 {
 	return sizeof(TetrisBlock);

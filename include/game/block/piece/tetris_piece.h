@@ -14,6 +14,7 @@
 
 
 
+
 /**
  * @brief The Tetris Piece.
  *
@@ -37,6 +38,17 @@ typedef struct _TetrisPiece TetrisPiece;
 extern TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_block, u16 width, u16 height);
 
 /**
+ * @brief Frees the TetrisPiece struct.
+ *
+ * Frees the TetrisPiece struct.
+ * This will also free the underlying blocks representing the TetrisPiece.
+ * Call @ref tetris_piece_shallow_free to not free the blocks
+ *
+ * @param self The TetrisPiece struct to reference
+ */
+extern void tetris_piece_free(TetrisPiece *self);
+
+/**
  * @brief Frees the TetrisBlock struct
  *
  * Frees the TetrisBlock struct.
@@ -51,7 +63,15 @@ extern TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_
  */
 extern void tetris_piece_shallow_free(TetrisPiece *self);
 
-
+/**
+ * @brief Creates a deep copy of a TetrisPiece struct.
+ *
+ * Creates a deep copy of a TetrisPiece struct.
+ *
+ * @param self The TetrisPiece struct to reference.
+ * @return A deep copy of the TetrisPiece
+ */
+extern TetrisPiece *tetris_piece_deep_copy(TetrisPiece *self);
 
 /**
  * @brief Rotates a Tetris Piece clockwise 90 degrees.
