@@ -11,12 +11,6 @@
 
 struct _TetrisBoard
 {
-	TetrisPiece *current_piece;
-	Point *piece_centre_location;
-
-	TetrisPiece *future_piece;
-	Point *future_piece_centre_location;
-
 	TetrisBlock ***block_array;
 	u16 block_array_width;
 	u16 block_array_height;
@@ -52,7 +46,7 @@ static bool is_position_free(TetrisBoard *self, u16 x, u16 y)
 
 
 //Checks if the current piece is in a valid position on the board.
-static bool is_piece_location_valid(TetrisBoard *self, TetrisPiece *piece, Point *piece_centre_location)
+bool tetris_board_is_piece_location_valid(TetrisBoard *self, TetrisPiece *piece, Point *piece_centre_location)
 {
 	TetrisBlock ***tetris_array = tetris_piece_get_array(piece);
 
@@ -128,8 +122,6 @@ TetrisBoard *tetris_board_init(int block_array_width, int block_array_height)
 	}
 
 	{
-		self->current_piece = NULL;
-
 		self->block_array_width = block_array_width;
 		self->block_array_height = block_array_height;
 
@@ -156,6 +148,11 @@ void tetris_board_free(TetrisBoard *self)
 	}
 }
 
+u16 tetris_board_get_width(TetrisBoard *self)
+{
+	return self->block_array_width;
+}
+
 
 bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, u8 x, u8 y)
 {
@@ -168,37 +165,16 @@ bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, u8 x, u8 y)
 }
 
 
-bool tetris_board_set_current_piece(TetrisBoard *self, TetrisPiece *piece)
+void tetris_board_concrete_tetris_piece(TetrisBoard *self, TetrisPiece *current_piece, Point *piece_centre_location)
 {
-	if (self->current_piece == NULL)
-	{
-		self->current_piece = piece;
-		self->piece_centre_location = point_init( (self->block_array_width/2), 1 ); //Set the piece to centre and top of the board
-		return true;
-	}
 
-	return false;
-}
+	s16 x_piece_offset = point_get_x(piece_centre_location) - point_get_x(tetris_piece_get_point(current_piece));
+	s16 y_piece_offset = point_get_y(piece_centre_location) - point_get_y(tetris_piece_get_point(current_piece));
 
+	u16 p_width = tetris_piece_get_width(current_piece);
+	u16 p_height = tetris_piece_get_height(current_piece);
 
-TetrisPiece *tetris_board_get_current_piece(TetrisBoard *self)
-{
-	return self->current_piece;
-}
-
-void tetris_board_concrete_current_piece(TetrisBoard *self)
-{
-	if (self->current_piece == NULL) return;
-
-
-
-	s16 x_piece_offset = point_get_x(self->piece_centre_location) - point_get_x(tetris_piece_get_point(self->current_piece));
-	s16 y_piece_offset = point_get_y(self->piece_centre_location) - point_get_y(tetris_piece_get_point(self->current_piece));
-
-	u16 p_width = tetris_piece_get_width(self->current_piece);
-	u16 p_height = tetris_piece_get_height(self->current_piece);
-
-	TetrisBlock ***tetris_array = tetris_piece_get_array(self->current_piece);
+	TetrisBlock ***tetris_array = tetris_piece_get_array(current_piece);
 
 	for (int x=0; x < p_width; x++)
 	{
@@ -224,50 +200,12 @@ void tetris_board_concrete_current_piece(TetrisBoard *self)
 
 		}
 	}
-
-	self->current_piece = NULL;
 }
 
 
-bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_right, u16 blocks_down)
-{
-	if (self->current_piece == NULL) return false;
-
-	Point *old_point = self->piece_centre_location;
-	u16 old_x = point_get_x(old_point);
-	u16 old_y = point_get_y(old_point);
-
-	self->piece_centre_location = point_init(old_x + blocks_right, old_y + blocks_down);
 
 
-	if (is_piece_location_valid(self, self->current_piece, self->piece_centre_location))
-	{
-		return true;
-	}
-	else
-	{
-		self->piece_centre_location = point_init(old_x, old_y);
-		return false;
-	}
-}
 
-bool tetris_board_rotate_current_piece(TetrisBoard *self, u8 rotations)
-{
-	if (self->current_piece == NULL) return false;
-
-	tetris_piece_rotate(self->current_piece, rotations);
-
-
-	if (is_piece_location_valid(self, self->current_piece, self->piece_centre_location))
-	{
-		return true;
-	}
-	else
-	{
-		tetris_piece_rotate(self->current_piece, -rotations);
-		return false;
-	}
-}
 
 void tetris_board_remove_full_lines(TetrisBoard *self)
 {
@@ -288,13 +226,7 @@ void tetris_board_remove_full_lines(TetrisBoard *self)
 
 //ZZZ TODO Move draw methods into a seperate view class.
 
-extern void draw_current_piece(TetrisBoard *self, int start_x_px, int start_y_px, int block_length_px)
-{
-	if (self->current_piece != NULL)
-	{
-		tetris_piece_draw(self->current_piece, start_x_px + (point_get_x(self->piece_centre_location) * block_length_px), start_y_px + (point_get_y(self->piece_centre_location) * block_length_px), block_length_px);
-	}
-}
+
 
 extern void draw_tetris_board(TetrisBoard *self, int start_x_px, int start_y_px, int block_length_px)
 {
@@ -309,7 +241,15 @@ extern void draw_tetris_board(TetrisBoard *self, int start_x_px, int start_y_px,
 	}
 }
 
-void tetris_board_draw(TetrisBoard *self, int x, int y, int pixel_width, int pixel_height)
+extern void draw_piece(TetrisBoard *self, TetrisPiece *current_piece, Point *piece_centre_location, int start_x_px, int start_y_px, int block_length_px)
+{
+	if (current_piece != NULL)
+	{
+		tetris_piece_draw(current_piece, start_x_px + (point_get_x(piece_centre_location) * block_length_px), start_y_px + (point_get_y(piece_centre_location) * block_length_px), block_length_px);
+	}
+}
+
+void tetris_board_draw(TetrisBoard *self, TetrisPiece *current_piece, Point *piece_centre_location, int x, int y, int pixel_width, int pixel_height)
 {
 	int block_length = min((pixel_width / self->block_array_width), (pixel_height / self->block_array_height));
 	block_length = block_length <= 2 ? 2 : block_length; //Enforce blocks are always 2px
@@ -323,5 +263,7 @@ void tetris_board_draw(TetrisBoard *self, int x, int y, int pixel_width, int pix
 	int start_y = (total_height > pixel_height) ? pixel_height - total_height : y + ((pixel_height - total_height)/2);
 
 	draw_tetris_board(self, start_x, start_y, block_length);
-	draw_current_piece(self, start_x, start_y, block_length);
+
+	//ZZZ TODO Move TetrisPiece out into the controller.
+	draw_piece(self, current_piece, piece_centre_location, start_x, start_y, block_length);
 }

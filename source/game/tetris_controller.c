@@ -20,11 +20,16 @@
 
 struct _TetrisController
 {
+	//Game Objects
 	TetrisBoard *board;
-	bool is_running;
 
 	PieceGenerator *piece_generator;
 
+	TetrisPiece *current_piece;
+	Point *piece_centre_location;
+
+	//Game Settings
+	bool is_running;
 	u8 level;
 
 	//Speed Settings
@@ -36,42 +41,6 @@ struct _TetrisController
 typedef struct _TetrisController TetrisController;
 
 
-
-
-
-static void handleInput(TetrisController *self)
-{
-	//ZZZ TODO Less primitive, standardise movement into a seperate function.
-	switch (get_game_input())
-	{
-	case NO_COMMAND: return;
-	case MOVE_UP:
-		tetris_board_move_current_piece(self->board, 0, -1);
-		break;
-	case MOVE_DOWN:
-		tetris_board_move_current_piece(self->board, 0, 1);
-		break;
-	case MOVE_LEFT:
-		tetris_board_move_current_piece(self->board, -1, 0);
-		break;
-	case MOVE_RIGHT:
-		tetris_board_move_current_piece(self->board, 1, 0);
-		break;
-	case DROP_INSTANTLY:
-		break;
-	case ROTATE_CLOCKWISE: //X
-		tetris_board_rotate_current_piece(self->board, 1);
-		break;
-	case ROTATE_ANTICLOCKWISE: //Y
-		tetris_board_rotate_current_piece(self->board, 3);
-		break;
-	case STORE_BLOCK:
-		break;
-	case DO_PAUSE:
-		self->is_running = false;
-		break;
-	}
-}
 
 
 
@@ -106,27 +75,81 @@ static bool is_new_tetris_iteration(TetrisController *self)
 	}
 }
 
-static void do_new_iteration(TetrisController *self)
+extern bool rotate_current_piece(TetrisController *self, u8 rotations)
 {
-	if (tetris_board_get_current_piece(self->board) == NULL)
-	{
-		TetrisPiece *piece = piece_generator_get_next(self->piece_generator);
-		tetris_board_set_current_piece(self->board, piece);
-	}
+	if (self->current_piece == NULL) return false;
 
-	if (!tetris_board_move_current_piece(self->board, 0, 1))
+	tetris_piece_rotate(self->current_piece, rotations);
+
+
+	if (tetris_board_is_piece_location_valid(self->board, self->current_piece, self->piece_centre_location))
 	{
-		tetris_board_concrete_current_piece(self->board);
+		return true;
+	}
+	else
+	{
+		tetris_piece_rotate(self->current_piece, -rotations);
+		return false;
 	}
 }
 
-int i =0;
+extern bool move_current_piece(TetrisController *self, u16 blocks_right, u16 blocks_down)
+{
+	if (self->current_piece == NULL) return false;
+
+	Point *old_point = self->piece_centre_location;
+	u16 old_x = point_get_x(old_point);
+	u16 old_y = point_get_y(old_point);
+
+	self->piece_centre_location = point_init(old_x + blocks_right, old_y + blocks_down);
+
+
+	if (tetris_board_is_piece_location_valid(self->board, self->current_piece, self->piece_centre_location))
+	{
+		return true;
+	}
+	else
+	{
+		self->piece_centre_location = point_init(old_x, old_y);
+		return false;
+	}
+}
+
+
+static void generate_new_piece(TetrisController *self)
+{
+	self->current_piece = piece_generator_get_next(self->piece_generator);
+	self->piece_centre_location = point_init( tetris_board_get_width(self->board) / 2, 1 );
+}
+
+
+static void do_new_iteration(TetrisController *self)
+{
+	if (self->current_piece == NULL) generate_new_piece(self);
+
+	if (!move_current_piece(self, 0, 1))
+	{
+		tetris_board_concrete_tetris_piece(self->board, self->current_piece, self->piece_centre_location);
+		tetris_piece_shallow_free(self->current_piece);
+		self->current_piece = NULL;
+	}
+}
+
+
+
+extern void draw_current_piece(TetrisController *self, int start_x_px, int start_y_px, int block_length_px)
+{
+	if (self->current_piece != NULL)
+	{
+		tetris_piece_draw(self->current_piece, start_x_px + (point_get_x(self->piece_centre_location) * block_length_px), start_y_px + (point_get_y(self->piece_centre_location) * block_length_px), block_length_px);
+	}
+}
 
 static void draw_tetris_game(TetrisController *self)
 {
 	sf2d_start_frame(GFX_TOP, GFX_LEFT);
 	{
-		tetris_board_draw(self->board, 0, 0, 400, 240);
+		tetris_board_draw(self->board, self->current_piece, self->piece_centre_location, 0, 0, 400, 240);
 	}
 	sf2d_end_frame();
 
@@ -138,6 +161,41 @@ static void draw_tetris_game(TetrisController *self)
 	sf2d_end_frame();
 
 	sf2d_swapbuffers();
+}
+
+
+static void handleInput(TetrisController *self)
+{
+	//ZZZ TODO Less primitive, standardise movement into a seperate function.
+	switch (get_game_input())
+	{
+	case NO_COMMAND: return;
+	case MOVE_UP:
+		move_current_piece(self, 0, -1);
+		break;
+	case MOVE_DOWN:
+		move_current_piece(self, 0, 1);
+		break;
+	case MOVE_LEFT:
+		move_current_piece(self, -1, 0);
+		break;
+	case MOVE_RIGHT:
+		move_current_piece(self, 1, 0);
+		break;
+	case DROP_INSTANTLY:
+		break;
+	case ROTATE_CLOCKWISE: //X
+		rotate_current_piece(self, 1);
+		break;
+	case ROTATE_ANTICLOCKWISE: //Y
+		rotate_current_piece(self, 3);
+		break;
+	case STORE_BLOCK:
+		break;
+	case DO_PAUSE:
+		self->is_running = false;
+		break;
+	}
 }
 
 

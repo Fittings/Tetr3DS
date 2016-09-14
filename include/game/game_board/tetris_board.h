@@ -46,6 +46,8 @@ extern TetrisBoard *tetris_board_init(int width, int height);
  */
 extern void tetris_board_free(TetrisBoard *self);
 
+extern u16 tetris_board_get_width(TetrisBoard *self);
+
 /**
  * @brief Removes any completed lines in the Tetris Board
  *
@@ -54,7 +56,9 @@ extern void tetris_board_free(TetrisBoard *self);
  *
  * @param self The TetrisBoard struct to reference.
  */
-void tetris_board_remove_full_lines(TetrisBoard *self);
+extern void tetris_board_remove_full_lines(TetrisBoard *self);
+
+extern bool tetris_board_is_piece_location_valid(TetrisBoard *self, TetrisPiece *piece, Point *piece_centre_location);
 
 
 /**
@@ -68,7 +72,7 @@ void tetris_board_remove_full_lines(TetrisBoard *self);
  * @param width The width from the x co-ordinate. (Rightwards)
  * @param height The height from the y co-ordinate. (Downwards)
  */
-extern void tetris_board_draw(TetrisBoard *self, int x, int y, int width, int height);
+extern void tetris_board_draw(TetrisBoard *self, TetrisPiece *current_piece, Point *piece_centre_location, int x, int y, int pixel_width, int pixel_height);
 
 
 /**
@@ -103,7 +107,7 @@ extern TetrisPiece *tetris_board_get_current_piece(TetrisBoard *self);
  *
  * @param self The TetrisBoard struct to reference.
  */
-extern void tetris_board_concrete_current_piece(TetrisBoard *self);
+extern void tetris_board_concrete_tetris_piece(TetrisBoard *self, TetrisPiece *current_piece, Point *piece_centre_location);
 
 /**
  * @brief Moves the current piece on the board by the parameters.
