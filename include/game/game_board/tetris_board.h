@@ -46,6 +46,14 @@ extern TetrisBoard *tetris_board_init(int width, int height);
  */
 extern void tetris_board_free(TetrisBoard *self);
 
+/**
+ * @brief Returns the width in blocks of the TetrisBoard.
+ *
+ * Returns the width of the TetrisBoard in block units.
+ *
+ * @param self The TetrisBoard struct to reference.
+ * @return The count of the blocks left to right.
+ */
 extern u16 tetris_board_get_width(TetrisBoard *self);
 
 /**
@@ -58,6 +66,16 @@ extern u16 tetris_board_get_width(TetrisBoard *self);
  */
 extern void tetris_board_remove_full_lines(TetrisBoard *self);
 
+/**
+ * @brief Validates a TetrisPiece at the given location.
+ *
+ * Validates if the TetrisPiece is in a valid location on the board.
+ *
+ * @param self The TetrisBoard struct to reference.
+ * @param piece The TetrisPiece to validate.
+ * @param piece_centre_location The pieces current location.
+ * @return True if the piece is in a valid location on the board.
+ */
 extern bool tetris_board_is_piece_location_valid(TetrisBoard *self, TetrisPiece *piece, Point *piece_centre_location);
 
 
@@ -67,10 +85,12 @@ extern bool tetris_board_is_piece_location_valid(TetrisBoard *self, TetrisPiece 
  * Renders the TetrisBoard on the given input screen. At the location given.
  *
  * @param self The TetrisBoard struct to reference
+ * @param current_piece The current peice to draw with the board.
+ * @param piece_centre_location The current pieces centre location on the board.
  * @param x x coordinate of the top left corner of the board
  * @param y y coordinate of the top left corner of the board
- * @param width The width from the x co-ordinate. (Rightwards)
- * @param height The height from the y co-ordinate. (Downwards)
+ * @param pixel_width The width from the x co-ordinate. (Rightwards)
+ * @param pixel_height The height from the y co-ordinate. (Downwards)
  */
 extern void tetris_board_draw(TetrisBoard *self, TetrisPiece *current_piece, Point *piece_centre_location, int x, int y, int pixel_width, int pixel_height);
 
@@ -106,6 +126,8 @@ extern TetrisPiece *tetris_board_get_current_piece(TetrisBoard *self);
  * The current piece is reset back to NULL.
  *
  * @param self The TetrisBoard struct to reference.
+ * @param current_piece The piece to concrete into the board.
+ * @param piece_centre_location The pieces current location on the board.
  */
 extern void tetris_board_concrete_tetris_piece(TetrisBoard *self, TetrisPiece *current_piece, Point *piece_centre_location);
 
