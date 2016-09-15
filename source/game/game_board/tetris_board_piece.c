@@ -33,7 +33,7 @@ void tetris_board_piece_free(TetrisBoardPiece *self)
 	}
 }
 
-TetrisPiece *tetris_board_piece_get_current_piece(TetrisBoardPiece *self)
+TetrisPiece *tetris_board_piece_get_tetris_piece(TetrisBoardPiece *self)
 {
 	return self->current_piece;
 }
@@ -43,3 +43,7 @@ Point *tetris_board_piece_get_location(TetrisBoardPiece *self)
 	return self->board_location;
 }
 
+void tetris_board_piece_set_location(TetrisBoardPiece *self, Point *new_location)
+{
+	self->board_location = new_location;
+}
