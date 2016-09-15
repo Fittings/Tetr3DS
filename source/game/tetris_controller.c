@@ -125,7 +125,10 @@ static void generate_new_piece(TetrisController *self)
 
 static void do_new_iteration(TetrisController *self)
 {
-	if (self->current_piece == NULL) generate_new_piece(self);
+	if (self->current_piece == NULL)
+	{
+		generate_new_piece(self);
+	}
 
 	if (!move_current_piece(self, 0, 1))
 	{
