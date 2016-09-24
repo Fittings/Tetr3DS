@@ -10,6 +10,8 @@ typedef struct _TetrisBoardController TetrisBoardController;
 
 extern TetrisBoardController *tetris_board_controller_init(TetrisBoard *board);
 
+extern void tetris_board_controller_free(TetrisBoardController *self);
+
 extern bool tetris_board_controller_can_spawn_piece(TetrisBoardController *self, TetrisPiece *piece);
 
 extern void tetris_board_controller_spawn_piece(TetrisBoardController *self, TetrisPiece *piece);

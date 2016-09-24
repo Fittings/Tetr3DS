@@ -34,6 +34,15 @@ TetrisBoardController *tetris_board_controller_init(TetrisBoard *board)
 	return self;
 }
 
+void tetris_board_controller_free(TetrisBoardController *self)
+{
+	if (self)
+	{
+		tetris_board_free(self->board);
+		tetris_board_piece_free(self->current_piece);
+	}
+}
+
 bool tetris_board_controller_can_spawn_piece(TetrisBoardController *self, TetrisPiece *piece)
 {
 	return tetris_board_is_piece_location_valid(self->board, piece, get_spawn_point(self));
@@ -63,7 +72,18 @@ void tetris_board_controller_move_current_piece(TetrisBoardController *self, s8 
 	}
 }
 
+//ZZZ TODO Fix this method up with just the TetrisBoardPiece param instead of using a TetrisPiece
 void tetris_board_controller_rotate_current_piece(TetrisBoardController *self, u8 rotations)
 {
-	//ZZZ TODO
+	if (self->current_piece != NULL)
+	{
+		TetrisPiece *rotated_piece = tetris_piece_deep_copy(tetris_board_piece_get_tetris_piece(self->current_piece));
+		Point *current_location = tetris_board_piece_get_location(self->current_piece);
+
+		tetris_piece_rotate(rotated_piece, rotations);
+		if (tetris_board_is_piece_location_valid(self->board, rotated_piece, current_location))
+		{
+			tetris_piece_rotate(tetris_board_piece_get_tetris_piece(self->current_piece), rotations);
+		}
+	}
 }
