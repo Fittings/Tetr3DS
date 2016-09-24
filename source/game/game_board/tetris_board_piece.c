@@ -47,3 +47,8 @@ void tetris_board_piece_set_location(TetrisBoardPiece *self, Point *new_location
 {
 	self->board_location = new_location;
 }
+
+void tetris_board_piece_rotate(TetrisBoardPiece *self, u8 rotations)
+{
+	tetris_piece_rotate(self->current_piece, rotations);
+}

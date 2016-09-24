@@ -19,5 +19,6 @@ extern Point *tetris_board_piece_get_location(TetrisBoardPiece *self);
 
 extern void tetris_board_piece_set_location(TetrisBoardPiece *self, Point *new_location);
 
+extern void tetris_board_piece_rotate(TetrisBoardPiece *self, u8 rotations);
 
 #endif
