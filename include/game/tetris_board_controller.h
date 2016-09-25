@@ -22,6 +22,8 @@ extern bool tetris_board_controller_can_spawn_piece(TetrisBoardController *self,
 extern bool tetris_board_is_current_piece(TetrisBoardController *self);
 extern bool tetris_board_can_current_piece_move(TetrisBoardController *self, s8 x_offset, s8 y_offset);
 
+extern void tetris_board_controller_draw(TetrisBoardController *self);
+
 
 
 
