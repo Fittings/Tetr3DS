@@ -13,7 +13,7 @@ struct _TetrisBoardController
 static Point *get_spawn_point(TetrisBoardController *self)
 {
 	u16 width = tetris_board_get_width(self->board);
-	return point_init(width, 0);
+	return point_init(width/2, 0);
 }
 
 
@@ -58,6 +58,10 @@ void tetris_board_controller_commit_piece(TetrisBoardController *self)
 	Point *current_location = tetris_board_piece_get_location(self->current_piece);
 
 	tetris_board_concrete_tetris_piece(self->board, current_piece, current_location);
+
+	tetris_board_piece_free(self->current_piece);
+	self->current_piece = NULL;
+
 }
 
 void tetris_board_controller_move_current_piece(TetrisBoardController *self, s8 x_offset, s8 y_offset)
@@ -108,9 +112,14 @@ bool tetris_board_can_current_piece_move(TetrisBoardController *self, s8 x_offse
 
 void tetris_board_controller_draw(TetrisBoardController *self)
 {
-	TetrisPiece *current_piece = tetris_board_piece_get_tetris_piece(self->current_piece);
-	Point *current_location = tetris_board_piece_get_location(self->current_piece);
+	TetrisPiece *current_piece = NULL;
+	Point *current_location = NULL;
 
+	if (self->current_piece != NULL)
+	{
+		current_piece = tetris_board_piece_get_tetris_piece(self->current_piece);
+		current_location = tetris_board_piece_get_location(self->current_piece);
+	}
 	//ZZZ TODO Remove hardcoded values, seperate out display from board.
 	tetris_board_draw(self->board, current_piece, current_location, 0, 0, 400, 240);
 }

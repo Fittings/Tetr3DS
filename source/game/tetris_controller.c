@@ -10,6 +10,7 @@
 #include <sf2d.h>
 #include "../include/game/configurations/piece_set.h"
 #include "../include/game/block_generator/piece_generator.h"
+#include "../include/game/tetris_board_controller.h"
 
 
 //ZZZ TODO Remove these from globals and make part of the constructor.
@@ -20,13 +21,8 @@
 
 struct _TetrisController
 {
-	//Game Objects
-	TetrisBoard *board;
-
+	TetrisBoardController *board_controller;
 	PieceGenerator *piece_generator;
-
-	TetrisPiece *current_piece;
-	Point *piece_centre_location;
 
 	//Game Settings
 	bool is_running;
@@ -75,76 +71,37 @@ static bool is_new_tetris_iteration(TetrisController *self)
 	}
 }
 
-extern bool rotate_current_piece(TetrisController *self, u8 rotations)
-{
-	if (self->current_piece == NULL) return false;
-
-	tetris_piece_rotate(self->current_piece, rotations);
-
-
-	if (tetris_board_is_piece_location_valid(self->board, self->current_piece, self->piece_centre_location))
-	{
-		return true;
-	}
-	else
-	{
-		tetris_piece_rotate(self->current_piece, -rotations);
-		return false;
-	}
-}
-
-extern bool move_current_piece(TetrisController *self, u16 blocks_right, u16 blocks_down)
-{
-	if (self->current_piece == NULL) return false;
-
-	Point *old_point = self->piece_centre_location;
-	u16 old_x = point_get_x(old_point);
-	u16 old_y = point_get_y(old_point);
-
-	self->piece_centre_location = point_init(old_x + blocks_right, old_y + blocks_down);
-
-
-	if (tetris_board_is_piece_location_valid(self->board, self->current_piece, self->piece_centre_location))
-	{
-		return true;
-	}
-	else
-	{
-		self->piece_centre_location = point_init(old_x, old_y);
-		return false;
-	}
-}
-
-
-static void generate_new_piece(TetrisController *self)
-{
-	self->current_piece = piece_generator_get_next(self->piece_generator);
-	self->piece_centre_location = point_init( tetris_board_get_width(self->board) / 2, 1 );
-}
 
 
 static void do_new_iteration(TetrisController *self)
 {
-	if (self->current_piece == NULL)
+
+	if (tetris_board_is_current_piece(self->board_controller))
 	{
-		generate_new_piece(self);
+		//Attempt to make piece fall.
+		if (tetris_board_can_current_piece_move(self->board_controller, 0, 1))
+		{
+			tetris_board_controller_move_current_piece(self->board_controller, 0, 1);
+		}
+		else
+		{
+			tetris_board_controller_commit_piece(self->board_controller);
+		}
 	}
-
-	if (!move_current_piece(self, 0, 1))
+	else
 	{
-		tetris_board_concrete_tetris_piece(self->board, self->current_piece, self->piece_centre_location);
-		tetris_piece_shallow_free(self->current_piece);
-		self->current_piece = NULL;
-	}
-}
-
-
-
-extern void draw_current_piece(TetrisController *self, int start_x_px, int start_y_px, int block_length_px)
-{
-	if (self->current_piece != NULL)
-	{
-		tetris_piece_draw(self->current_piece, start_x_px + (point_get_x(self->piece_centre_location) * block_length_px), start_y_px + (point_get_y(self->piece_centre_location) * block_length_px), block_length_px);
+		//Attempt to place highest priority in piece queue onto board.
+		TetrisPiece *next_piece = piece_generator_get_next(self->piece_generator);
+		if (tetris_board_controller_can_spawn_piece(self->board_controller, next_piece))
+		{
+			tetris_board_controller_spawn_piece(self->board_controller, next_piece);
+		}
+		else
+		{
+			/*
+			self->is_running = false;
+			return; */
+		}
 	}
 }
 
@@ -152,7 +109,7 @@ static void draw_tetris_game(TetrisController *self)
 {
 	sf2d_start_frame(GFX_TOP, GFX_LEFT);
 	{
-		tetris_board_draw(self->board, self->current_piece, self->piece_centre_location, 0, 0, 400, 240);
+		tetris_board_controller_draw(self->board_controller);
 	}
 	sf2d_end_frame();
 
@@ -174,24 +131,24 @@ static void handleInput(TetrisController *self)
 	{
 	case NO_COMMAND: return;
 	case MOVE_UP:
-		move_current_piece(self, 0, -1);
+		tetris_board_controller_move_current_piece(self->board_controller, 0, -1);
 		break;
 	case MOVE_DOWN:
-		move_current_piece(self, 0, 1);
+		tetris_board_controller_move_current_piece(self->board_controller, 0, 1);
 		break;
 	case MOVE_LEFT:
-		move_current_piece(self, -1, 0);
+		tetris_board_controller_move_current_piece(self->board_controller, -1, 0);
 		break;
 	case MOVE_RIGHT:
-		move_current_piece(self, 1, 0);
+		tetris_board_controller_move_current_piece(self->board_controller, 1, 0);
 		break;
 	case DROP_INSTANTLY:
 		break;
 	case ROTATE_CLOCKWISE: //X
-		rotate_current_piece(self, 1);
+		tetris_board_controller_rotate_current_piece(self->board_controller, 1);
 		break;
 	case ROTATE_ANTICLOCKWISE: //Y
-		rotate_current_piece(self, 3);
+		tetris_board_controller_rotate_current_piece(self->board_controller, 3);
 		break;
 	case STORE_BLOCK:
 		break;
@@ -204,15 +161,14 @@ static void handleInput(TetrisController *self)
 
 void update_tetris_controller(TetrisController *self)
 {
-	handleInput(self);
 	draw_tetris_game(self);
+
+	handleInput(self);
 
 	if (is_new_tetris_iteration(self))
 	{
 		do_new_iteration(self);
 	}
-
-	tetris_board_remove_full_lines(self->board);
 }
 
 
@@ -227,14 +183,9 @@ TetrisController *tetris_controller_init()
 	}
 
 	{
-		self->board = tetris_board_init(10, 20); //ZZZ TODO Fix this... TODO Maybe this init structure could be nicer in general...
-		if (!self)
-		{
-			tetris_controller_free(self);
-			return NULL;
-		}
+		TetrisBoard *board = tetris_board_init(10, 20); //ZZZ TODO Make this a construction setting.
+		self->board_controller = tetris_board_controller_init(board);
 		self->piece_generator = piece_generator_init(G_QUEUE_SIZE, G_PIECE_SET); //ZZZ TODO Fix this, no global pls
-
 		self->is_running = true; //ZZZ TODO Move this
 
 		//ZZZ TODO Move this out of here.
@@ -252,10 +203,7 @@ void tetris_controller_free(TetrisController *self)
 {
 	if (self)
 	{
-		if (self->board)
-		{
-			tetris_board_free(self->board);
-		}
+		tetris_board_controller_free(self->board_controller);
 
 		free(self);
 	}

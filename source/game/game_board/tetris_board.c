@@ -192,12 +192,8 @@ void tetris_board_concrete_tetris_piece(TetrisBoard *self, TetrisPiece *current_
 			{
 				tetris_block_free(self->block_array[board_x][board_y]);
 				self->block_array[board_x][board_y] = tetris_array[x][y];
+				tetris_array[x][y] = NULL; //Note: This is done so we can't accidentally free the block.
 			}
-			else
-			{
-				tetris_block_free(tetris_array[x][y]);
-			}
-
 		}
 	}
 }
@@ -265,5 +261,9 @@ void tetris_board_draw(TetrisBoard *self, TetrisPiece *current_piece, Point *pie
 	draw_tetris_board(self, start_x, start_y, block_length);
 
 	//ZZZ TODO Move TetrisPiece out into the controller.
-	draw_piece(self, current_piece, piece_centre_location, start_x, start_y, block_length);
+	if (current_piece != NULL && piece_centre_location != NULL)
+	{
+		draw_piece(self, current_piece, piece_centre_location, start_x, start_y, block_length);
+	}
+
 }
