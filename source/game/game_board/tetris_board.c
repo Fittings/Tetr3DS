@@ -184,13 +184,11 @@ void tetris_board_concrete_tetris_piece(TetrisBoard *self, TetrisPiece *current_
 		{
 			int board_y = y + y_piece_offset;
 
-			sf2d_draw_rectangle((board_x)*12, (board_y)*12, 12, 12, RGBA8(0xFF, 0x00, 0x00, 0xFF));
-
 			if (board_x >= 0 && board_x < self->block_array_width &&
 					board_y >= 0 && board_y < self->block_array_height &&
 					tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY)
 			{
-				tetris_block_free(self->block_array[board_x][board_y]);
+				//tetris_block_free(self->block_array[board_x][board_y]);
 				self->block_array[board_x][board_y] = tetris_array[x][y];
 				tetris_array[x][y] = NULL; //Note: This is done so we can't accidentally free the block.
 			}

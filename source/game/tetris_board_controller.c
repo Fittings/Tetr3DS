@@ -66,7 +66,7 @@ void tetris_board_controller_commit_piece(TetrisBoardController *self)
 
 void tetris_board_controller_move_current_piece(TetrisBoardController *self, s8 x_offset, s8 y_offset)
 {
-	if (tetris_board_can_current_piece_move(self, x_offset, y_offset))
+	if (self->current_piece != NULL && tetris_board_can_current_piece_move(self, x_offset, y_offset))
 	{
 		Point *old_point = tetris_board_piece_get_location(self->current_piece);
 		Point *new_location = point_init(point_get_x(old_point) + x_offset, point_get_y(old_point) + y_offset);
