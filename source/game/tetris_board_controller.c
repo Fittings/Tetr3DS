@@ -53,12 +53,25 @@ void tetris_board_controller_spawn_piece(TetrisBoardController *self, TetrisPiec
 	self->current_piece = tetris_board_piece_init(piece, get_spawn_point(self));
 }
 
+bool tetris_board_is_current_piece(TetrisBoardController *self)
+{
+	return self->current_piece != NULL;
+}
+
 bool tetris_board_can_current_piece_move(TetrisBoardController *self, s8 x_offset, s8 y_offset)
 {
 	Point *old_point = tetris_board_piece_get_location(self->current_piece);
 	Point *new_location = point_init(point_get_x(old_point) + x_offset, point_get_y(old_point) + y_offset);
 
 	return tetris_board_is_piece_location_valid(self->board, tetris_board_piece_get_tetris_piece(self->current_piece), new_location);
+}
+
+void tetris_board_controller_commit_piece(TetrisBoardController *self)
+{
+	TetrisPiece *current_piece = tetris_board_piece_get_tetris_piece(self->current_piece);
+	Point *current_location = tetris_board_piece_get_location(self->current_piece);
+
+	tetris_board_concrete_tetris_piece(self->board, current_piece, current_location);
 }
 
 void tetris_board_controller_move_current_piece(TetrisBoardController *self, s8 x_offset, s8 y_offset)
@@ -88,3 +101,16 @@ void tetris_board_controller_rotate_current_piece(TetrisBoardController *self, u
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
