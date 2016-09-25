@@ -45,12 +45,15 @@ void tetris_board_controller_free(TetrisBoardController *self)
 
 
 
+void tetris_board_controller_remove_completed_rows(TetrisBoardController *self)
+{
+	tetris_board_remove_full_lines(self->board);
+}
+
 void tetris_board_controller_spawn_piece(TetrisBoardController *self, TetrisPiece *piece)
 {
 	self->current_piece = tetris_board_piece_init(piece, get_spawn_point(self));
 }
-
-
 
 void tetris_board_controller_commit_piece(TetrisBoardController *self)
 {

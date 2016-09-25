@@ -11,6 +11,7 @@ typedef struct _TetrisBoardController TetrisBoardController;
 extern TetrisBoardController *tetris_board_controller_init(TetrisBoard *board);
 extern void tetris_board_controller_free(TetrisBoardController *self);
 
+extern void tetris_board_controller_remove_completed_rows(TetrisBoardController *self);
 
 extern void tetris_board_controller_spawn_piece(TetrisBoardController *self, TetrisPiece *piece);
 extern void tetris_board_controller_move_current_piece(TetrisBoardController *self, s8 x_offset, s8 y_offset);

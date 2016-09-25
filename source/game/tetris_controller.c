@@ -86,6 +86,7 @@ static void do_new_iteration(TetrisController *self)
 		else
 		{
 			tetris_board_controller_commit_piece(self->board_controller);
+			tetris_board_controller_remove_completed_rows(self->board_controller);
 		}
 	}
 	else
