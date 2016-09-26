@@ -57,6 +57,16 @@ extern void tetris_board_free(TetrisBoard *self);
 extern u16 tetris_board_get_width(TetrisBoard *self);
 
 /**
+ * @brief Returns the height in blocks of the TetrisBoard.
+ *
+ * Returns the height of the TetrisBoard in block units.
+ *
+ * @param self The TetrisBoard struct to reference.
+ * @return The count of the blocks from top to bottom.
+ */
+extern u16 tetris_board_get_height(TetrisBoard *self);
+
+/**
  * @brief Removes any completed lines in the Tetris Board
  *
  * Removes any completed lines in the TetrisBoard and also moves the TetrisBoard down into

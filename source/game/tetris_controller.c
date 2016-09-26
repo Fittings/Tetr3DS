@@ -99,9 +99,8 @@ static void do_new_iteration(TetrisController *self)
 		}
 		else
 		{
-			/*
-			self->is_running = false;
-			return; */
+			//self->is_running = false;
+			return;
 		}
 	}
 }
@@ -143,7 +142,8 @@ static void handleInput(TetrisController *self)
 	case MOVE_RIGHT:
 		tetris_board_controller_move_current_piece(self->board_controller, 1, 0);
 		break;
-	case DROP_INSTANTLY:
+	case DROP_INSTANTLY: //B
+		tetris_board_controller_drop_current_piece(self->board_controller);
 		break;
 	case ROTATE_CLOCKWISE: //X
 		tetris_board_controller_rotate_current_piece(self->board_controller, 1);
@@ -214,5 +214,7 @@ void tetris_controller_free(TetrisController *self)
 
 bool tetris_controller_is_running(TetrisController *self)
 {
-	return self->is_running;
+	//ZZZ TODO Proper game finishing.
+	return true;
+	//return self->is_running;
 }

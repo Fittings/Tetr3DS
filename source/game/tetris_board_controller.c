@@ -67,6 +67,27 @@ void tetris_board_controller_commit_piece(TetrisBoardController *self)
 
 }
 
+void tetris_board_controller_drop_current_piece(TetrisBoardController *self)
+{
+	if (self->current_piece != NULL)
+	{
+		u16 board_height = tetris_board_get_height(self->board);
+		u16 current_y = point_get_y(tetris_board_piece_get_location(self->current_piece));
+
+		for (u16 y = board_height; y > current_y; y--)
+		{
+			s8 y_offset = y - current_y;
+
+			if (tetris_board_can_current_piece_move(self, 0, y_offset))
+			{
+				tetris_board_controller_move_current_piece(self, 0, y_offset);
+				return;
+			}
+		}
+	}
+
+}
+
 void tetris_board_controller_move_current_piece(TetrisBoardController *self, s8 x_offset, s8 y_offset)
 {
 	if (self->current_piece != NULL && tetris_board_can_current_piece_move(self, x_offset, y_offset))

@@ -153,6 +153,11 @@ u16 tetris_board_get_width(TetrisBoard *self)
 	return self->block_array_width;
 }
 
+u16 tetris_board_get_height(TetrisBoard *self)
+{
+	return self->block_array_height;
+}
+
 
 bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, u8 x, u8 y)
 {

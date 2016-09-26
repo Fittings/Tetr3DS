@@ -18,6 +18,8 @@ extern void tetris_board_controller_move_current_piece(TetrisBoardController *se
 extern void tetris_board_controller_rotate_current_piece(TetrisBoardController *self, u8 rotations);
 extern void tetris_board_controller_commit_piece(TetrisBoardController *self);
 
+extern void tetris_board_controller_drop_current_piece(TetrisBoardController *self);
+
 
 extern bool tetris_board_controller_can_spawn_piece(TetrisBoardController *self, TetrisPiece *piece);
 extern bool tetris_board_is_current_piece(TetrisBoardController *self);
