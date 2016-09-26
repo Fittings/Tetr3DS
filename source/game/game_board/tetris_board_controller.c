@@ -1,4 +1,4 @@
-#include "../include/game/tetris_board_controller.h"
+#include "../../../include/game/game_board/tetris_board_controller.h"
 
 #include <malloc.h>
 
@@ -144,8 +144,15 @@ void tetris_board_controller_draw(TetrisBoardController *self)
 		current_piece = tetris_board_piece_get_tetris_piece(self->current_piece);
 		current_location = tetris_board_piece_get_location(self->current_piece);
 	}
+
+	u16 start_x = 0;
+	u16 start_y = 0;
+	u16 width = 400;
+	u16 height = 240;
+
+
 	//ZZZ TODO Remove hardcoded values, seperate out display from board.
-	tetris_board_draw(self->board, current_piece, current_location, 0, 0, 400, 240);
+	tetris_board_draw(self->board, current_piece, current_location, start_x, start_y, width, height);
 }
 
 

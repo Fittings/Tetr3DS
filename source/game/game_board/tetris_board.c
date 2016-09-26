@@ -263,10 +263,8 @@ void tetris_board_draw(TetrisBoard *self, TetrisPiece *current_piece, Point *pie
 
 	draw_tetris_board(self, start_x, start_y, block_length);
 
-	//ZZZ TODO Move TetrisPiece out into the controller.
 	if (current_piece != NULL && piece_centre_location != NULL)
 	{
 		draw_piece(self, current_piece, piece_centre_location, start_x, start_y, block_length);
 	}
-
 }

@@ -8,9 +8,10 @@
 #include <malloc.h>
 #include <stdbool.h>
 #include <sf2d.h>
+
+#include "../../include/game/game_board/tetris_board_controller.h"
 #include "../include/game/configurations/piece_set.h"
 #include "../include/game/block_generator/piece_generator.h"
-#include "../include/game/tetris_board_controller.h"
 
 
 //ZZZ TODO Remove these from globals and make part of the constructor.
