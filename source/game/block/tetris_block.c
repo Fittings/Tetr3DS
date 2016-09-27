@@ -59,6 +59,11 @@ BlockType tetris_block_get_type(TetrisBlock *self)
 	return self->type;
 }
 
+Colour tetris_block_get_colour(TetrisBlock *self)
+{
+	return self->colour;
+}
+
 
 void tetris_block_draw(TetrisBlock *self, u16 x, u16 y, u16 length)
 {

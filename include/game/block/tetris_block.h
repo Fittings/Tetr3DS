@@ -70,6 +70,8 @@ extern int tetris_block_sizeof();
  */
 extern BlockType tetris_block_get_type(TetrisBlock *self);
 
+extern Colour tetris_block_get_colour(TetrisBlock *self);
+
 /**
  * @brief Draws the block.
  *

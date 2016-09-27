@@ -12,6 +12,7 @@
 
 #include <stdbool.h>
 #include "../include/game/block/piece/tetris_piece.h"
+#include "../include/game/block/tetris_block.h"
 
 
 
@@ -66,6 +67,8 @@ extern u16 tetris_board_get_width(TetrisBoard *self);
  */
 extern u16 tetris_board_get_height(TetrisBoard *self);
 
+extern TetrisBlock *tetris_board_get_block(TetrisBoard *self, u16 x, u16 y);
+
 /**
  * @brief Removes any completed lines in the Tetris Board
  *
@@ -89,20 +92,8 @@ extern void tetris_board_remove_full_lines(TetrisBoard *self);
 extern bool tetris_board_is_piece_location_valid(TetrisBoard *self, TetrisPiece *piece, Point *piece_centre_location);
 
 
-/**
- * @brief Renders the TetrisBoard
- *
- * Renders the TetrisBoard on the given input screen. At the location given.
- *
- * @param self The TetrisBoard struct to reference
- * @param current_piece The current peice to draw with the board.
- * @param piece_centre_location The current pieces centre location on the board.
- * @param x x coordinate of the top left corner of the board
- * @param y y coordinate of the top left corner of the board
- * @param pixel_width The width from the x co-ordinate. (Rightwards)
- * @param pixel_height The height from the y co-ordinate. (Downwards)
- */
-extern void tetris_board_draw(TetrisBoard *self, TetrisPiece *current_piece, Point *piece_centre_location, int x, int y, int pixel_width, int pixel_height);
+
+extern void tetris_board_draw(TetrisBoard *self, int start_x_px, int start_y_px, int block_length_px);
 
 
 /**

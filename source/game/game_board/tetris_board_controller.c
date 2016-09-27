@@ -1,10 +1,16 @@
 #include "../../../include/game/game_board/tetris_board_controller.h"
 
 #include <malloc.h>
+#include "../include/types/colours.h"
+#include "../include/game/game_board/tetris_board_view.h"
 
+
+#define BOARD_COLOUR BLACK
 
 struct _TetrisBoardController
 {
+	TetrisBoardView *view;
+
 	TetrisBoard *board;
 	TetrisBoardPiece *current_piece;
 };
@@ -20,13 +26,17 @@ static Point *get_spawn_point(TetrisBoardController *self)
 
 
 
-TetrisBoardController *tetris_board_controller_init(TetrisBoard *board)
+TetrisBoardController *tetris_board_controller_init(TetrisBoard *board, Region *region)
 {
 	TetrisBoardController *self = malloc(sizeof *self);
 
 	if (!self || board == NULL) return NULL;
 
 	{
+
+		Colour colour = BOARD_COLOUR;
+		self->view = tetris_board_view_init(region, BOARD_COLOUR);
+
 		self->board = board;
 		self->current_piece = NULL;
 	}
@@ -136,23 +146,7 @@ bool tetris_board_can_current_piece_move(TetrisBoardController *self, s8 x_offse
 
 void tetris_board_controller_draw(TetrisBoardController *self)
 {
-	TetrisPiece *current_piece = NULL;
-	Point *current_location = NULL;
-
-	if (self->current_piece != NULL)
-	{
-		current_piece = tetris_board_piece_get_tetris_piece(self->current_piece);
-		current_location = tetris_board_piece_get_location(self->current_piece);
-	}
-
-	u16 start_x = 0;
-	u16 start_y = 0;
-	u16 width = 400;
-	u16 height = 240;
-
-
-	//ZZZ TODO Remove hardcoded values, seperate out display from board.
-	tetris_board_draw(self->board, current_piece, current_location, start_x, start_y, width, height);
+	tetris_board_view_draw(self->view, self->board, self->current_piece);
 }
 
 

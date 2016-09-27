@@ -34,6 +34,20 @@ void region_free(Region *self)
 	}
 }
 
+Point *region_get_top_left_point(Region *self)
+{
+	return self->top_left_corner;
+}
+
+u16 region_get_top_left_x(Region *self)
+{
+	return point_get_x(self->top_left_corner);
+}
+
+u16 region_get_top_left_y(Region *self)
+{
+	return point_get_y(self->top_left_corner);
+}
 
 u16 region_get_width(Region *self)
 {

@@ -12,6 +12,7 @@
 #include "../../include/game/game_board/tetris_board_controller.h"
 #include "../include/game/configurations/piece_set.h"
 #include "../include/game/block_generator/piece_generator.h"
+#include "../include/general/region/region.h"
 
 
 //ZZZ TODO Remove these from globals and make part of the constructor.
@@ -186,7 +187,7 @@ TetrisController *tetris_controller_init()
 
 	{
 		TetrisBoard *board = tetris_board_init(10, 20); //ZZZ TODO Make this a construction setting.
-		self->board_controller = tetris_board_controller_init(board);
+		self->board_controller = tetris_board_controller_init(board, region_init(point_init(0, 0), 400, 240));
 		self->piece_generator = piece_generator_init(G_QUEUE_SIZE, G_PIECE_SET); //ZZZ TODO Fix this, no global pls
 		self->is_running = true; //ZZZ TODO Move this
 

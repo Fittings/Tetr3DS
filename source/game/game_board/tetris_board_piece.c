@@ -52,3 +52,8 @@ void tetris_board_piece_rotate(TetrisBoardPiece *self, u8 rotations)
 {
 	tetris_piece_rotate(self->current_piece, rotations);
 }
+
+void tetris_board_piece_draw(TetrisBoardPiece *self, u16 start_x, u16 start_y, u16 block_size)
+{
+	tetris_piece_draw(self->current_piece, start_x, start_y, block_size);
+}

@@ -3,12 +3,14 @@
 
 #include "../include/game/game_board/tetris_board.h"
 #include "../include/game/game_board/tetris_board_piece.h"
+#include "../include/general/region/region.h"
+#include "../include/game/game_board/tetris_board_view.h"
 
 
 typedef struct _TetrisBoardController TetrisBoardController;
 
 
-extern TetrisBoardController *tetris_board_controller_init(TetrisBoard *board);
+extern TetrisBoardController *tetris_board_controller_init(TetrisBoard *board, Region *region);
 extern void tetris_board_controller_free(TetrisBoardController *self);
 
 extern void tetris_board_controller_remove_completed_rows(TetrisBoardController *self);

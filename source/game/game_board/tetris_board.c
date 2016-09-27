@@ -158,6 +158,11 @@ u16 tetris_board_get_height(TetrisBoard *self)
 	return self->block_array_height;
 }
 
+TetrisBlock *tetris_board_get_block(TetrisBoard *self, u16 x, u16 y)
+{
+	return self->block_array[x][y];
+}
+
 
 bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, u8 x, u8 y)
 {
@@ -227,7 +232,7 @@ void tetris_board_remove_full_lines(TetrisBoard *self)
 
 
 
-extern void draw_tetris_board(TetrisBoard *self, int start_x_px, int start_y_px, int block_length_px)
+void tetris_board_draw(TetrisBoard *self, int start_x_px, int start_y_px, int block_length_px)
 {
 	for (int w=0; w < self->block_array_width; w++)
 	{
@@ -240,31 +245,5 @@ extern void draw_tetris_board(TetrisBoard *self, int start_x_px, int start_y_px,
 	}
 }
 
-extern void draw_piece(TetrisBoard *self, TetrisPiece *current_piece, Point *piece_centre_location, int start_x_px, int start_y_px, int block_length_px)
-{
-	if (current_piece != NULL)
-	{
-		tetris_piece_draw(current_piece, start_x_px + (point_get_x(piece_centre_location) * block_length_px), start_y_px + (point_get_y(piece_centre_location) * block_length_px), block_length_px);
-	}
-}
-
-void tetris_board_draw(TetrisBoard *self, TetrisPiece *current_piece, Point *piece_centre_location, int x, int y, int pixel_width, int pixel_height)
-{
-	int block_length = min((pixel_width / self->block_array_width), (pixel_height / self->block_array_height));
-	block_length = block_length <= 2 ? 2 : block_length; //Enforce blocks are always 2px
 
 
-	int total_width = block_length * self->block_array_width;
-	int start_x = (total_width > pixel_width) ? pixel_width - total_width : x + ((pixel_width - total_width)/2);
-
-
-	int total_height = block_length * self->block_array_height;
-	int start_y = (total_height > pixel_height) ? pixel_height - total_height : y + ((pixel_height - total_height)/2);
-
-	draw_tetris_board(self, start_x, start_y, block_length);
-
-	if (current_piece != NULL && piece_centre_location != NULL)
-	{
-		draw_piece(self, current_piece, piece_centre_location, start_x, start_y, block_length);
-	}
-}
