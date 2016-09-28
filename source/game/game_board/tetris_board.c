@@ -240,7 +240,7 @@ void tetris_board_draw(TetrisBoard *self, int start_x_px, int start_y_px, int bl
 		{
 			int block_x = start_x_px + (w * block_length_px);
 			int block_y = start_y_px + (h * block_length_px);
-			tetris_block_draw(self->block_array[w][h], block_x, block_y, block_length_px);
+			tetris_block_draw(self->block_array[w][h], block_x, block_y, block_length_px, 0xFF);
 		}
 	}
 }

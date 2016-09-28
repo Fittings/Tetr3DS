@@ -75,26 +75,34 @@ void tetris_board_controller_commit_piece(TetrisBoardController *self)
 
 }
 
+static u16 calculate_max_piece_down_offset(TetrisBoardController *self)
+{
+	u16 board_height = tetris_board_get_height(self->board);
+	u16 current_y = point_get_y(tetris_board_piece_get_location(self->current_piece));
+
+	for (u16 y = board_height; y > current_y; y--)
+	{
+		s8 y_offset = y - current_y;
+
+		if (tetris_board_can_current_piece_move(self, 0, y_offset))
+		{
+			return y_offset;
+		}
+	}
+
+	return 0; //Note: A piece should always be in a valid position.
+}
+
 void tetris_board_controller_drop_current_piece(TetrisBoardController *self)
 {
 	if (self->current_piece != NULL)
 	{
-		u16 board_height = tetris_board_get_height(self->board);
-		u16 current_y = point_get_y(tetris_board_piece_get_location(self->current_piece));
+		u16 y_offset = calculate_max_piece_down_offset(self);
 
-		for (u16 y = board_height; y > current_y; y--)
-		{
-			s8 y_offset = y - current_y;
-
-			if (tetris_board_can_current_piece_move(self, 0, y_offset))
-			{
-				tetris_board_controller_move_current_piece(self, 0, y_offset);
-				return;
-			}
-		}
+		tetris_board_controller_move_current_piece(self, 0, y_offset);
 	}
-
 }
+
 
 void tetris_board_controller_move_current_piece(TetrisBoardController *self, s8 x_offset, s8 y_offset)
 {
@@ -144,7 +152,14 @@ bool tetris_board_can_current_piece_move(TetrisBoardController *self, s8 x_offse
 
 void tetris_board_controller_draw(TetrisBoardController *self)
 {
-	tetris_board_view_draw(self->view, self->board, self->current_piece);
+	Point *shadow_board_location = NULL;
+	if (self->current_piece != NULL)
+	{
+		Point *current_board_location = tetris_board_piece_get_location(self->current_piece);
+		shadow_board_location = point_init(point_get_x(current_board_location), calculate_max_piece_down_offset(self));
+	}
+
+	tetris_board_view_draw(self->view, self->board, self->current_piece, shadow_board_location);
 }
 
 

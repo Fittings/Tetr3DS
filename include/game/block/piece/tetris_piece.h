@@ -95,7 +95,7 @@ extern TetrisPiece tetris_block_rotate_90_clockwise(TetrisPiece *self, u8 rotati
  * @param block_size The width/height of the TetrisBlock to draw
  *
  */
-extern void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_size);
+extern void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_size, u8 opacity);
 
 
 /**

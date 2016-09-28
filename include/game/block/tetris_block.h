@@ -80,7 +80,7 @@ extern Colour tetris_block_get_colour(TetrisBlock *self);
  * @param y The y co-ordinate of the top left of the box. (Where 0,0 is top left of the screen)
  * @param length The width and height of the block.
  */
-extern void tetris_block_draw(TetrisBlock *self, u16 x, u16 y, u16 length);
+extern void tetris_block_draw(TetrisBlock *self, u16 x, u16 y, u16 length, u8 opacity);
 
 
 

@@ -84,7 +84,7 @@ static Point *calculate_board_render_start_point(TetrisBoardView *self, TetrisBo
  * Re-calculates the Region based on the board size.
  * Centres the board inside of the max_region and returns this new region.
  */
-void tetris_board_view_draw(TetrisBoardView *self, TetrisBoard *board, TetrisBoardPiece *board_piece)
+void tetris_board_view_draw(TetrisBoardView *self, TetrisBoard *board, TetrisBoardPiece *board_piece, Point *shadow_board_location)
 {
 	u16 block_size = calculate_block_size(self, board);
 	Point *top_left_corner = calculate_board_render_start_point(self, board, block_size);
@@ -93,6 +93,6 @@ void tetris_board_view_draw(TetrisBoardView *self, TetrisBoard *board, TetrisBoa
 
 	if (board_piece != NULL)
 	{
-		tetris_board_piece_draw(board_piece, point_get_x(top_left_corner), point_get_y(top_left_corner), block_size);
+		tetris_board_piece_draw(board_piece, point_get_x(top_left_corner), point_get_y(top_left_corner), block_size, shadow_board_location);
 	}
 }

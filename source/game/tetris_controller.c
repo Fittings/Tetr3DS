@@ -216,7 +216,5 @@ void tetris_controller_free(TetrisController *self)
 
 bool tetris_controller_is_running(TetrisController *self)
 {
-	//ZZZ TODO Proper game finishing.
-	return true;
-	//return self->is_running;
+	return self->is_running;
 }

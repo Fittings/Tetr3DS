@@ -65,16 +65,16 @@ Colour tetris_block_get_colour(TetrisBlock *self)
 }
 
 
-void tetris_block_draw(TetrisBlock *self, u16 x, u16 y, u16 length)
+void tetris_block_draw(TetrisBlock *self, u16 x, u16 y, u16 length, u8 opacity)
 {
 
 	if (self->colour != INVISIBLE)
 	{
 		//Draw a black border
-		sf2d_draw_rectangle(x, y, length, length, RGBA8(0x00, 0x00, 0x00, 0xFF));
+		sf2d_draw_rectangle(x, y, length, length, RGBA8(0x00, 0x00, 0x00, opacity));
 
 		//Draw the square
-		sf2d_draw_rectangle(x+1, y+1, length-1, length-1, getColourRGBAValue(self->colour, 0xFF));
+		sf2d_draw_rectangle(x+1, y+1, length-1, length-1, getColourRGBAValue(self->colour, opacity));
 	}
 }
 

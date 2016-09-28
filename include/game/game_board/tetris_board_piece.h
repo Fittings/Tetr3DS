@@ -15,7 +15,7 @@ extern void tetris_board_piece_free(TetrisBoardPiece *self);
 
 extern TetrisPiece *tetris_board_piece_get_tetris_piece(TetrisBoardPiece *self);
 
-extern void tetris_board_piece_draw(TetrisBoardPiece *self, u16 start_x, u16 start_y, u16 block_size);
+extern void tetris_board_piece_draw(TetrisBoardPiece *self, u16 start_x, u16 start_y, u16 block_size, Point *shadow_board_location);
 
 extern Point *tetris_board_piece_get_location(TetrisBoardPiece *self);
 

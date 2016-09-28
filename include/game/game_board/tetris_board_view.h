@@ -14,6 +14,7 @@ extern TetrisBoardView *tetris_board_view_init(Region *max_region, Colour board_
 
 extern void tetris_board_view_free(TetrisBoardView *self);
 
-extern void tetris_board_view_draw(TetrisBoardView *self, TetrisBoard *board, TetrisBoardPiece *board_piece);
+extern void tetris_board_view_draw(TetrisBoardView *self, TetrisBoard *board, TetrisBoardPiece *board_piece, Point *shadow_board_location);
+
 
 #endif

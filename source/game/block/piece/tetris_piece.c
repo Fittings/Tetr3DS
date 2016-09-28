@@ -91,7 +91,7 @@ TetrisPiece *tetris_piece_deep_copy(TetrisPiece *self)
 }
 
 
-void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_size)
+void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_size, u8 opacity)
 {
 	for (int w=0; w < self->width; w++)
 	{
@@ -99,7 +99,7 @@ void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_si
 		{
 			int block_x = pixel_x + ( (w-point_get_x(self->centre_block)) * block_size);
 			int block_y = pixel_y + ( (h-point_get_y(self->centre_block)) * block_size);
-			tetris_block_draw(self->block_array[w][h], block_x , block_y, block_size);
+			tetris_block_draw(self->block_array[w][h], block_x , block_y, block_size, opacity);
 		}
 	}
 }
