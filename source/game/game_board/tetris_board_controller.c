@@ -33,8 +33,6 @@ TetrisBoardController *tetris_board_controller_init(TetrisBoard *board, Region *
 	if (!self || board == NULL) return NULL;
 
 	{
-
-		Colour colour = BOARD_COLOUR;
 		self->view = tetris_board_view_init(region, BOARD_COLOUR);
 
 		self->board = board;

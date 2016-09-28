@@ -2,6 +2,7 @@
 #define INCLUDE_GAME_REGION_H_
 
 #include <3ds.h>
+#include "../include/game/block/point.h"
 
 typedef struct _Region Region;
 

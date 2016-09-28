@@ -12,7 +12,7 @@
 #include "../../include/game/game_board/tetris_board_controller.h"
 #include "../include/game/configurations/piece_set.h"
 #include "../include/game/block_generator/piece_generator.h"
-#include "../include/general/region/region.h"
+#include "../../include/general/region/region.h"
 
 
 //ZZZ TODO Remove these from globals and make part of the constructor.

@@ -3,7 +3,7 @@
 
 #include "../include/game/game_board/tetris_board.h"
 #include "../include/game/game_board/tetris_board_piece.h"
-#include "../include/general/region/region.h"
+#include "../../include/general/region/region.h"
 #include "../include/game/game_board/tetris_board_view.h"
 
 

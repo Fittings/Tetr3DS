@@ -73,7 +73,7 @@ static Point *calculate_board_render_start_point(TetrisBoardView *self, TetrisBo
 	int actual_height = block_size * tetris_board_get_height(board);
 	int start_y = (actual_height > max_height_px) ? max_height_px - actual_height : max_top_left_y_px + ((max_height_px - actual_height)/2);
 
-	return region_init(point_init(start_x, start_y), actual_width, actual_height);
+	return point_init(start_x, start_y);
 }
 
 
