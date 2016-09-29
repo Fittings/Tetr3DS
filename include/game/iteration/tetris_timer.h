@@ -18,6 +18,8 @@ extern void tetris_timer_free(TetrisTimer *self);
 
 extern bool tetris_timer_is_new_iteration(TetrisTimer *self, s8 current_tetris_level);
 
+extern void tetris_timer_current_iteration_reset(TetrisTimer *self, double reset_percentage);
+
 
 
 

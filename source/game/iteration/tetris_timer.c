@@ -44,9 +44,10 @@ void tetris_timer_free(TetrisTimer *self)
 }
 
 
-void tetris_timer_current_iteration_reset(TetrisTimer *self, s8 reset_percentage)
+void tetris_timer_current_iteration_reset(TetrisTimer *self, double reset_percentage)
 {
-
+	u64 update_difference_ms = osGetTime() - self->last_board_update;
+	self->last_board_update += (update_difference_ms * (reset_percentage / 100));
 }
 
 
