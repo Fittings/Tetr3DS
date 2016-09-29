@@ -13,6 +13,7 @@
 #include "../include/game/configurations/piece_set.h"
 #include "../include/game/block_generator/piece_generator.h"
 #include "../../include/general/region/region.h"
+#include "../include/game/iteration/tetris_timer.h"
 
 
 //ZZZ TODO Remove these from globals and make part of the constructor.
@@ -25,6 +26,7 @@ struct _TetrisController
 {
 	TetrisBoardController *board_controller;
 	PieceGenerator *piece_generator;
+	TetrisTimer *tetris_timer;
 
 	//Game Settings
 	bool is_running;
@@ -39,39 +41,6 @@ struct _TetrisController
 typedef struct _TetrisController TetrisController;
 
 
-
-
-
-static bool is_new_tetris_iteration(TetrisController *self)
-{
-	/*
-	actualLevel      iterationDelay [seconds]
-	                (rounded to nearest 0.05)
-	============    =========================
-	     1                 0.50
-	     2                 0.45
-	     3                 0.40
-	     4                 0.35
-	     5                 0.30
-	     6                 0.25
-	     7                 0.20
-	     8                 0.15
-	     9                 0.10
-	    10                 0.05
-	*/
-	u64 update_difference_ms = osGetTime() - self->last_board_update;
-	u64 current_iteration_delay = (1000 * (11 - self->level) * 0.05);
-
-	if (update_difference_ms >= current_iteration_delay)
-	{
-		self->last_board_update = osGetTime();
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
 
 
 
@@ -168,7 +137,7 @@ void update_tetris_controller(TetrisController *self)
 
 	handleInput(self);
 
-	if (is_new_tetris_iteration(self))
+	if (tetris_timer_is_new_iteration(self->tetris_timer, self->level))
 	{
 		do_new_iteration(self);
 	}
@@ -191,9 +160,9 @@ TetrisController *tetris_controller_init()
 		self->piece_generator = piece_generator_init(G_QUEUE_SIZE, G_PIECE_SET); //ZZZ TODO Fix this, no global pls
 		self->is_running = true; //ZZZ TODO Move this
 
-		//ZZZ TODO Move this out of here.
-		self->game_start_time = osGetTime();
-		self->last_board_update = osGetTime();
+
+		self->tetris_timer = tetris_timer_init(osGetTime());
+
 		self->level = 5;
 	}
 
