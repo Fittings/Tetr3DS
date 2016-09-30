@@ -45,7 +45,6 @@ typedef struct _TetrisController TetrisController;
 
 static void do_new_iteration(TetrisController *self)
 {
-	tetris_board_controller_remove_completed_rows(self->board_controller);
 	if (tetris_board_is_current_piece(self->board_controller))
 	{
 		//Attempt to make piece fall.

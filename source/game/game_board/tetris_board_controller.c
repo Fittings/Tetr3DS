@@ -73,6 +73,8 @@ void tetris_board_controller_commit_piece(TetrisBoardController *self)
 	tetris_board_piece_free(self->current_piece);
 	self->current_piece = NULL;
 
+	tetris_board_controller_remove_completed_rows(self);
+
 }
 
 static u16 calculate_max_piece_down_offset(TetrisBoardController *self)
