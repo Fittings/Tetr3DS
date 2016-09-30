@@ -30,7 +30,6 @@ struct _TetrisController
 
 	//Game Settings
 	bool is_running;
-	u8 level;
 
 	//Speed Settings
 	u64 game_start_time;
@@ -139,7 +138,7 @@ void update_tetris_controller(TetrisController *self)
 
 	handleInput(self);
 
-	if (tetris_timer_is_new_iteration(self->tetris_timer, self->level))
+	if (tetris_timer_is_new_iteration(self->tetris_timer))
 	{
 		do_new_iteration(self);
 	}
@@ -164,8 +163,6 @@ TetrisController *tetris_controller_init()
 
 
 		self->tetris_timer = tetris_timer_init(osGetTime());
-
-		self->level = 5;
 	}
 
 

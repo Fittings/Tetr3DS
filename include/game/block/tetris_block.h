@@ -53,15 +53,6 @@ extern TetrisBlock *tetris_block_deep_copy(TetrisBlock *self);
  */
 extern void tetris_block_free(TetrisBlock *self);
 
-/**
- * @brief Returns the size of a TetrisBlock struct
- *
- * Returns the size of the TetrisBlock struct.
- * This can change depending on the implementation of this header.
- *
- * @return The size of th TetrisBlock struct.
- */
-extern int tetris_block_sizeof();
 
 /**
  * @brief Returns the type of block
@@ -70,6 +61,13 @@ extern int tetris_block_sizeof();
  */
 extern BlockType tetris_block_get_type(TetrisBlock *self);
 
+/**
+ * @brief Returns the colour of the block.
+ *
+ * Returns the colour of the block.
+ *
+ * @param self The TetrisBlock to reference.
+ */
 extern Colour tetris_block_get_colour(TetrisBlock *self);
 
 /**
@@ -79,6 +77,7 @@ extern Colour tetris_block_get_colour(TetrisBlock *self);
  * @param x The x co-ordinate of the top left of the box. (Where 0,0 is top left of the screen)
  * @param y The y co-ordinate of the top left of the box. (Where 0,0 is top left of the screen)
  * @param length The width and height of the block.
+ * @param opacity The opacity of the TetrisBlock to draw.
  */
 extern void tetris_block_draw(TetrisBlock *self, u16 x, u16 y, u16 length, u8 opacity);
 

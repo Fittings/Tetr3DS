@@ -11,6 +11,9 @@
 
 struct _TetrisTimer
 {
+	//Timer level
+	s8 current_level;
+
 	//Speed Settings
 	u64 game_start_time;
 	u64 last_board_update;
@@ -50,8 +53,6 @@ void tetris_timer_current_iteration_reset(TetrisTimer *self, double reset_percen
 	self->last_board_update += (update_difference_ms * (reset_percentage / 100));
 }
 
-
-
 /*
 actualLevel      iterationDelay [seconds]
                 (rounded to nearest 0.05)
@@ -67,10 +68,10 @@ actualLevel      iterationDelay [seconds]
      9                 0.10
     10                 0.05
 */
-bool tetris_timer_is_new_iteration(TetrisTimer *self, s8 current_tetris_level)
+bool tetris_timer_is_new_iteration(TetrisTimer *self)
 {
 	u64 update_difference_ms = osGetTime() - self->last_board_update;
-	u64 current_iteration_delay = (1000 * (11 - current_tetris_level) * 0.05);
+	u64 current_iteration_delay = (1000 * (11 - self->current_level) * 0.05);
 
 	if (update_difference_ms >= current_iteration_delay)
 	{
