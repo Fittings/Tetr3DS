@@ -20,6 +20,8 @@ extern bool tetris_timer_is_new_iteration(TetrisTimer *self);
 
 extern void tetris_timer_current_iteration_reset(TetrisTimer *self, double reset_percentage);
 
+extern void tetris_timer_new_iteration(TetrisTimer *self);
+
 
 
 

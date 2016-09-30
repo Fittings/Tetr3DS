@@ -45,7 +45,7 @@ typedef struct _TetrisController TetrisController;
 
 static void do_new_iteration(TetrisController *self)
 {
-
+	tetris_board_controller_remove_completed_rows(self->board_controller);
 	if (tetris_board_is_current_piece(self->board_controller))
 	{
 		//Attempt to make piece fall.
@@ -56,7 +56,6 @@ static void do_new_iteration(TetrisController *self)
 		else
 		{
 			tetris_board_controller_commit_piece(self->board_controller);
-			tetris_board_controller_remove_completed_rows(self->board_controller);
 		}
 	}
 	else
@@ -94,6 +93,26 @@ static void draw_tetris_game(TetrisController *self)
 }
 
 
+static void move_piece(TetrisController *self, u16 x_offset, u16 y_offset)
+{
+	tetris_board_controller_move_current_piece(self->board_controller, x_offset, y_offset);
+
+	if (!tetris_board_can_current_piece_move(self->board_controller, 0, 1))
+	{
+		tetris_timer_current_iteration_reset(self->tetris_timer, 80);
+	}
+}
+
+static void rotate_piece(TetrisController *self, s8 rotations)
+{
+	tetris_board_controller_rotate_current_piece(self->board_controller, rotations);
+
+	if (!tetris_board_can_current_piece_move(self->board_controller, 0, 1))
+	{
+		tetris_timer_current_iteration_reset(self->tetris_timer, 80);
+	}
+}
+
 static void handleInput(TetrisController *self)
 {
 	//ZZZ TODO Less primitive, standardise movement into a seperate function.
@@ -104,24 +123,23 @@ static void handleInput(TetrisController *self)
 		//tetris_board_controller_move_current_piece(self->board_controller, 0, -1);
 		break;
 	case MOVE_DOWN:
-		tetris_board_controller_move_current_piece(self->board_controller, 0, 1);
+		move_piece(self, 0, 1);
 		break;
 	case MOVE_LEFT:
-		tetris_board_controller_move_current_piece(self->board_controller, -1, 0);
+		move_piece(self, -1, 0);
 		break;
 	case MOVE_RIGHT:
-		tetris_board_controller_move_current_piece(self->board_controller, 1, 0);
+		move_piece(self, 1, 0);
 		break;
 	case DROP_INSTANTLY: //B
 		tetris_board_controller_drop_current_piece(self->board_controller);
+		tetris_timer_new_iteration(self->tetris_timer);
 		break;
 	case ROTATE_CLOCKWISE: //X
-		tetris_timer_current_iteration_reset(self->tetris_timer, 80);
-		tetris_board_controller_rotate_current_piece(self->board_controller, 1);
+		rotate_piece(self, 1);
 		break;
 	case ROTATE_ANTICLOCKWISE: //Y
-		tetris_timer_current_iteration_reset(self->tetris_timer, 80);
-		tetris_board_controller_rotate_current_piece(self->board_controller, 3);
+		rotate_piece(self, 3);
 		break;
 	case STORE_BLOCK:
 		break;

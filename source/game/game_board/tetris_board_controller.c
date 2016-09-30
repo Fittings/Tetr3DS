@@ -80,7 +80,7 @@ static u16 calculate_max_piece_down_offset(TetrisBoardController *self)
 	u16 board_height = tetris_board_get_height(self->board);
 	u16 current_y = point_get_y(tetris_board_piece_get_location(self->current_piece));
 
-	for (u16 y_offset = 0; (current_y + y_offset) < board_height; y_offset++)
+	for (u16 y_offset = 0; (current_y + y_offset) <= board_height; y_offset++)
 	{
 		if (!tetris_board_can_current_piece_move(self, 0, y_offset))
 		{
@@ -97,7 +97,11 @@ void tetris_board_controller_drop_current_piece(TetrisBoardController *self)
 	{
 		u16 y_offset = calculate_max_piece_down_offset(self);
 
-		tetris_board_controller_move_current_piece(self, 0, y_offset);
+		Point *old_point = tetris_board_piece_get_location(self->current_piece);
+		Point *new_location = point_init(point_get_x(old_point) + 0, point_get_y(old_point) + y_offset);
+		tetris_board_piece_set_location(self->current_piece, new_location);
+
+		tetris_board_controller_commit_piece(self);
 	}
 }
 
@@ -114,7 +118,7 @@ void tetris_board_controller_move_current_piece(TetrisBoardController *self, s8 
 }
 
 
-void tetris_board_controller_rotate_current_piece(TetrisBoardController *self, u8 rotations)
+void tetris_board_controller_rotate_current_piece(TetrisBoardController *self, s8 rotations)
 {
 	if (self->current_piece != NULL)
 	{
@@ -143,10 +147,15 @@ bool tetris_board_is_current_piece(TetrisBoardController *self)
 
 bool tetris_board_can_current_piece_move(TetrisBoardController *self, s8 x_offset, s8 y_offset)
 {
-	Point *old_point = tetris_board_piece_get_location(self->current_piece);
-	Point *new_location = point_init(point_get_x(old_point) + x_offset, point_get_y(old_point) + y_offset);
+	if (self->current_piece != NULL)
+	{
+		Point *old_point = tetris_board_piece_get_location(self->current_piece);
+		Point *new_location = point_init(point_get_x(old_point) + x_offset, point_get_y(old_point) + y_offset);
 
-	return tetris_board_is_piece_location_valid(self->board, tetris_board_piece_get_tetris_piece(self->current_piece), new_location);
+		return tetris_board_is_piece_location_valid(self->board, tetris_board_piece_get_tetris_piece(self->current_piece), new_location);
+	}
+
+	return false;
 }
 
 void tetris_board_controller_draw(TetrisBoardController *self)

@@ -17,7 +17,7 @@ extern void tetris_board_controller_remove_completed_rows(TetrisBoardController 
 
 extern void tetris_board_controller_spawn_piece(TetrisBoardController *self, TetrisPiece *piece);
 extern void tetris_board_controller_move_current_piece(TetrisBoardController *self, s8 x_offset, s8 y_offset);
-extern void tetris_board_controller_rotate_current_piece(TetrisBoardController *self, u8 rotations);
+extern void tetris_board_controller_rotate_current_piece(TetrisBoardController *self, s8 rotations);
 extern void tetris_board_controller_commit_piece(TetrisBoardController *self);
 
 extern void tetris_board_controller_drop_current_piece(TetrisBoardController *self);

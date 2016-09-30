@@ -34,7 +34,7 @@ static void free_block_array(TetrisBoard *self)
 
 
 //Checks if there is a block at the current location.
-static bool is_position_free(TetrisBoard *self, u16 x, u16 y)
+static bool is_position_free(TetrisBoard *self, s16 x, s16 y)
 {
 	if (x < 0) return false;
 	if (x >= self->block_array_width) return false;

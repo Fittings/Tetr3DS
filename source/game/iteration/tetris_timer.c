@@ -46,6 +46,11 @@ void tetris_timer_free(TetrisTimer *self)
 	}
 }
 
+void tetris_timer_new_iteration(TetrisTimer *self)
+{
+	self->last_board_update = 0;
+}
+
 
 void tetris_timer_current_iteration_reset(TetrisTimer *self, double reset_percentage)
 {
