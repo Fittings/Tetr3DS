@@ -46,7 +46,7 @@ extern void tetris_timer_free(TetrisTimer *self);
  * Returns true if there is a new Tetris Iteration.
  *
  * @param self The TetrisTimer struct to reference.
- * @retrun true if there is a new Tetris Iteration.
+ * @return true if there is a new Tetris Iteration.
  */
 extern bool tetris_timer_is_new_iteration(TetrisTimer *self);
 
