@@ -93,7 +93,7 @@ extern TetrisPiece tetris_block_rotate_90_clockwise(TetrisPiece *self, u8 rotati
  * @param pixel_x The x pixel co-ordinate for the top left of the centre block.
  * @param pixel_y The y pixel co-ordinate for the top left of the centre block.
  * @param block_size The width/height of the TetrisBlock to draw
- *
+ * @param opacity The opacity of the TetrisPiece to draw.
  */
 extern void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_size, u8 opacity);
 

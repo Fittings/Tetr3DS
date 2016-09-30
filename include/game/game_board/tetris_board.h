@@ -67,6 +67,15 @@ extern u16 tetris_board_get_width(TetrisBoard *self);
  */
 extern u16 tetris_board_get_height(TetrisBoard *self);
 
+/**
+ * @brief Returns the TetrisBlock at the TetrisBoard location.
+ *
+ * Returns the TetrisBlock at the (x,y) array positions.
+ *
+ * @param self The TetrisBoard struct to reference.
+ * @param x The x position in the 2d array of TetrisBlocks.
+ * @param y The y position in the 2d array of TetrisBlocks.
+ */
 extern TetrisBlock *tetris_board_get_block(TetrisBoard *self, u16 x, u16 y);
 
 /**
@@ -92,7 +101,16 @@ extern void tetris_board_remove_full_lines(TetrisBoard *self);
 extern bool tetris_board_is_piece_location_valid(TetrisBoard *self, TetrisPiece *piece, Point *piece_centre_location);
 
 
-
+/**
+ * @brief Draws the TetrisBoard.
+ *
+ * Draws the tetrisboard at the location and with block size specified.
+ *
+ * @param self The TetrisBoard struct to reference.
+ * @param start_x_px The x co-ordinate pixel for the top left of the board.
+ * @param start_y_px The y co-ordinate pixel for the top left of the board.
+ * @param block_length_px The size of the TetrisBlocks in pixels.
+ */
 extern void tetris_board_draw(TetrisBoard *self, int start_x_px, int start_y_px, int block_length_px);
 
 
