@@ -174,7 +174,7 @@ TetrisController *tetris_controller_init()
 
 	{
 		TetrisBoard *board = tetris_board_init(10, 20); //ZZZ TODO Make this a construction setting.
-		self->board_controller = tetris_board_controller_init(board, region_init(point_init(0, 0), 400, 240));
+		self->board_controller = tetris_board_controller_init(board, region_init(point_init(100, 0), 200, 240));
 		self->piece_generator = piece_generator_init(G_QUEUE_SIZE, G_PIECE_SET); //ZZZ TODO Fix this, no global pls
 		self->is_running = true; //ZZZ TODO Move this
 
@@ -192,6 +192,8 @@ void tetris_controller_free(TetrisController *self)
 	if (self)
 	{
 		tetris_board_controller_free(self->board_controller);
+		piece_generator_free(self->piece_generator);
+		tetris_timer_free(self->tetris_timer);
 
 		free(self);
 	}

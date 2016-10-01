@@ -42,6 +42,14 @@ PieceGenerator *piece_generator_init(u8 size, PieceSetType set_type)
 	return self;
 }
 
+void piece_generator_free(PieceGenerator *self)
+{
+	if (self)
+	{
+		free(self);
+	}
+}
+
 
 TetrisPiece *piece_generator_get_next(PieceGenerator *self)
 {

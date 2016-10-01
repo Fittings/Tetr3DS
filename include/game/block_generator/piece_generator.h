@@ -38,6 +38,16 @@ extern PieceGenerator *piece_generator_init(u8 size, PieceSetType set_type);
 
 
 /**
+ * @brief Frees the PieceGenerator struct.
+ *
+ * Frees the PieceGenerator struct.
+ *
+ * @param self The PieceGenerator struct to reference.
+ */
+extern void piece_generator_free(PieceGenerator *self);
+
+
+/**
  * @brief Returns the next piece in the queue.
  *
  * Returns the next piece in the queue.
