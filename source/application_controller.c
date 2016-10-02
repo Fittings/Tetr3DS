@@ -9,6 +9,7 @@
 
 struct _ApplicationController
 {
+	bool is_running;
 	ExternalState flag_mode;
 
 	TetrisController *tetris_controller;
@@ -27,6 +28,7 @@ ApplicationController *application_controller_init()
 	}
 
 	{
+		self->is_running = true;
 		self->flag_mode = GAME_STATE;
 
 		self->tetris_controller = tetris_controller_init();
@@ -56,17 +58,12 @@ static void update_menu(ApplicationController *self)
 
 static void update_game(ApplicationController *self)
 {
-	/* Start the game, if not loaded */
-
-
-
 	if (tetris_controller_is_running(self->tetris_controller))
 	{
 		update_tetris_controller(self->tetris_controller);
 	}
 	else
 	{
-		//tetris_controller_free(self->tetris_controller);
 		self->flag_mode = QUIT_APP;
 	}
 
@@ -96,6 +93,8 @@ void update_application_controller(ApplicationController *self)
 			update_game(self);
 			break;
 		case QUIT_APP:
+			tetris_controller_free(self->tetris_controller);
+			self->is_running = false;
 			break;
 	}
 }
@@ -105,6 +104,6 @@ void update_application_controller(ApplicationController *self)
 
 bool application_controller_is_running(ApplicationController *self)
 {
-	return !(self->flag_mode == QUIT_APP);
+	return self->is_running;
 }
 

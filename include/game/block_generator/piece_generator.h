@@ -13,6 +13,7 @@
 
 #include "../include/game/configurations/piece_set.h"
 #include "../include/game/block/piece/tetris_piece.h"
+#include "../general/region/region.h"
 
 
 
@@ -58,7 +59,16 @@ extern void piece_generator_free(PieceGenerator *self);
  */
 extern TetrisPiece *piece_generator_get_next(PieceGenerator *self);
 
-
+/**
+ * @brief Draws the Piece Generator in a given region.
+ *
+ * Draws a piece generator in a given region.
+ *
+ * @param self The PieceGenerator struct to reference.
+ * @param max_region The maximum region that the generator will be rendered in.
+ * @param block_size The maximum block size the piece generator will render with.
+ */
+extern void piece_generator_draw(PieceGenerator *self, Region *max_region, int block_size);
 
 
 #endif
