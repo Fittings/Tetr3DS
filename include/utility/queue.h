@@ -10,6 +10,8 @@ typedef struct _Queue Queue;
 
 extern Queue *queue_init(u32 max_size);
 
+extern void **queue_get_item_list(Queue *queue);
+
 extern bool queue_is_full(Queue *queue);
 
 extern int queue_get_current_size(Queue *queue);

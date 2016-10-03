@@ -9,8 +9,6 @@
 
 struct _TetrisBoardController
 {
-	TetrisBoardView *view;
-
 	TetrisBoard *board;
 	TetrisBoardPiece *current_piece;
 };
@@ -33,8 +31,6 @@ TetrisBoardController *tetris_board_controller_init(TetrisBoard *board, Region *
 	if (!self || board == NULL) return NULL;
 
 	{
-		self->view = tetris_board_view_init(region, BOARD_COLOUR);
-
 		self->board = board;
 		self->current_piece = NULL;
 	}

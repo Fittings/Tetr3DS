@@ -80,6 +80,7 @@ static void draw_tetris_game(TetrisController *self)
 	sf2d_start_frame(GFX_TOP, GFX_LEFT);
 	{
 		tetris_board_controller_draw(self->board_controller, region_init(point_init(100, 0), 200, 240), STANDARD_BLOCK_SIZE);
+		piece_generator_draw(self->piece_generator, region_init(point_init(0, 0), 100, 240), STANDARD_BLOCK_SIZE);
 	}
 	sf2d_end_frame();
 

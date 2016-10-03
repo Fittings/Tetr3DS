@@ -51,6 +51,23 @@ Queue *queue_init(u32 max_size)
 }
 
 
+void **queue_get_item_list(Queue *queue)
+{
+	if (queue->current_size <= 0) return NULL;
+
+	void **item_list = malloc(queue->current_size * sizeof(void));
+
+	Node *current_node = queue->head_node;
+	for (int i=0; current_node->next_node != NULL; i++)
+	{
+		item_list[i] = current_node->item;
+		current_node = current_node->next_node;
+	}
+
+	return item_list;
+}
+
+
 bool queue_is_full(Queue *queue)
 {
 	return (queue->current_size >= queue->upper_bound);
@@ -60,7 +77,6 @@ int queue_get_current_size(Queue *queue)
 {
 	return queue->current_size;
 }
-
 
 
 void queue_add(Queue *queue, void *item)
@@ -79,7 +95,6 @@ void queue_add(Queue *queue, void *item)
 			current_node = current_node->next_node;
 		}
 		current_node->next_node = create_node(item);
-		queue->current_size++;
 	}
 
 	queue->current_size++;

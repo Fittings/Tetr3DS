@@ -74,5 +74,27 @@ TetrisPiece **piece_generator_get_list(PieceGenerator *self)
 	return piece_array;
 }
 
+void piece_generator_draw(PieceGenerator *self, Region *max_region, int block_size)
+{
+	u32 gap_size = 2 * block_size;
+
+	u16 y_px = region_get_top_left_y(max_region);
+
+
+	TetrisPiece **tetris_piece_list = (TetrisPiece **) queue_get_item_list(self->piece_queue);
+	for (u8 i=0; i < queue_get_current_size(self->piece_queue); i++)
+	{
+		TetrisPiece *tetris_piece = tetris_piece_list[i];
+		if (tetris_piece != NULL)
+		{
+			u16 x_px = point_get_x(tetris_piece_get_point(tetris_piece)) * block_size;
+			y_px += (block_size * i) + (block_size * tetris_piece_get_height(tetris_piece));
+			tetris_piece_draw(tetris_piece, x_px, y_px, block_size, 0xFF);
+			y_px += gap_size;
+		}
+
+	}
+}
+
 
 
