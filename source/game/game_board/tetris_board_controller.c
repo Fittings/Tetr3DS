@@ -160,17 +160,43 @@ bool tetris_board_can_current_piece_move(TetrisBoardController *self, s8 x_offse
 	return false;
 }
 
-void tetris_board_controller_draw(TetrisBoardController *self)
+
+//void tetris_board_controller_draw(TetrisBoardController *self, Region *region, u32 block_size)
+//{
+//	Point *shadow_board_location = NULL;
+//	if (self->current_piece != NULL)
+//	{
+//		Point *current_board_location = tetris_board_piece_get_location(self->current_piece);
+//		shadow_board_location = point_init(point_get_x(current_board_location), calculate_max_piece_down_offset(self));
+//	}
+//
+//	tetris_board_view_draw(self->view, self->board, self->current_piece, shadow_board_location, block_size);
+//
+//	if (self->current_piece != NULL)
+//	{
+//		tetris_board_piece_draw(self->current_piece, point_get_x(top_left_corner), point_get_y(top_left_corner), block_size, shadow_board_location);
+//	}
+//}
+
+
+void tetris_board_controller_draw(TetrisBoardController *self, Region *region, u32 block_size)
 {
+
+	Point *top_left_corner = region_get_top_left_point(region);
+
+	tetris_board_draw(self->board, point_get_x(top_left_corner), point_get_y(top_left_corner), block_size);
+
 	Point *shadow_board_location = NULL;
 	if (self->current_piece != NULL)
 	{
 		Point *current_board_location = tetris_board_piece_get_location(self->current_piece);
 		shadow_board_location = point_init(point_get_x(current_board_location), calculate_max_piece_down_offset(self));
-	}
 
-	tetris_board_view_draw(self->view, self->board, self->current_piece, shadow_board_location);
+		tetris_board_piece_draw(self->current_piece, point_get_x(top_left_corner), point_get_y(top_left_corner), block_size, shadow_board_location);
+	}
 }
+
+
 
 
 

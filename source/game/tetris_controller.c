@@ -20,6 +20,8 @@
 #define G_QUEUE_SIZE 8
 #define G_PIECE_SET TETRIS_SET_STANDARD
 
+#define STANDARD_BLOCK_SIZE 12
+
 
 
 struct _TetrisController
@@ -77,7 +79,7 @@ static void draw_tetris_game(TetrisController *self)
 {
 	sf2d_start_frame(GFX_TOP, GFX_LEFT);
 	{
-		tetris_board_controller_draw(self->board_controller);
+		tetris_board_controller_draw(self->board_controller, region_init(point_init(100, 0), 200, 240), STANDARD_BLOCK_SIZE);
 	}
 	sf2d_end_frame();
 

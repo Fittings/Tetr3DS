@@ -135,7 +135,8 @@ extern bool tetris_board_can_current_piece_move(TetrisBoardController *self, s8 
  *
  * @param self The TetrisBoardStruct to reference.
  */
-extern void tetris_board_controller_draw(TetrisBoardController *self);
+extern void tetris_board_controller_draw(TetrisBoardController *self, Region *region, u32 block_size);
+
 
 
 
