@@ -51,6 +51,7 @@ int main(void)
 	{
 		update_application_controller(application_controller);
 	}
+	application_controller_free(application_controller);
 
 	return application_finish();
 }
