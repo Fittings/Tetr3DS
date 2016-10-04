@@ -198,9 +198,7 @@ void tetris_board_concrete_tetris_piece(TetrisBoard *self, TetrisPiece *current_
 					board_y >= 0 && board_y < self->block_array_height &&
 					tetris_block_get_type(tetris_array[x][y]) != BLOCK_TYPE_EMPTY)
 			{
-				//tetris_block_free(self->block_array[board_x][board_y]);
-				self->block_array[board_x][board_y] = tetris_array[x][y];
-				tetris_array[x][y] = NULL; //Note: This is done so we can't accidentally free the block.
+				self->block_array[board_x][board_y] = tetris_block_deep_copy(tetris_array[x][y]);
 			}
 		}
 	}
@@ -221,14 +219,6 @@ void tetris_board_remove_full_lines(TetrisBoard *self)
 		}
 	}
 }
-
-
-
-
-
-
-
-//ZZZ TODO Move draw methods into a seperate view class.
 
 
 

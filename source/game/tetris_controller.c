@@ -43,7 +43,7 @@ typedef struct _TetrisController TetrisController;
 
 
 
-
+int temp = 1;
 
 static void do_new_iteration(TetrisController *self)
 {
@@ -57,6 +57,7 @@ static void do_new_iteration(TetrisController *self)
 		else
 		{
 			tetris_board_controller_commit_piece(self->board_controller);
+			tetris_timer_new_iteration(self->tetris_timer);
 		}
 	}
 	else
@@ -70,7 +71,6 @@ static void do_new_iteration(TetrisController *self)
 		else
 		{
 			self->is_running = false;
-			return;
 		}
 	}
 }
@@ -87,7 +87,6 @@ static void draw_tetris_game(TetrisController *self)
 
 	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
 	{
-
 	}
 	sf2d_end_frame();
 

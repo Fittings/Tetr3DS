@@ -61,10 +61,11 @@ void tetris_board_controller_spawn_piece(TetrisBoardController *self, TetrisPiec
 
 void tetris_board_controller_commit_piece(TetrisBoardController *self)
 {
-	TetrisPiece *current_piece = tetris_board_piece_get_tetris_piece(self->current_piece);
+	TetrisPiece *current_tetris_piece = tetris_board_piece_get_tetris_piece(self->current_piece);
 	Point *current_location = tetris_board_piece_get_location(self->current_piece);
 
-	tetris_board_concrete_tetris_piece(self->board, current_piece, current_location);
+
+	tetris_board_concrete_tetris_piece(self->board, current_tetris_piece, current_location);
 
 	tetris_board_piece_free(self->current_piece);
 	self->current_piece = NULL;
@@ -91,7 +92,7 @@ static u16 calculate_max_piece_down_offset(TetrisBoardController *self)
 
 void tetris_board_controller_drop_current_piece(TetrisBoardController *self)
 {
-	if (self->current_piece != NULL)
+	if (tetris_board_is_current_piece(self))
 	{
 		u16 y_offset = calculate_max_piece_down_offset(self);
 

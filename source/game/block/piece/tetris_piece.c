@@ -62,10 +62,7 @@ void tetris_piece_free(TetrisPiece *self)
 			for (int y=0; y < self->height; y++)
 			{
 				TetrisBlock *current_block = self->block_array[x][y];
-				if (current_block != NULL)
-				{
-					tetris_block_free(current_block);
-				}
+				tetris_block_free(current_block);
 			}
 		}
 

@@ -37,7 +37,9 @@ void tetris_block_free(TetrisBlock *self)
 {
 	if (self)
 	{
-		free(self);
+		//ZZZ TODO There is something messed up here. If a piece drops instantly and calls this its fine,
+		//ZZZ TODO But if it falls we get some messed up behaviour. What's the difference...
+		//free(self);
 	}
 }
 
