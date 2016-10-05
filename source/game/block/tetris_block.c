@@ -61,7 +61,7 @@ Colour tetris_block_get_colour(TetrisBlock *self)
 }
 
 
-void tetris_block_draw(TetrisBlock *self, u16 x, u16 y, u16 length, u8 opacity)
+void tetris_block_draw(TetrisBlock *self, s16 x, s16 y, s16 length, s8 opacity)
 {
 
 	if (self->colour != INVISIBLE)

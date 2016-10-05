@@ -6,12 +6,12 @@ struct _Region
 {
 	Point *top_left_corner;
 
-	u16 width;
-	u16 height;
+	s16 width;
+	s16 height;
 };
 
 
-Region *region_init(Point *top_left_corner, u16 width, u16 height)
+Region *region_init(Point *top_left_corner, s16 width, s16 height)
 {
 	Region *self = malloc(sizeof *self);
 	if (!self) return NULL;
@@ -39,22 +39,22 @@ Point *region_get_top_left_point(Region *self)
 	return self->top_left_corner;
 }
 
-u16 region_get_top_left_x(Region *self)
+s16 region_get_top_left_x(Region *self)
 {
 	return point_get_x(self->top_left_corner);
 }
 
-u16 region_get_top_left_y(Region *self)
+s16 region_get_top_left_y(Region *self)
 {
 	return point_get_y(self->top_left_corner);
 }
 
-u16 region_get_width(Region *self)
+s16 region_get_width(Region *self)
 {
 	return self->width;
 }
 
-u16 region_get_height(Region *self)
+s16 region_get_height(Region *self)
 {
 	return self->height;
 }
@@ -75,14 +75,14 @@ void region_set_top_left_corner(Region *self, Point *top_left_corner)
 	self->top_left_corner = top_left_corner;
 }
 
-void region_set_top_left_x(Region *self, u16 x)
+void region_set_top_left_x(Region *self, s16 x)
 {
 	Point *new_top_left_corner = point_init(x, point_get_y(self->top_left_corner));
 
 	region_set_top_left_corner(self, new_top_left_corner);
 }
 
-void region_set_top_left_y(Region *self, u16 y)
+void region_set_top_left_y(Region *self, s16 y)
 {
 	Point *new_top_left_corner = point_init(point_get_x(self->top_left_corner), y);
 

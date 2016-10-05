@@ -7,7 +7,7 @@ TetrisCommand get_game_input()
 {
 	hidScanInput();
 
-
+	u32 kHeld = hidKeysHeld();
 	u32 kDown = hidKeysDown();
 		//Check key_presses
 	if (kDown & KEY_A)
@@ -22,7 +22,7 @@ TetrisCommand get_game_input()
 	{ //X
 		return ROTATE_CLOCKWISE;
 	}
-	else if (kDown & KEY_Y)
+	else if (kHeld& KEY_Y) //ZZZ TODO Rate Limit bby
 	{ //Y
 		return ROTATE_ANTICLOCKWISE;
 	}

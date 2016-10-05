@@ -26,6 +26,6 @@ typedef enum
  * @param colour The colour you want an RGBA value for.
  * @param opacity The opacity of the colour.
  */
-extern u32 getColourRGBAValue(Colour colour, u8 opacity);
+extern u32 getColourRGBAValue(Colour colour, s8 opacity);
 
 #endif

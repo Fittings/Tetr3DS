@@ -79,7 +79,7 @@ extern Colour tetris_block_get_colour(TetrisBlock *self);
  * @param length The width and height of the block.
  * @param opacity The opacity of the TetrisBlock to draw.
  */
-extern void tetris_block_draw(TetrisBlock *self, u16 x, u16 y, u16 length, u8 opacity);
+extern void tetris_block_draw(TetrisBlock *self, s16 x, s16 y, s16 length, s8 opacity);
 
 
 

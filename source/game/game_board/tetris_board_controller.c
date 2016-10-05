@@ -16,7 +16,7 @@ struct _TetrisBoardController
 
 static Point *get_spawn_point(TetrisBoardController *self)
 {
-	u16 width = tetris_board_get_width(self->board);
+	s16 width = tetris_board_get_width(self->board);
 	return point_init(width/2, 0);
 }
 
@@ -24,7 +24,7 @@ static Point *get_spawn_point(TetrisBoardController *self)
 
 
 
-TetrisBoardController *tetris_board_controller_init(TetrisBoard *board, Region *region)
+TetrisBoardController *tetris_board_controller_init(TetrisBoard *board)
 {
 	TetrisBoardController *self = malloc(sizeof *self);
 
@@ -74,12 +74,12 @@ void tetris_board_controller_commit_piece(TetrisBoardController *self)
 
 }
 
-static u16 calculate_max_piece_down_offset(TetrisBoardController *self)
+static s16 calculate_max_piece_down_offset(TetrisBoardController *self)
 {
-	u16 board_height = tetris_board_get_height(self->board);
-	u16 current_y = point_get_y(tetris_board_piece_get_location(self->current_piece));
+	s16 board_height = tetris_board_get_height(self->board);
+	s16 current_y = point_get_y(tetris_board_piece_get_location(self->current_piece));
 
-	for (u16 y_offset = 0; (current_y + y_offset) <= board_height; y_offset++)
+	for (s16 y_offset = 0; (current_y + y_offset) <= board_height; y_offset++)
 	{
 		if (!tetris_board_can_current_piece_move(self, 0, y_offset))
 		{
@@ -94,7 +94,7 @@ void tetris_board_controller_drop_current_piece(TetrisBoardController *self)
 {
 	if (tetris_board_is_current_piece(self))
 	{
-		u16 y_offset = calculate_max_piece_down_offset(self);
+		s16 y_offset = calculate_max_piece_down_offset(self);
 
 		Point *old_point = tetris_board_piece_get_location(self->current_piece);
 		Point *new_location = point_init(point_get_x(old_point) + 0, point_get_y(old_point) + y_offset);

@@ -48,17 +48,17 @@ void tetris_board_piece_set_location(TetrisBoardPiece *self, Point *new_location
 	self->board_location = new_location;
 }
 
-void tetris_board_piece_rotate(TetrisBoardPiece *self, u8 rotations)
+void tetris_board_piece_rotate(TetrisBoardPiece *self, s8 rotations)
 {
 	tetris_piece_rotate(self->current_piece, rotations);
 }
 
 
-void tetris_board_piece_draw(TetrisBoardPiece *self, u16 start_x, u16 start_y, u16 block_size, Point *shadow_board_location)
+void tetris_board_piece_draw(TetrisBoardPiece *self, s16 start_x, s16 start_y, s16 block_size, Point *shadow_board_location)
 {
-	u16 x_offset = point_get_x(self->board_location) * block_size;
-	u16 y_offset = point_get_y(self->board_location) * block_size;
-	u16 shadow_y_offset = (point_get_y(self->board_location) + (point_get_y(shadow_board_location))) * block_size;
+	s16 x_offset = point_get_x(self->board_location) * block_size;
+	s16 y_offset = point_get_y(self->board_location) * block_size;
+	s16 shadow_y_offset = (point_get_y(self->board_location) + (point_get_y(shadow_board_location))) * block_size;
 
 	tetris_piece_draw(self->current_piece, start_x + x_offset, start_y + shadow_y_offset, block_size, 0xAA); //Shadow
 	tetris_piece_draw(self->current_piece, start_x + x_offset, start_y + y_offset, block_size, 0xFF); //Actual Piece

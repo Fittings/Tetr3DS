@@ -20,7 +20,7 @@
 #define G_QUEUE_SIZE 8
 #define G_PIECE_SET TETRIS_SET_STANDARD
 
-#define STANDARD_BLOCK_SIZE 12
+#define STANDARD_BLOCK_SIZE 10
 
 
 
@@ -79,8 +79,8 @@ static void draw_tetris_game(TetrisController *self)
 {
 	sf2d_start_frame(GFX_TOP, GFX_LEFT);
 	{
-		tetris_board_controller_draw(self->board_controller, region_init(point_init(100, 0), 200, 240), STANDARD_BLOCK_SIZE);
-		piece_generator_draw(self->piece_generator, region_init(point_init(0, 0), 100, 240), STANDARD_BLOCK_SIZE);
+		tetris_board_controller_draw(self->board_controller, region_init(point_init(100, 0), -0, -0), STANDARD_BLOCK_SIZE);
+		piece_generator_draw(self->piece_generator, region_init(point_init(0, 0), 100, 240), 5);
 	}
 	sf2d_end_frame();
 
@@ -94,7 +94,7 @@ static void draw_tetris_game(TetrisController *self)
 }
 
 
-static void move_piece(TetrisController *self, u16 x_offset, u16 y_offset)
+static void move_piece(TetrisController *self, s16 x_offset, s16 y_offset)
 {
 	tetris_board_controller_move_current_piece(self->board_controller, x_offset, y_offset);
 
@@ -176,7 +176,7 @@ TetrisController *tetris_controller_init()
 
 	{
 		TetrisBoard *board = tetris_board_init(10, 20); //ZZZ TODO Make this a construction setting.
-		self->board_controller = tetris_board_controller_init(board, region_init(point_init(100, 0), 200, 240));
+		self->board_controller = tetris_board_controller_init(board);
 		self->piece_generator = piece_generator_init(G_QUEUE_SIZE, G_PIECE_SET);
 		self->is_running = true; //ZZZ TODO Move this
 

@@ -11,8 +11,8 @@
 TetrisPiece *create_O()
 {
 	//Standard Tetris Piece is inside a 4x4
-	u8 width = STANDARD_WIDTH;
-	u8 height = STANDARD_HEIGHT;
+	s8 width = STANDARD_WIDTH;
+	s8 height = STANDARD_HEIGHT;
 
 	TetrisBlock ***block_array;
 	block_array = malloc(width * sizeof(void *));
@@ -40,8 +40,8 @@ TetrisPiece *create_O()
 TetrisPiece *create_I()
 {
 	//Standard Tetris Piece is inside a 4x4
-	u8 width = STANDARD_WIDTH;
-	u8 height = STANDARD_HEIGHT;
+	s8 width = STANDARD_WIDTH;
+	s8 height = STANDARD_HEIGHT;
 
 	TetrisBlock ***block_array;
 	block_array = malloc(width * sizeof(void *));
@@ -69,8 +69,8 @@ TetrisPiece *create_I()
 TetrisPiece *create_Z()
 {
 	//Standard Tetris Piece is inside a 4x4
-	u8 width = STANDARD_WIDTH;
-	u8 height = STANDARD_HEIGHT;
+	s8 width = STANDARD_WIDTH;
+	s8 height = STANDARD_HEIGHT;
 
 	TetrisBlock ***block_array;
 	block_array = malloc(width * sizeof(void *));
@@ -98,8 +98,8 @@ TetrisPiece *create_Z()
 TetrisPiece *create_S()
 {
 	//Standard Tetris Piece is inside a 4x4
-	u8 width = STANDARD_WIDTH;
-	u8 height = STANDARD_HEIGHT;
+	s8 width = STANDARD_WIDTH;
+	s8 height = STANDARD_HEIGHT;
 
 	TetrisBlock ***block_array;
 	block_array = malloc(width * sizeof(void *));
@@ -127,8 +127,8 @@ TetrisPiece *create_S()
 TetrisPiece *create_L()
 {
 	//Standard Tetris Piece is inside a 4x4
-	u8 width = STANDARD_WIDTH;
-	u8 height = 4;
+	s8 width = STANDARD_WIDTH;
+	s8 height = 4;
 
 	TetrisBlock ***block_array;
 	block_array = malloc(width * sizeof(void *));
@@ -156,8 +156,8 @@ TetrisPiece *create_L()
 TetrisPiece *create_J()
 {
 	//Standard Tetris Piece is inside a 4x4
-	u8 width = STANDARD_WIDTH;
-	u8 height = STANDARD_HEIGHT;
+	s8 width = STANDARD_WIDTH;
+	s8 height = STANDARD_HEIGHT;
 
 	TetrisBlock ***block_array;
 	block_array = malloc(width * sizeof(void *));
@@ -184,8 +184,8 @@ TetrisPiece *create_J()
 TetrisPiece *create_T()
 {
 	//Standard Tetris Piece is inside a 4x4
-	u8 width = STANDARD_WIDTH;
-	u8 height = STANDARD_HEIGHT;
+	s8 width = STANDARD_WIDTH;
+	s8 height = STANDARD_HEIGHT;
 
 	TetrisBlock ***block_array;
 	block_array = malloc(width * sizeof(void *));

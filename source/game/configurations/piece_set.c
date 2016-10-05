@@ -10,7 +10,7 @@
 struct _PieceSet
 {
 	PieceSetType set_type;
-	u8 set_size;
+	s8 set_size;
 };
 typedef struct _PieceSet PieceSet;
 
@@ -48,7 +48,7 @@ void piece_set_free(PieceSet *self)
 }
 
 
-static TetrisPiece *get_standard_tetris_piece(u8 piece_number)
+static TetrisPiece *get_standard_tetris_piece(s8 piece_number)
 {
 	switch (piece_number)
 	{
@@ -72,7 +72,7 @@ static TetrisPiece *get_standard_tetris_piece(u8 piece_number)
 }
 
 
-TetrisPiece *piece_set_get_tetris_piece(PieceSet *self, u8 piece_number)
+TetrisPiece *piece_set_get_tetris_piece(PieceSet *self, s8 piece_number)
 {
 	piece_number = piece_number % (self->set_size);
 
@@ -89,7 +89,7 @@ TetrisPiece *piece_set_get_tetris_piece(PieceSet *self, u8 piece_number)
 
 TetrisPiece *piece_set_get_rand_tetris_piece(PieceSet *self)
 {
-	u8 piece_number = rand() % (self->set_size);
+	s8 piece_number = rand() % (self->set_size);
 	return piece_set_get_tetris_piece(self, piece_number);
 
 }

@@ -12,8 +12,8 @@
 struct _TetrisBoard
 {
 	TetrisBlock ***block_array;
-	u16 block_array_width;
-	u16 block_array_height;
+	s16 block_array_width;
+	s16 block_array_height;
 };
 
 
@@ -50,8 +50,8 @@ bool tetris_board_is_piece_location_valid(TetrisBoard *self, TetrisPiece *piece,
 {
 	TetrisBlock ***tetris_array = tetris_piece_get_array(piece);
 
-	u16 width = tetris_piece_get_width(piece);
-	u16 height = tetris_piece_get_height(piece);
+	s16 width = tetris_piece_get_width(piece);
+	s16 height = tetris_piece_get_height(piece);
 
 	s16 x_piece_offset = point_get_x(piece_centre_location) - point_get_x(tetris_piece_get_point(piece));
 	s16 y_piece_offset = point_get_y(piece_centre_location) - point_get_y(tetris_piece_get_point(piece));
@@ -148,23 +148,23 @@ void tetris_board_free(TetrisBoard *self)
 	}
 }
 
-u16 tetris_board_get_width(TetrisBoard *self)
+s16 tetris_board_get_width(TetrisBoard *self)
 {
 	return self->block_array_width;
 }
 
-u16 tetris_board_get_height(TetrisBoard *self)
+s16 tetris_board_get_height(TetrisBoard *self)
 {
 	return self->block_array_height;
 }
 
-TetrisBlock *tetris_board_get_block(TetrisBoard *self, u16 x, u16 y)
+TetrisBlock *tetris_board_get_block(TetrisBoard *self, s16 x, s16 y)
 {
 	return self->block_array[x][y];
 }
 
 
-bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, u8 x, u8 y)
+bool tetris_board_put(TetrisBoard *self, TetrisPiece *piece, s8 x, s8 y)
 {
 	if (x < self->block_array_width && y < self->block_array_height)
 	{
@@ -181,8 +181,8 @@ void tetris_board_concrete_tetris_piece(TetrisBoard *self, TetrisPiece *current_
 	s16 x_piece_offset = point_get_x(piece_centre_location) - point_get_x(tetris_piece_get_point(current_piece));
 	s16 y_piece_offset = point_get_y(piece_centre_location) - point_get_y(tetris_piece_get_point(current_piece));
 
-	u16 p_width = tetris_piece_get_width(current_piece);
-	u16 p_height = tetris_piece_get_height(current_piece);
+	s16 p_width = tetris_piece_get_width(current_piece);
+	s16 p_height = tetris_piece_get_height(current_piece);
 
 	TetrisBlock ***tetris_array = tetris_piece_get_array(current_piece);
 
@@ -222,7 +222,7 @@ void tetris_board_remove_full_lines(TetrisBoard *self)
 
 
 
-void tetris_board_draw(TetrisBoard *self, int start_x_px, int start_y_px, int block_length_px)
+void tetris_board_draw(TetrisBoard *self, s16 start_x_px, s16 start_y_px, s16 block_length_px)
 {
 	for (int w=0; w < self->block_array_width; w++)
 	{

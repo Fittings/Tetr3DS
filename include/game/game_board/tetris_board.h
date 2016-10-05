@@ -55,7 +55,7 @@ extern void tetris_board_free(TetrisBoard *self);
  * @param self The TetrisBoard struct to reference.
  * @return The count of the blocks left to right.
  */
-extern u16 tetris_board_get_width(TetrisBoard *self);
+extern s16 tetris_board_get_width(TetrisBoard *self);
 
 /**
  * @brief Returns the height in blocks of the TetrisBoard.
@@ -65,7 +65,7 @@ extern u16 tetris_board_get_width(TetrisBoard *self);
  * @param self The TetrisBoard struct to reference.
  * @return The count of the blocks from top to bottom.
  */
-extern u16 tetris_board_get_height(TetrisBoard *self);
+extern s16 tetris_board_get_height(TetrisBoard *self);
 
 /**
  * @brief Returns the TetrisBlock at the TetrisBoard location.
@@ -76,7 +76,7 @@ extern u16 tetris_board_get_height(TetrisBoard *self);
  * @param x The x position in the 2d array of TetrisBlocks.
  * @param y The y position in the 2d array of TetrisBlocks.
  */
-extern TetrisBlock *tetris_board_get_block(TetrisBoard *self, u16 x, u16 y);
+extern TetrisBlock *tetris_board_get_block(TetrisBoard *self, s16 x, s16 y);
 
 /**
  * @brief Removes any completed lines in the Tetris Board
@@ -111,7 +111,7 @@ extern bool tetris_board_is_piece_location_valid(TetrisBoard *self, TetrisPiece 
  * @param start_y_px The y co-ordinate pixel for the top left of the board.
  * @param block_length_px The size of the TetrisBlocks in pixels.
  */
-extern void tetris_board_draw(TetrisBoard *self, int start_x_px, int start_y_px, int block_length_px);
+extern void tetris_board_draw(TetrisBoard *self, s16 start_x_px, s16 start_y_px, s16 block_length_px);
 
 
 /**
@@ -161,7 +161,7 @@ extern void tetris_board_concrete_tetris_piece(TetrisBoard *self, TetrisPiece *c
  * @param blocks_right The amount of blocks on the board to move the piece right.
  * @return A bool representing if the piece was successfully moved.
  */
-extern bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_down, u16 blocks_right);
+extern bool tetris_board_move_current_piece(TetrisBoard *self, s16 blocks_down, s16 blocks_right);
 
 /**
  * @brief Rotates the current user piece on the board.
@@ -170,7 +170,7 @@ extern bool tetris_board_move_current_piece(TetrisBoard *self, u16 blocks_down, 
  * @param rotations the amount of piece rotations.
  * @return True if the rotation occurred.
  */
-extern bool tetris_board_rotate_current_piece(TetrisBoard *self, u8 rotations);
+extern bool tetris_board_rotate_current_piece(TetrisBoard *self, s8 rotations);
 
 
 #endif

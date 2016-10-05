@@ -29,7 +29,7 @@ typedef struct _Point Point;
  * @param x The x co-ordinate.
  * @param y The y co-ordinate.
  */
-extern Point *point_init(u16 x, u16 y);
+extern Point *point_init(s16 x, s16 y);
 
 /**
  * @brief Frees the Point struct
@@ -46,7 +46,7 @@ extern void point_free(Point *self);
  *
  * @param self The Point struct to reference.
  */
-extern u16 point_get_x(Point *self);
+extern s16 point_get_x(Point *self);
 
 /**
  * @brief Returns the y co-ordinate.
@@ -55,7 +55,7 @@ extern u16 point_get_x(Point *self);
  *
  * @param self The Point struct to reference.
  */
-extern u16 point_get_y(Point *self);
+extern s16 point_get_y(Point *self);
 
 
 #endif

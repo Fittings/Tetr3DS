@@ -50,7 +50,7 @@ extern void piece_set_free(PieceSet *self);
  * @param self The PieceSet struct to reference.
  * @param piece_number The piece at the index. piece_number loops around if greater than number of pieces.
  */
-extern TetrisPiece *piece_set_get_tetris_piece(PieceSet *self, u8 piece_number);
+extern TetrisPiece *piece_set_get_tetris_piece(PieceSet *self, s8 piece_number);
 
 /**
  * @brief Returns a random TetrisPiece from the PieceSet.

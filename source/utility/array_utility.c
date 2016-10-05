@@ -77,7 +77,7 @@ static void ***array2d_array_rotate270(void ***array, u32 width, u32 height)
 
 
 
-void ***array2d_array_rotate_right_angle(void ***array, u32 width, u32 height, u8 rotations)
+void ***array2d_array_rotate_right_angle(void ***array, u32 width, u32 height, s8 rotations)
 {
 	switch (rotations % 4)
 	{

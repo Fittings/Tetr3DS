@@ -14,7 +14,7 @@
  * @param height The height of the 2d array.
  * @param rotations The amount of 90 degree rotations to do.
  */
-extern void ***array2d_array_rotate_right_angle(void ***array, u32 width, u32 height, u8 rotations);
+extern void ***array2d_array_rotate_right_angle(void ***array, u32 width, u32 height, s8 rotations);
 
 
 /**

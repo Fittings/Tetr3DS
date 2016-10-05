@@ -35,7 +35,7 @@ typedef struct _PieceGenerator PieceGenerator;
  * @param set_type The set of pieces used for the piece generator. All pieces will be from this set.
  * @return Returns the PieceGenerator for TetrisPiece generation.
  */
-extern PieceGenerator *piece_generator_init(u8 size, PieceSetType set_type);
+extern PieceGenerator *piece_generator_init(s8 size, PieceSetType set_type);
 
 
 /**

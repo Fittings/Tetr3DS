@@ -35,7 +35,7 @@ typedef struct _TetrisPiece TetrisPiece;
  * @param height The height of the 2d array
  * @return A single TetrisPiece
  */
-extern TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_block, u16 width, u16 height);
+extern TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_block, s16 width, s16 height);
 
 /**
  * @brief Frees the TetrisPiece struct.
@@ -81,7 +81,7 @@ extern TetrisPiece *tetris_piece_deep_copy(TetrisPiece *self);
  * @param self The TetrisPiece struct to reference.
  * @param rotations The amount of times to rotate.
  */
-extern TetrisPiece tetris_block_rotate_90_clockwise(TetrisPiece *self, u8 rotations);
+extern TetrisPiece tetris_block_rotate_90_clockwise(TetrisPiece *self, s8 rotations);
 
 
 /**
@@ -95,7 +95,7 @@ extern TetrisPiece tetris_block_rotate_90_clockwise(TetrisPiece *self, u8 rotati
  * @param block_size The width/height of the TetrisBlock to draw
  * @param opacity The opacity of the TetrisPiece to draw.
  */
-extern void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_size, u8 opacity);
+extern void tetris_piece_draw(TetrisPiece *self, s16 pixel_x, s16 pixel_y, s16 block_size, s8 opacity);
 
 
 /**
@@ -130,7 +130,7 @@ extern TetrisBlock ***tetris_piece_get_array(TetrisPiece *self);
  * @param self The TetrisPiece struct to reference.
  * @return The width of the 2d TetrisBlock array.
  */
-extern u16 tetris_piece_get_width(TetrisPiece *self);
+extern s16 tetris_piece_get_width(TetrisPiece *self);
 
 
 /**
@@ -141,7 +141,7 @@ extern u16 tetris_piece_get_width(TetrisPiece *self);
  * @param self The TetrisPiece struct to reference.
  * @return The height of the 2d TetrisBlock array.
  */
-extern u16 tetris_piece_get_height(TetrisPiece *self);
+extern s16 tetris_piece_get_height(TetrisPiece *self);
 
 /**
  * @brief Rotates the TetrisPiece
@@ -151,7 +151,7 @@ extern u16 tetris_piece_get_height(TetrisPiece *self);
  * @param self The TetrisPiece struct to reference
  * @param clockwise_90_rotation_count The amount of rotations.
  */
-extern void tetris_piece_rotate(TetrisPiece *self, u8 clockwise_90_rotation_count);
+extern void tetris_piece_rotate(TetrisPiece *self, s8 clockwise_90_rotation_count);
 
 
 

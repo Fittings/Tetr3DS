@@ -9,8 +9,8 @@
 struct _TetrisPiece
 {
 	TetrisBlock ***block_array;
-	u16 width;
-	u16 height;
+	s16 width;
+	s16 height;
 
 	Point *centre_block;
 };
@@ -18,7 +18,7 @@ typedef struct _TetrisPiece TetrisPiece;
 
 
 
-TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_block, u16 width, u16 height)
+TetrisPiece *tetris_piece_init(TetrisBlock ***piece_array, Point *centre_block, s16 width, s16 height)
 {
 	if ( (point_get_x(centre_block) >= width) && (point_get_y(centre_block) >= height))
 	{
@@ -88,7 +88,7 @@ TetrisPiece *tetris_piece_deep_copy(TetrisPiece *self)
 }
 
 
-void tetris_piece_draw(TetrisPiece *self, u16 pixel_x, u16 pixel_y, u16 block_size, u8 opacity)
+void tetris_piece_draw(TetrisPiece *self, s16 pixel_x, s16 pixel_y, s16 block_size, s8 opacity)
 {
 	for (int w=0; w < self->width; w++)
 	{
@@ -111,18 +111,18 @@ TetrisBlock ***tetris_piece_get_array(TetrisPiece *self)
 	return self->block_array;
 }
 
-u16 tetris_piece_get_width(TetrisPiece *self)
+s16 tetris_piece_get_width(TetrisPiece *self)
 {
 	return self->width;
 }
 
-u16 tetris_piece_get_height(TetrisPiece *self)
+s16 tetris_piece_get_height(TetrisPiece *self)
 {
 	return self->height;
 }
 
 
-void tetris_piece_rotate(TetrisPiece *self, u8 clockwise_90_rotation_count)
+void tetris_piece_rotate(TetrisPiece *self, s8 clockwise_90_rotation_count)
 {
 	self->block_array = (TetrisBlock ***) array2d_array_rotate_right_angle( (void *)self->block_array, self->width, self->height, clockwise_90_rotation_count);
 

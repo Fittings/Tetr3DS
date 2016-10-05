@@ -27,10 +27,9 @@ typedef struct _TetrisBoardController TetrisBoardController;
  * Initialises the TetrisBoardController.
  *
  * @param board The TetrisBoard used in the TetrisBoardController.
- * @param region The Region in the UI that the TetrisBoardController will occupy.
  * @return The TetrisBoardController struct.
  */
-extern TetrisBoardController *tetris_board_controller_init(TetrisBoard *board, Region *region);
+extern TetrisBoardController *tetris_board_controller_init(TetrisBoard *board);
 
 /**
  * @brief Frees the TetrisBoardController

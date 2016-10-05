@@ -5,8 +5,8 @@
 
 struct _Point
 {
-	u16 x;
-	u16 y;
+	s16 x;
+	s16 y;
 
 };
 typedef struct _Point Point;
@@ -17,7 +17,7 @@ typedef struct _Point Point;
 
 
 
-Point *point_init(u16 x, u16 y)
+Point *point_init(s16 x, s16 y)
 {
 	Point *self = malloc(sizeof *self);
 	if (!self)
@@ -43,13 +43,13 @@ void point_free(Point *self)
 }
 
 
-u16 point_get_x(Point *self)
+s16 point_get_x(Point *self)
 {
 	return self->x;
 }
 
 
-u16 point_get_y(Point *self)
+s16 point_get_y(Point *self)
 {
 	return self->y;
 }

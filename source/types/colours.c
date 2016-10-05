@@ -2,7 +2,7 @@
 
 #include <sf2d.h>
 
-u32 getColourRGBAValue(Colour colour, u8 opacity)
+u32 getColourRGBAValue(Colour colour, s8 opacity)
 {
 	u32 colourValue = 0;
 
