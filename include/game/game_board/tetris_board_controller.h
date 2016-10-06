@@ -133,9 +133,11 @@ extern bool tetris_board_can_current_piece_move(TetrisBoardController *self, s8 
  * Draws the TetrisBoard, TetrisPiece and TetrisPiece shadow in the currently set region.
  *
  * @param self The TetrisBoardStruct to reference.
+ * @param region The region that the TetrisBoard is inside of
+ * @param block_size The block size of the board blocks.
  */
 extern void tetris_board_controller_draw(TetrisBoardController *self, Region *region, u32 block_size);
-
+//ZZZ TODO Not actually using the region like stated, just using the top left point...
 
 
 

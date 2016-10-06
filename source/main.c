@@ -5,7 +5,6 @@
 #include <math.h>
 #include <3ds.h>
 #include <sf2d.h>
-#include <stdbool.h>
 #include <sftd.h>
 
 #include "../include/application_controller.h"

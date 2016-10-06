@@ -2,7 +2,6 @@
 
 //Implementation Specific Imports
 #include <malloc.h>
-#include <stdbool.h>
 #include <sys/queue.h>
 #include "../include/utility/queue.h"
 
